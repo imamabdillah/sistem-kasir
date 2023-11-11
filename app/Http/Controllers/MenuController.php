@@ -14,13 +14,20 @@ class MenuController extends Controller
     {
         $menus = Menu::all();
         $categories = Category::all();
-        return view('menu.index', compact('menus'), compact('categories'));
+
+        return view('kasir.menu.index', compact('menus', 'categories'));
     }
+
+    // Ambil tenant berdasarkan category_id masing-masing menu
+    // $tenants = [];
+    // foreach ($menus as $menu) {
+    //     $tenants[$menu->category_id] = $menu->tenant;
+    // }
 
     public function create()
     {
         $categories = Category::all();
-        return view('menu.create', compact('categories'));
+        return view('admin.create', compact('categories'));
     }
 
     public function store(Request $request)

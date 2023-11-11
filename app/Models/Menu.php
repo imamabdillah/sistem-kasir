@@ -20,6 +20,15 @@ class Menu extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
+    public function scopeByTenant($query, $tenantId)
+    {
+        return $query->where('tenant_id', $tenantId);
+    }
 
     use HasFactory;
 }

@@ -1,7 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KasirController;
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\Auth\LoginController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +21,34 @@ use App\Http\Controllers\MenuController;
 |
 */
 
-Route::get('/', function () {
-    return view('landingpage');
+
+
+Route::get('/', [HomeController::class, 'index'])->name('landingpage');
+Route::get('/home', [HomeController::class, 'home'])->name('home');
+
+// Rute Auth
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+
+
+// Rute Dashboard
+Route::middleware(['auth'])->group(function () {
+    // Rute berdasarkan peran
+    Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'check.role:admin']], function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        // Tambahkan rute admin lainnya di sini
+    });
+
+    Route::group(['prefix' => 'owner', 'middleware' => ['auth', 'check.role:owner']], function () {
+        Route::get('/dashboard', [OwnerController::class, 'dashboard'])->name('owner.dashboard');
+        // Tambahkan rute owner lainnya di sini
+    });
+
+    Route::group(['prefix' => 'kasir', 'middleware' => ['auth', 'check.role:kasir']], function () {
+        Route::get('/menu', [KasirController::class, 'index'])->name('kasir.menu.index');
+        Route::get('/menu', [MenuController::class, 'index'])->name('kasir.menu.index');
+        // Tambahkan rute kasir lainnya di sini
+    });
+
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
-    // Route::get('/menu/create', [MenuController::class, 'create'])->name('menu.create');
-    // Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
-    // Route::get('/menu/{id}', [MenuController::class, 'show'])->name('menu.show');
-    // Route::get('/menu/{id}/edit', [MenuController::class, 'edit'])->name('menu.edit');
-    // Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
-    // Route::delete('/menu/{id}', [MenuController::class, 'store'])->name('menu.destroy');
