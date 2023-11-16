@@ -36,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
     // Rute berdasarkan peran
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'check.role:admin']], function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/dashboard/create', [MenuController::class, 'create'])->name('create');
+        Route::post('/dashboard', [MenuController::class, 'store'])->name('store');
         // Tambahkan rute admin lainnya di sini
     });
 

@@ -1,4 +1,4 @@
-@include('layout.base')
+@extends('layout.adminheader')
 
 <!--begin::Main-->
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -24,7 +24,7 @@
         </div>
         <!--end::Toolbar-->
         <!--begin::Content-->
-        <form method="POST" action="{{ route('menu.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
             @csrf
             <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
@@ -51,11 +51,11 @@
                                     <!--begin::Image input placeholder-->
                                     <style>
                                         .image-input-placeholder {
-                                            background-image: url('assets/media/svg/files/blank-image.svg');
+                                            background-image: url("{!! asset('assets/media/svg/files/blank-image.svg') !!}");
                                         }
 
                                         [data-bs-theme="dark"] .image-input-placeholder {
-                                            background-image: url('assets/media/svg/files/blank-image-dark.svg');
+                                            background-image: url("{!! asset('assets/media/svg/files/blank-image.dark.svg') !!}");
                                         }
                                     </style>
                                     <!--end::Image input placeholder-->
@@ -138,10 +138,10 @@
                                     <label class="required form-label">Tenant</label>
                                     <!--end::Label-->
                                     <!--begin::Select2-->
-                                    <select name="category_id" class="form-select form-select-solid form-select-lg mb-2"
+                                    <select name="tenant_id" class="form-select form-select-solid form-select-lg mb-2"
                                         data-control="select2">
-                                        @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->nama }}</option>
+                                        @foreach ($tenants as $tenant)
+                                            <option value="{{ $tenant->id }}">{{ $tenant->nama }}</option>
                                         @endforeach
                                     </select>
                                     <!--end::Select2-->
@@ -229,7 +229,7 @@
                                         <div class="card card-flush py-4">
                                             <!--begin::Card header-->
                                             <div class="card-header">
-                                                <div class "card-title">
+                                                <div class="card-title">
                                                     <h2>Pricing</h2>
                                                 </div>
                                             </div>
@@ -254,6 +254,7 @@
                                             <!--end::Card header-->
                                         </div>
                                         <!--end::Pricing-->
+
                                     </div>
                                 </div>
                                 <!--end::Tab pane-->
@@ -265,12 +266,15 @@
                                     id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
                                 <!--end::Button-->
                                 <!--begin::Button-->
-                                <button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                                <!--begin::Button-->
+                                <button type="submit" class="btn btn-primary">
                                     <span class="indicator-label">Save Changes</span>
                                     <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                     </span>
                                 </button>
+                                <!--end::Button-->
+
                                 <!--end::Button-->
                             </div>
                         </div>

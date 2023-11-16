@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Tenant;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Menu extends Model
 {
@@ -25,10 +27,7 @@ class Menu extends Model
         return $this->belongsTo(Tenant::class);
     }
 
-    public function scopeByTenant($query, $tenantId)
-    {
-        return $query->where('tenant_id', $tenantId);
-    }
+
 
     use HasFactory;
 }
