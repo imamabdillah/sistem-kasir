@@ -50,7 +50,7 @@ class MenuController extends Controller
         if ($request->hasFile('foto_produk')) {
             $image = $request->file('foto_produk');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-
+            $image->move(public_path('storage/foto_produk/'), $imageName);
             // Kompresi gambar sebelum menyimpannya
             // $compressedImage = Image::make($image)->encode('jpg', 75);
             // $compressedImage->save(public_path('storage/foto_produk/' . $imageName));

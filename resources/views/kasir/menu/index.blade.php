@@ -167,9 +167,10 @@
                                         <div class="product-item">
                                             <div class="position-relative bg-light overflow-hidden">
                                                 <img class="img-fluid w-100"
-                                                    src="{{ public_path('foto_produk/' . $menu->foto_produk) }}"
+                                                    src="{{ asset('storage/foto_produk/' . $menu->foto_produk) }}"
                                                     alt="{{ $menu->nama }}"
                                                     style="object-fit: cover; object-position: center; height: 200px; width: 100%;">
+
                                                 <div class="card-img-overlay ps-0">
                                                     <span class="badge bg-primary p-2 ms-3 rounded-pill"><i
                                                             class="fas fa-plus me-0 fs-0"></i></span>

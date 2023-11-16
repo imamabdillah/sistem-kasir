@@ -15,9 +15,8 @@
         @csrf
         <button type="submit">Logout</button>
     </form>
-    <a href="{{ route('create') }}" class="btn btn-sm fw-bold btn-primary">New
-        Product</a>
 
+    <a href="{{ route('create') }}" class="btn btn-sm fw-bold btn-primary">New Product</a>
 
 </body>
 
