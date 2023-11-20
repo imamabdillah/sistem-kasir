@@ -70,7 +70,6 @@
                                 </th>
                                 <th class="min-w-100px">Nama Menu</th>
                                 <th class="text-end min-w-100px">deskripsi</th>
-                                {{-- <th class="text-end min-w-70px">foto</th> --}}
                                 <th class="text-end min-w-100px">harga</th>
                                 <th class="text-end min-w-100px">kategori</th>
                                 <th class="text-end min-w-100px">tenant</th>
@@ -111,14 +110,9 @@
                                         <span class="fw-bold">{{ $menu->deskripsi }}</span>
                                     </td>
 
-                                    {{-- <!-- Foto -->
-                                    <td class="text-end pe-0" data-order="1">
-                                        <img src="{{ asset($menu->foto_produk) }}" alt="{{ $menu->nama }}"
-                                            style="width: 50px; height: 50px;">
-                                    </td> --}}
-
                                     <!-- Harga -->
-                                    <td class="text-end pe-0">{{ $menu->harga }}</td>
+                                    <td class="text-end pe-0">{{ 'Rp ' . number_format($menu->harga, 0, ',', '.') }}
+                                    </td>
 
                                     <!-- Kategori -->
                                     <!-- Kategori -->
@@ -134,9 +128,11 @@
 
                                     <!-- Actions (Edit, Delete, etc.) -->
                                     <td class="text-end min-w-70px">
-                                        <a href="" class="btn btn-sm btn-icon btn-primary">
+                                        <a href="{{ route('edit', $menu->id) }}"
+                                            class="btn btn-sm btn-icon btn-primary">
                                             <i class="bi bi-pencil"></i>
                                         </a>
+
                                         <button class="btn btn-sm btn-icon btn-danger"
                                             onclick="confirmDelete('{{ route('destroy', $menu->id) }}')">
                                             <i class="bi bi-trash"></i>
@@ -159,35 +155,33 @@
         <!--end::Content container-->
     </div>
     <script>
-        function confirmDelete(deleteUrl) {
-            if (confirm('Apakah Anda yakin ingin menghapus menu ini?')) {
-                // Jika pengguna menekan OK, kirim permintaan penghapusan ke URL yang ditentukan
-                fetch(deleteUrl, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                        },
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Menu berhasil dihapus, lakukan sesuatu jika perlu
-                            // Misalnya, perbarui tampilan tabel atau berikan pemberitahuan
-                            console.log('Menu berhasil dihapus');
-                            location.reload(); // Perbarui halaman untuk menampilkan perubahan
-                        } else {
-                            // Menangani kesalahan jika diperlukan
-                            console.error('Gagal menghapus menu');
-                        }
-                    })
-                    .catch(error => {
-                        // Menangani kesalahan jika diperlukan
-                        console.error('Terjadi kesalahan:', error);
-                    });
-            }
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+
+            addToCartButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var menuId = this.getAttribute('data-menu-id');
+
+                    fetch('/add-to-cart/' + menuId, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.success); // Tampilkan pesan sukses
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
     </script>
+
 
 </body>
 

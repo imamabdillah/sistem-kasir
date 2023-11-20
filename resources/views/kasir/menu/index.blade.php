@@ -172,8 +172,11 @@
                                                     style="object-fit: cover; object-position: center; height: 200px; width: 100%;">
 
                                                 <div class="card-img-overlay ps-0">
-                                                    <span class="badge bg-primary p-2 ms-3 rounded-pill"><i
-                                                            class="fas fa-plus me-0 fs-0"></i></span>
+                                                    <span
+                                                        class="badge bg-primary p-2 ms-3 rounded-pill btn-add-to-cart"
+                                                        data-menu-id="{{ $menu->id }}">
+                                                        <i class="fas fa-plus me-0 fs-0"></i>
+                                                    </span>
                                                     <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i
                                                             class="fas fa-minus me-0 fs-0"></i></span>
                                                     <span class="badge bg-primary p-2 ms-4 rounded-pill"><i
@@ -184,8 +187,6 @@
                                                 <a class="d-block h5 mb-2" href="#">{{ $menu->nama }}</a>
                                                 <span
                                                     class="text-primary me-1">{{ 'Rp ' . number_format($menu->harga, 0, ',', '.') }}</span>
-                                                {{-- <span
-                                            class="text-body text-decoration-line-through">${{ $menu->old_price }}</span> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -194,8 +195,42 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
 
+                <a href="checkout.html">
+                    <div class="col-xl-4 mb-5 mb-xl-10 right-table btn">
+                        <!--begin::List widget 6-->
+                        <div class="card card-flush">
+                            <!--begin::Body-->
+                            <div class="table-responsive btn-primary">
+                                <!--begin::Table-->
+                                <table class="table table-row-dashed align-middle gs-0 gy-4 my-0">
+                                    <!--begin::Table body-->
+                                    <tbody>
+                                        <tr>
+                                            <td class="ps-0">
+                                                <a
+                                                    class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6 text-start pe-0 text-light d-block ms-4">4
+                                                    Item</a>
+                                                <span
+                                                    class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0 text-light ms-4">Checkout</span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">40.000
+                                                    <span class="fas fa-shopping-cart ms-1"></span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <!--end::Table body-->
+                                </table>
+                            </div>
+                            <!--end::Table-->
+                        </div>
+                        <!--end::List widget 6-->
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -207,3 +242,36 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
             class="bi bi-arrow-up"></i></a>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mendapatkan semua tombol "fa-plus"
+            var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+
+            // Menambahkan event listener ke setiap tombol
+            addToCartButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var menuId = this.getAttribute('data-menu-id');
+
+                    // Kirim permintaan AJAX
+                    fetch('/add-to-cart/' + menuId + '/1', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Handle respon jika diperlukan
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+    </script>
+
+</body>

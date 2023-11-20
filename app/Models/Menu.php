@@ -26,7 +26,10 @@ class Menu extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
-
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
 
 
     use HasFactory;
