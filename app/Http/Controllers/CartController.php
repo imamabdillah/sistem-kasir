@@ -3,41 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
     public function addToCart(Request $request)
     {
-        $request->validate([
-            'menu_id' => 'required|exists:menus,id',
-            'quantity' => 'required|integer|min:1',
+        $menuId = $request->input('menu_id');
+        $menuName = $request->input('nama');
+        $menuPrice = $request->input('harga');
+
+        // Lakukan validasi atau operasi lain yang diperlukan di sini
+
+        // Tambahkan item ke database
+        $cart = Cart::create([
+            'menu_id' => $menuId,
+            'nama' => $menuName,
+            'harga' => $menuPrice,
+            'quantity' => 1,
         ]);
 
-        $menu = Menu::find($request->menu_id);
+        return response()->json(['success' => true, 'message' => 'Item added to cart', 'cart' => $cart]);
+    }
 
-        if (!$menu) {
-            return response()->json(['message' => 'Menu not found'], 404);
+
+    public function removeFromCart(Request $request)
+    {
+        $menuId = $request->input('menu_id');
+
+        // Validasi jika menu dengan ID tertentu ada dalam keranjang
+        $cartItem = Cart::where('menu_id', $menuId)->first();
+
+        if ($cartItem) {
+            $cartItem->delete();
+            return response()->json(['success' => true, 'message' => 'Item removed from cart', 'cartItem' => $cartItem]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Item not found in cart']);
         }
-
-        $cart = new Cart([
-            'menu_id' => $menu->id,
-            'quantity' => $request->quantity,
-            'total_price' => $menu->harga * $request->quantity,
-        ]);
-
-        $cart->save();
-
-        // You can return a response as needed (e.g., success message, updated cart data)
-        return response()->json(['message' => 'Menu added to cart', 'cart' => $cart]);
     }
 
     public function getCart()
     {
-        // Implement logic to retrieve and return cart items
-        $cartItems = Cart::with('menu')->get();
+        // Dapatkan informasi keranjang belanja untuk semua pengguna
+        $cartInfo = Cart::with('menu')->get();
 
-        return response()->json(['cartItems' => $cartItems]);
+        // Hitung jumlah item dan total harga
+        $totalItems = $cartInfo->sum('quantity');
+        $totalPrice = $cartInfo->sum(function ($item) {
+            return $item->quantity * $item->menu->harga;
+        });
+
+        return response()->json([
+            'totalItems' => $totalItems,
+            'totalPrice' => $totalPrice,
+        ]);
     }
+
+    // Tambahkan fungsi-fungsi lainnya sesuai kebutuhan
 }

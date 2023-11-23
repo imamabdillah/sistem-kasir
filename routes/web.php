@@ -7,6 +7,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\LoginController;
 
 
@@ -25,6 +26,7 @@ use App\Http\Controllers\Auth\LoginController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('landingpage');
+Route::get('/aboutus', [HomeController::class, 'AboutUs'])->name('aboutus');
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 // Rute Auth
@@ -54,8 +56,12 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'kasir', 'middleware' => ['auth', 'check.role:kasir']], function () {
         Route::get('/menu', [KasirController::class, 'index'])->name('kasir.menu.index');
         Route::get('/menu', [MenuController::class, 'index'])->name('kasir.menu.index');
-        Route::post('/add-to-cart/{menu_id}', [CartController::class, 'addToCart'])->name('addToCart');
-        Route::get('/get-cart', [CartController::class, 'getCart']);
+        Route::post('menu/add-to-cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+        Route::get('menu/get-cart', [CartController::class, 'getCart']);
+        Route::post('menu/remove-from-cart', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
+        Route::get('menu/update-cart-view', [CartController::class, 'updateCartView'])->name('update-cart-view');
+
+        Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('checkout');
         // Tambahkan rute kasir lainnya di sini
     });
 

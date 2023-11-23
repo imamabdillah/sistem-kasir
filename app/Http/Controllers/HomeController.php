@@ -16,6 +16,10 @@ class HomeController extends Controller
     {
         return view('landingpage');
     }
+    public function AboutUs()
+    {
+        return view('aboutus');
+    }
     public function home()
     {
         if (auth()->user()->role == 'admin') {

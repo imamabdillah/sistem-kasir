@@ -174,11 +174,15 @@
                                                 <div class="card-img-overlay ps-0">
                                                     <span
                                                         class="badge bg-primary p-2 ms-3 rounded-pill btn-add-to-cart"
-                                                        data-menu-id="{{ $menu->id }}">
+                                                        data-menu-id="{{ $menu->id }}"
+                                                        onclick="addToCart({{ $menu->id }}, '{{ $menu->nama }}', {{ $menu->harga }})">
                                                         <i class="fas fa-plus me-0 fs-0"></i>
                                                     </span>
-                                                    <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i
-                                                            class="fas fa-minus me-0 fs-0"></i></span>
+                                                    <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"
+                                                        onclick="removeFromCart('{{ $menu->id }}')">
+                                                        <i class="fas fa-minus me-0 fs-0"></i>
+                                                    </span>
+
                                                     <span class="badge bg-primary p-2 ms-4 rounded-pill"><i
                                                             class="fas fa-list-alt me-0 fs-0"></i></span>
                                                 </div>
@@ -196,7 +200,7 @@
                     </div>
                 @endforeach
 
-                <a href="checkout.html">
+                <a href="{{ route('checkout') }}">
                     <div class="col-xl-4 mb-5 mb-xl-10 right-table btn">
                         <!--begin::List widget 6-->
                         <div class="card card-flush">
@@ -208,15 +212,16 @@
                                     <tbody>
                                         <tr>
                                             <td class="ps-0">
-                                                <a
-                                                    class="text-gray-800 fw-bold text-hover-primary mb-1 fs-6 text-start pe-0 text-light d-block ms-4">4
-                                                    Item</a>
+                                                <span id="total-items"
+                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">0
+                                                    Item</span>
                                                 <span
                                                     class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0 text-light ms-4">Checkout</span>
                                             </td>
                                             <td>
-                                                <span
-                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">40.000
+                                                <span id="total-price"
+                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">Rp
+                                                    0
                                                     <span class="fas fa-shopping-cart ms-1"></span>
                                                 </span>
                                             </td>
@@ -243,35 +248,129 @@
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
             class="bi bi-arrow-up"></i></a>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mendapatkan semua tombol "fa-plus"
-            var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
+        const csrfTokenElement = document.head.querySelector('meta[name="csrf-token"]');
+        const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
 
-            // Menambahkan event listener ke setiap tombol
-            addToCartButtons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var menuId = this.getAttribute('data-menu-id');
 
-                    // Kirim permintaan AJAX
-                    fetch('/add-to-cart/' + menuId + '/1', {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                            },
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Handle respon jika diperlukan
-                            console.log(data);
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                });
-            });
-        });
+        let cartItems = []; // Array untuk menyimpan item yang dipilih
+
+        function addToCart(menuId, menuNama, menuHarga) {
+            // Kirim permintaan HTTP ke server untuk menambahkan item ke database
+            fetch('menu/add-to-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        menu_id: menuId,
+                        nama: menuNama,
+                        harga: menuHarga,
+                    }),
+                })
+
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Item added to cart:', data.cart);
+                        // Tetapkan data.cart ke keranjang di sisi klien jika perlu
+                        cartItems.push(data.cart);
+                        updateCartView();
+                    } else {
+                        console.error('Failed to add item to cart:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+        function removeFromCart(menuId) {
+            fetch('menu/remove-from-cart', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        menu_id: menuId
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(data.message);
+                        // Panggil fungsi removeFromCart di sisi klien
+                        let index = cartItems.findIndex(item => item.id === menuId);
+                        if (index !== -1) {
+                            cartItems.splice(index, 1);
+                            console.log('Item removed from cart:', cartItems);
+                            // Perbarui tampilan setelah menghapus item
+                            updateCartView();
+
+                            // Pastikan ini memberikan efek pada server (menghapus item dari keranjang di sisi server)
+                            // ...
+                        }
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+
+
+        function updateCartView() {
+            fetch('menu/get-cart', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let totalItemsElement = document.getElementById('total-items');
+                    let totalPriceElement = document.getElementById('total-price');
+
+                    if (totalItemsElement && totalPriceElement) {
+                        // Mengupdate tampilan total harga dan jumlah menu yang dipilih pada elemen
+                        totalItemsElement.innerText = data.totalItems;
+                        totalPriceElement.innerText = formatCurrency(data.totalPrice);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        // function updateCartView() {
+        //     console.log('cartItems:', cartItems); // Tambahkan log ini
+        //     let totalItemsElement = document.getElementById('total-items');
+        //     let totalPriceElement = document.getElementById('total-price');
+
+        //     if (totalItemsElement && totalPriceElement) {
+        //         let totalItems = cartItems.length;
+        //         let totalPrice = cartItems.reduce((sum, item) => {
+        //             console.log('item.harga:', item.harga); // Tambahkan log ini
+
+        //             // Validasi bahwa item.harga adalah angka sebelum penambahan
+        //             if (typeof item.harga === 'number') {
+        //                 return sum + item.harga * item.quantity;
+        //             } else {
+        //                 console.error('Invalid price for item:', item);
+        //                 return sum; // Tidak menambahkan apa-apa jika item.harga tidak valid
+        //             }
+        //         }, 0);
+
+        //         // Menampilkan total harga dan jumlah menu yang dipilih pada elemen
+        //         totalItemsElement.innerText = totalItems;
+        //         totalPriceElement.innerText = formatCurrency(totalPrice);
+        //     }
+        // }
+
+        function formatCurrency(amount) {
+            // Fungsi untuk memformat angka ke format mata uang
+            return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+        }
     </script>
+
 
 </body>
