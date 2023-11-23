@@ -28,6 +28,7 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="index.html" class="nav-item nav-link active">Home</a>
                     <a href="{{ '/aboutus' }}" class="nav-item nav-link">About Us</a>
+                    <a href="index.html" class="nav-item nav-link active">Presensi</a>
                     <a href="product.html" class="nav-item nav-link">Tenant</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -168,56 +169,14 @@
     </div>
     <!-- About End -->
 
-    <!-- Feature Start -->
-    <div class="container-fluid bg-light bg-icon my-5 py-6">
-        <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
-                style="max-width: 500px;">
-                <h1 class="display-5 mb-3">Our Tenants</h1>
-                <p>Berikut ini merupakan daftar tenant yang terdapat di Foodcourt Kenangan.</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src='{!! asset('assets/img/icon-1.png') !!}' alt="">
-                        <h4 class="mb-3">Natural Process</h4>
-                        <p class="mb-4">Berikut ini merupakan daftar tenant yang terdapat di Foodcourt Kenangan.</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read
-                            More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src='{!! asset('assets/img/icon-2.png') !!}' alt="">
-                        <h4 class="mb-3">Organic Products</h4>
-                        <p class="mb-4">Berikut ini merupakan daftar tenant yang terdapat di Foodcourt Kenangan.</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read
-                            More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-white text-center h-100 p-4 p-xl-5">
-                        <img class="img-fluid mb-4" src="'{!! asset('assets/img/icon-3.png') !!}'" alt="">
-                        <h4 class="mb-3">Biologically Safe</h4>
-                        <p class="mb-4">Berikut ini merupakan daftar tenant yang terdapat di Foodcourt Kenangan.</p>
-                        <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read
-                            More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Feature End -->
-
-
     <!-- Product Start -->
     <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-0 gx-5 align-items-end">
+        <div class=" container">
+            <div class="row g-0 gx-5 align-items-end text-center">
                 <div class="col-lg-6">
                     <div class="section-header text-start mb-5 wow fadeInUp" data-wow-delay="0.1s"
-                        style="max-width: 500px;">
-                        <h1 class="display-5 mb-3">Our Tenants</h1>
+                        style="max-width: 5000px;">
+                        <h1 class="text-center">Our Tenants</h1>
                         <p>Berikut ini merupakan daftar tenant yang terdapat di Foodcourt Kenangan.</p>
                     </div>
                 </div>
@@ -322,123 +281,191 @@
                             </div>
                         </div>
                         <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                            <a class="btn btn-primary rounded-pill py-3 px-5" href="">Browse More Products</a>
+                            <a class="btn btn-primary rounded-pill py-3 px-5" href="">Show More Tenant</a>
+                        </div>
+                        <div class="section-title position-relative text-center mx-auto mb-5 pb-3"
+                            style="max-width: 1000px;">
+                            <h2 class="text-primary font-secondary">-Food Court Kenangan-</h2>
+                            <h1 class="display-5 text-uppercase">Tenant</h1>
+                            <div class="card w-xxl-75">
+                                <div class="card-body">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Product End -->
+            <!-- Product End -->
 
-    <!-- Appointment Start -->
-    <div class="container" data-aos="fade-up">
+            <!-- Appointment Start -->
+            <div class="container" data-aos="fade-up">
 
-        <div class="section-title">
-            <h2> Contact </h2>
-            <p>Contact Us</p>
-        </div>
-    </div>
-
-    <div data-aos="fade-up">
-        <iframe style="border:0; width: 100%; height: 350px;"
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-            frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
-                                    style="width: 65px; height: 65px;">
-                                    <i class="fa fa-2x fa-phone-alt text-primary"></i>
-                                </div>
-                                <div class="ms-4">
-                                    <h3 class="mb-2">Location</h3>
-                                    <p class="mb-0">Jl. Jetis Permai Gg. 13, Gentan, Kec. Baki, Kabupaten Sukoharjo,
-                                        Jawa Tengah 57556 </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
-                                    style="width: 65px; height: 65px;">
-                                    <i class="fa fa-2x fa-phone-alt text-primary"y"></i>
-                                </div>
-                                <div class="ms-4">
-                                    <h3 class="mb-2">Open Hours</h3>
-                                    <p class="mb-0">Senin - Minggu</br>
-                                        08.00 AM - 20.00 PM
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
-                                    style="width: 65px; height: 65px;">
-                                    <i class="fa fa-2x fa-envelope-open text-primary"></i>
-                                </div>
-                                <div class="ms-4">
-                                    <h3 class="mb-2">Email</h3>
-                                    <p class="mb-0">foodcourtkenangan@gmail.com</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex">
-                                <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
-                                    style="width: 65px; height: 65px;">
-                                    <i class="fa fa-2x fa-phone-alt text-primary""></i>
-                                </div>
-                                <div class="ms-4">
-                                    <h3 class="mb-2">call</h3>
-                                    <p class="mb-0">081227570155</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="section-title">
+                    <h2> Contact </h2>
+                    <p>Contact Us</p>
                 </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="row g-3">
-                        <div class="col-12 col-sm-6">
-                            <input type="text" class="form-control" placeholder="Your Name"
-                                style="height: 55px;">
+            </div>
+
+            <div data-aos="fade-up">
+                <iframe style="border:0; width: 100%; height: 350px;"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                    frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="container-xxl py-5">
+                <div class="container">
+                    <div class="row g-5">
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
+                                            style="width: 65px; height: 65px;">
+                                            <i class="fa fa-2x fa-phone-alt text-primary"></i>
+                                        </div>
+                                        <div class="ms-4">
+                                            <h3 class="mb-2">Location</h3>
+                                            <p class="mb-0">Jl. Jetis Permai Gg. 13, Gentan, Kec. Baki, Kabupaten
+                                                Sukoharjo,
+                                                Jawa Tengah 57556 </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
+                                            style="width: 65px; height: 65px;">
+                                            <i class="fa fa-2x fa-phone-alt text-primary"y"></i>
+                                        </div>
+                                        <div class="ms-4">
+                                            <h3 class="mb-2">Open Hours</h3>
+                                            <p class="mb-0">Senin - Minggu</br>
+                                                08.00 AM - 20.00 PM
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
+                                            style="width: 65px; height: 65px;">
+                                            <i class="fa fa-2x fa-envelope-open text-primary"></i>
+                                        </div>
+                                        <div class="ms-4">
+                                            <h3 class="mb-2">Email</h3>
+                                            <p class="mb-0">foodcourtkenangan@gmail.com</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-light"
+                                            style="width: 65px; height: 65px;">
+                                            <i class="fa fa-2x fa-phone-alt text-primary""></i>
+                                        </div>
+                                        <div class="ms-4">
+                                            <h3 class="mb-2">call</h3>
+                                            <p class="mb-0">081227570155</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 col-sm-6">
-                            <input type="email" class="form-control" placeholder="Your Email"
-                                style="height: 55px;">
-                        </div>
-                        <div class="col-12">
-                            <input type="text" class="form-control" placeholder="Subject" style="height: 55px;">
-                        </div>
-                        <div class="col-12">
-                            <textarea class="form-control" rows="7" placeholder="Message"></textarea>
-                        </div>
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="row g-3">
+                                <div class="col-12 col-sm-6">
+                                    <input type="text" class="form-control" placeholder="Your Name"
+                                        style="height: 55px;">
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="email" class="form-control" placeholder="Your Email"
+                                        style="height: 55px;">
+                                </div>
+                                <div class="col-12">
+                                    <input type="text" class="form-control" placeholder="Subject"
+                                        style="height: 55px;">
+                                </div>
+                                <div class="col-12">
+                                    <textarea class="form-control" rows="7" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Appointment End -->
+            <!-- Appointment End -->
 
-    <!-- Footer Start -->
-    @include('layout.footer')
-    <!-- Footer End -->
+            <!-- Footer Start -->
+            <div class="container-fluid bg-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="container py-5">
+                    <div class="row g-5">
+                        <div class="col-lg-3 col-md-6">
+                            <h1 class="fw-bold text-primary mb-4">F<span class="text-secondary">oo</span>dy</h1>
+                            <p>Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
+                                sed
+                                stet lorem sit clita</p>
+                            <div class="d-flex pt-2">
+                                <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i
+                                        class="fab fa-youtube"></i></a>
+                                <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h4 class="text-light mb-4">Address</h4>
+                            <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                            <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                            <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h4 class="text-light mb-4">Quick Links</h4>
+                            <a class="btn btn-link" href="">About Us</a>
+                            <a class="btn btn-link" href="">Contact Us</a>
+                            <a class="btn btn-link" href="">Our Services</a>
+                            <a class="btn btn-link" href="">Terms & Condition</a>
+                            <a class="btn btn-link" href="">Support</a>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h4 class="text-light mb-4">Newsletter</h4>
+                            <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                            <div class="position-relative mx-auto" style="max-width: 400px;">
+                                <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text"
+                                    placeholder="Your email">
+                                <button type="button"
+                                    class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid copyright">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                                &copy; <a href="#">Your Site Name</a>, All Right Reserved.
+                            </div>
+                            <div class="col-md-6 text-center text-md-end">
+                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                                <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
-            class="bi bi-arrow-up"></i></a>
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+                    class="bi bi-arrow-up"></i></a>
 
 
-
+            <!-- JavaScript Libraries -->
 </body>
 
 </html>
