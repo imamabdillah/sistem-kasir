@@ -256,7 +256,7 @@
 
         function addToCart(menuId, menuNama, menuHarga) {
             // Kirim permintaan HTTP ke server untuk menambahkan item ke database
-            fetch('menu/add-to-cart', {
+            fetch('{{ route('cart.addToCart') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -285,7 +285,7 @@
 
 
         function removeFromCart(menuId) {
-            fetch('menu/remove-from-cart', {
+            fetch('{{ route('cart.removeFromCart') }}', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -299,19 +299,21 @@
                 .then(data => {
                     if (data.success) {
                         console.log(data.message);
-                        // Panggil fungsi removeFromCart di sisi klien
-                        let index = cartItems.findIndex(item => item.id === menuId);
-                        if (index !== -1) {
-                            cartItems.splice(index, 1);
-                            console.log('Item removed from cart:', cartItems);
-                            // Perbarui tampilan setelah menghapus item
-                            updateCartView();
 
-                            // Pastikan ini memberikan efek pada server (menghapus item dari keranjang di sisi server)
-                            // ...
-                        }
+                        // Perbarui tampilan setelah menghapus item dari server
+                        updateCartView();
+
+                        // Pastikan ini memberikan efek pada server (menghapus item dari keranjang di sisi server)
+                        // ...
                     } else {
                         console.error(data.message);
+                    }
+
+                    // Hapus item dari tampilan setelah mendapatkan respons dari server
+                    let index = cartItems.findIndex(item => item.id === menuId);
+                    if (index !== -1) {
+                        cartItems.splice(index, 1);
+                        console.log('Item removed from cart:', cartItems);
                     }
                 })
                 .catch(error => console.error('Error:', error));
@@ -320,8 +322,9 @@
 
 
 
+
         function updateCartView() {
-            fetch('menu/get-cart', {
+            fetch('{{ route('update-cart-view') }}', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -341,6 +344,7 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+
         // function updateCartView() {
         //     console.log('cartItems:', cartItems); // Tambahkan log ini
         //     let totalItemsElement = document.getElementById('total-items');

@@ -58,6 +58,28 @@ class CartController extends Controller
             'totalPrice' => $totalPrice,
         ]);
     }
+    public function updateCartView()
+    {
+        try {
+            // Dapatkan informasi keranjang belanja untuk semua pengguna
+            $cartInfo = Cart::with('menu')->get();
+
+            // Hitung jumlah item dan total harga
+            $totalItems = $cartInfo->sum('quantity');
+            $totalPrice = $cartInfo->sum(function ($item) {
+                return $item->quantity * $item->menu->harga;
+            });
+
+            return response()->json([
+                'success' => true,
+                'totalItems' => $totalItems,
+                'totalPrice' => $totalPrice,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
 
     // Tambahkan fungsi-fungsi lainnya sesuai kebutuhan
 }
