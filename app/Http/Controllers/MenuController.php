@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Tenant;
 use App\Models\Category;
@@ -20,7 +21,15 @@ class MenuController extends Controller
         $menus = Menu::all();
         $categories = Category::all();
         $tenants = Tenant::all();
-        return view('kasir.menu.index', compact('menus', 'categories', 'tenants'));
+        $cart = Cart::all();
+
+        // Menghitung total item dan total harga
+        $totalItems = $cart->sum('quantity');
+        $totalPrice = $cart->sum(function ($item) {
+            return $item->quantity * $item->menu->harga;
+        });
+
+        return view('kasir.menu.index', compact('cart', 'totalItems', 'totalPrice', 'menus', 'categories', 'tenants'));
     }
 
     // Ambil tenant berdasarkan category_id masing-masing menu

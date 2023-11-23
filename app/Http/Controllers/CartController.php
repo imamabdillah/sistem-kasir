@@ -13,9 +13,18 @@ class CartController extends Controller
         $menuName = $request->input('nama');
         $menuPrice = $request->input('harga');
 
-        // Lakukan validasi atau operasi lain yang diperlukan di sini
+        // Cek apakah item dengan menu_id sudah ada dalam keranjang
+        $existingCartItem = Cart::where('menu_id', $menuId)->first();
 
-        // Tambahkan item ke database
+        if ($existingCartItem) {
+            // Jika sudah ada, tingkatkan jumlahnya
+            $existingCartItem->quantity += 1;
+            $existingCartItem->save();
+
+            return response()->json(['success' => true, 'message' => 'Item quantity increased in cart', 'cart' => $existingCartItem]);
+        }
+
+        // Jika belum ada, tambahkan item baru ke dalam keranjang
         $cart = Cart::create([
             'menu_id' => $menuId,
             'nama' => $menuName,
@@ -27,6 +36,7 @@ class CartController extends Controller
     }
 
 
+
     public function removeFromCart(Request $request)
     {
         $menuId = $request->input('menu_id');
@@ -35,12 +45,21 @@ class CartController extends Controller
         $cartItem = Cart::where('menu_id', $menuId)->first();
 
         if ($cartItem) {
-            $cartItem->delete();
+            // Jika jumlahnya lebih dari 1, kurangi jumlahnya
+            if ($cartItem->quantity > 1) {
+                $cartItem->quantity -= 1;
+                $cartItem->save();
+            } else {
+                // Jika hanya satu, hapus item dari keranjang
+                $cartItem->delete();
+            }
+
             return response()->json(['success' => true, 'message' => 'Item removed from cart', 'cartItem' => $cartItem]);
         } else {
             return response()->json(['success' => false, 'message' => 'Item not found in cart']);
         }
     }
+
 
     public function getCart()
     {

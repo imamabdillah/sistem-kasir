@@ -11,19 +11,6 @@
 
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
-            <div class="col-lg-6 px-5 text-start">
-                <small><i class="fa fa-map-marker-alt me-2"></i>123 Street, New York, USA</small>
-                <small class="ms-4"><i class="fa fa-envelope me-2"></i>info@example.com</small>
-            </div>
-            <div class="col-lg-6 px-5 text-end">
-                <small>Follow us:</small>
-                <a class="text-body ms-3" href=""><i class="fab fa-facebook-f"></i></a>
-                <a class="text-body ms-3" href=""><i class="fab fa-twitter"></i></a>
-                <a class="text-body ms-3" href=""><i class="fab fa-linkedin-in"></i></a>
-                <a class="text-body ms-3" href=""><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
 
         <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
             <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
@@ -101,13 +88,11 @@
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
-                data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
-                data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -118,7 +103,7 @@
     <!-- Jobs Start -->
     <div class="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-            <a href="tenant.html">
+            <a href="{{ route('kasir.menu.index') }}">
                 <button class="carousel-control-prev badge " type="button">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
@@ -151,7 +136,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="job-item p-4 mb-4">
+                        @foreach ($cart as $cartItem)
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <!-- Tampilkan informasi masing-masing item cart di sini -->
+                                        <img class="flex-shrink-0 img-fluid border rounded-pill"
+                                            src="{{ asset('storage/foto_produk/' . $cartItem->menu->foto_produk) }}"
+                                            alt="{{ $cartItem->menu->nama }}"style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3"><strong>{{ $cartItem->menu->nama }}</strong></h5>
+                                            <span class="text-truncate me-3">{{ $cartItem->menu->deskripsi }}</span>
+                                            <div class="text-start pt-3">
+                                                <span class=" btn btn-primary badge bg-primary p-2 rounded-pill"><i
+                                                        class="fas fa-plus me-0 fs-0"></i></span>
+                                                <span class="ms-2"><Strong>{{ $cartItem->quantity }}</Strong></span>
+                                                <span
+                                                    class="btn btn-primary badge bg-danger me-1 p-2 ms-2 rounded-pill"><i
+                                                        class="fas fa-minus me-0 fs-0"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <!-- Tampilkan informasi masing-masing item cart di sini -->
+                                        <h5 class="text-primary pt-5">
+                                            {{ 'Rp ' . number_format($cartItem->menu->harga * $cartItem->quantity, 0, ',', '.') }}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                        {{-- <div class="job-item p-4 mb-4">
                             <div class="row g-4">
                                 <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                     <img class="flex-shrink-0 img-fluid border rounded-pill" src="img/mie-goreng.jpg"
@@ -175,34 +191,8 @@
                                     <h5 class="text-primary pt-5">Rp. 10.000,-</h5>
                                 </div>
                             </div>
-                        </div>
-                        <div class="job-item p-4 mb-4">
-                            <div class="row g-4">
-                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid border rounded-pill" src="img/cimol.jpeg"
-                                        alt="" style="width: 80px; height: 80px;">
-                                    <div class="text-start ps-4">
-                                        <h5 class="mb-3"><strong>Cimol</strong></h5>
-                                        <span class="text-truncate me-3">Super pedas</span>
-                                        <div class="text-start pt-3">
-                                            <span
-                                                class="btn btn-primary badge bg-primary p-2 rounded-pill btn btn-primary"><i
-                                                    class="fas fa-plus me-0 fs-0"></i></span>
-                                            <span class="ms-2"><Strong>3</Strong></span>
-                                            <span class="btn btn-primary badge bg-danger me-1 p-2 ms-2 rounded-pill"><i
-                                                    class="fas fa-minus me-0 fs-0"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                    <div class="pt-5">
-                                        <h5 class="text-primary">Rp. 25.000,-</h5>
-                                        <h6 class="text-body text-decoration-line-through">Rp. 30.000</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div> --}}
+
                         <div class="job-item2 p-2 mb-4">
                             <div class="row g-4 table-responsive">
                                 <div class="col-sm-12 col-md-8 d-flex align-items-center">
@@ -221,6 +211,62 @@
                             </div>
                         </div>
                         <div class="job-item p-4 mb-4">
+                            <div class="row g-4">
+                                <div class="col-sm-12 col-md-8 text-start">
+                                    <span class="badge bg-primary p-2 ms-3 rounded-pill"><i
+                                            class="fas fa-dollar me-0 fs-0"></i></span>
+                                    <span class="ms-2"><strong>Payment Options</strong></span>
+
+                                    <div class="text-start">
+                                        <h6 class="ms-3"><strong>Payment Details</strong></h6>
+                                        <div class="ms-4 p-0">
+                                            <!-- Menampilkan jumlah total item -->
+                                            <span class="">Total Items: {{ $totalItems }}</span>
+
+                                            <!-- Menampilkan subtotal -->
+                                            <span class="d-block">Subtotal:
+                                                {{ 'Rp ' . number_format($totalPrice, 0, ',', '.') }}</span>
+
+                                            <!-- Jika Anda memiliki informasi TAX, Discount, Payable Account, tampilkan di sini -->
+                                            <!-- Contoh: -->
+                                            {{-- <span class="d-block">TAX:
+                                                {{ 'Rp ' . number_format($tax, 0, ',', '.') }}</span>
+                                            <span class="d-block">Discount:
+                                                {{ 'Rp ' . number_format($discount, 0, ',', '.') }}</span>
+                                            <span class="d-block">Payable Account:
+                                                {{ 'Rp ' . number_format($payableAccount, 0, ',', '.') }}</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                    <div class="btn pt-0 text-end text-align">
+                                        <span
+                                            class="fw-bold d-block fs-6 p-0 text-start text-primary"><Strong>Cash</Strong>
+                                            <span class="fas fa-chevron-right ms-1"></span>
+                                        </span>
+                                    </div>
+                                    <div class="text-start p-3">
+                                        <div class="pt-1">
+                                            <!-- Menampilkan informasi total item dan total harga -->
+                                            <span class="d-block ms-4">{{ $totalItems }} Items</span>
+                                            <span
+                                                class="d-block ms-4">{{ 'Rp ' . number_format($totalPrice, 0, ',', '.') }}</span>
+                                            <!-- Menampilkan informasi TAX, Discount, Payable Account jika diperlukan -->
+                                            {{-- <span
+                                                class="d-block ms-4">{{ 'Rp ' . number_format($tax, 0, ',', '.') }}</span>
+                                            <span
+                                                class="d-block ms-4">{{ 'Rp ' . number_format($discount, 0, ',', '.') }}</span> --}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary py-3 px-5" href="">Processing Payments<i
+                                    class=" ms-2 fas fa-arrow-right"></i></a>
+                        </div>
+
+                        {{-- <div class="job-item p-4 mb-4">
                             <div class="row g-4">
                                 <div class="col-sm-12 col-md-8 text-start">
                                     <span class="badge bg-primary p-2 ms-3 rounded-pill"><i
@@ -260,7 +306,7 @@
                             </div>
                             <a class="btn btn-primary py-3 px-5" href="">Processing Payments<i
                                     class=" ms-2 fas fa-arrow-right"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

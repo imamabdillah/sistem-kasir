@@ -213,15 +213,16 @@
                                         <tr>
                                             <td class="ps-0">
                                                 <span id="total-items"
-                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">0
-                                                    Item</span>
+                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">
+                                                    {{ $totalItems }} Item
+                                                </span>
                                                 <span
                                                     class="text-gray-400 fw-semibold fs-7 d-block text-start ps-0 text-light ms-4">Checkout</span>
                                             </td>
                                             <td>
                                                 <span id="total-price"
-                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">Rp
-                                                    0
+                                                    class="text-gray-800 fw-bold d-block fs-6 ps-0 text-end text-light">
+                                                    Rp {{ number_format($totalPrice, 0, ',', '.') }}
                                                     <span class="fas fa-shopping-cart ms-1"></span>
                                                 </span>
                                             </td>
@@ -345,30 +346,6 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        // function updateCartView() {
-        //     console.log('cartItems:', cartItems); // Tambahkan log ini
-        //     let totalItemsElement = document.getElementById('total-items');
-        //     let totalPriceElement = document.getElementById('total-price');
-
-        //     if (totalItemsElement && totalPriceElement) {
-        //         let totalItems = cartItems.length;
-        //         let totalPrice = cartItems.reduce((sum, item) => {
-        //             console.log('item.harga:', item.harga); // Tambahkan log ini
-
-        //             // Validasi bahwa item.harga adalah angka sebelum penambahan
-        //             if (typeof item.harga === 'number') {
-        //                 return sum + item.harga * item.quantity;
-        //             } else {
-        //                 console.error('Invalid price for item:', item);
-        //                 return sum; // Tidak menambahkan apa-apa jika item.harga tidak valid
-        //             }
-        //         }, 0);
-
-        //         // Menampilkan total harga dan jumlah menu yang dipilih pada elemen
-        //         totalItemsElement.innerText = totalItems;
-        //         totalPriceElement.innerText = formatCurrency(totalPrice);
-        //     }
-        // }
 
         function formatCurrency(amount) {
             // Fungsi untuk memformat angka ke format mata uang
