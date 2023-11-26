@@ -57,7 +57,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/menu', [KasirController::class, 'index'])->name('kasir.menu.index');
         Route::get('/menu', [MenuController::class, 'index'])->name('kasir.menu.index');
         Route::post('menu/add-to-cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
-        Route::get('menu/get-cart', [CartController::class, 'getCart']);
         Route::post('menu/remove-from-cart', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
         Route::get('menu/update-cart-view', [CartController::class, 'updateCartView'])->name('update-cart-view');
 

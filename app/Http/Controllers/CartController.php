@@ -60,45 +60,42 @@ class CartController extends Controller
         }
     }
 
-
-    public function getCart()
-    {
-        // Dapatkan informasi keranjang belanja untuk semua pengguna
-        $cartInfo = Cart::with('menu')->get();
-
-        // Hitung jumlah item dan total harga
-        $totalItems = $cartInfo->sum('quantity');
-        $totalPrice = $cartInfo->sum(function ($item) {
-            return $item->quantity * $item->menu->harga;
-        });
-
-        return response()->json([
-            'totalItems' => $totalItems,
-            'totalPrice' => $totalPrice,
-        ]);
-    }
     public function updateCartView()
     {
         try {
             // Dapatkan informasi keranjang belanja untuk semua pengguna
-            $cartInfo = Cart::with('menu')->get();
+            $cartItems = Cart::with('menu')->get();
 
             // Hitung jumlah item dan total harga
-            $totalItems = $cartInfo->sum('quantity');
-            $totalPrice = $cartInfo->sum(function ($item) {
+            $totalItems = $cartItems->sum('quantity');
+            $totalPrice = $cartItems->sum(function ($item) {
                 return $item->quantity * $item->menu->harga;
             });
+
+            // Ambil data yang dibutuhkan untuk tampilan dinamis item keranjang
+            $cartData = [];
+            foreach ($cartItems as $cartItem) {
+                $cartData[] = [
+                    'menu' => [
+                        'id' => $cartItem->menu->id,
+                        'harga' => $cartItem->menu->harga,
+                    ],
+                    'quantity' => $cartItem->quantity,
+                ];
+            }
 
             return response()->json([
                 'success' => true,
                 'totalItems' => $totalItems,
                 'totalPrice' => $totalPrice,
+                'cartItems' => $cartData, // Sertakan data item keranjang
             ]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+}
+
 
 
     // Tambahkan fungsi-fungsi lainnya sesuai kebutuhan
-}

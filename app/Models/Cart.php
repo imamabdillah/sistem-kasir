@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     protected $fillable = ['menu_id', 'nama', 'harga', 'quantity'];
+
     public function menu()
     {
-        return $this->belongsTo(Menu::class);
+        return $this->belongsTo(Menu::class, 'menu_id');
     }
+
     use HasFactory;
 }

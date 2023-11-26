@@ -26,7 +26,7 @@ class Menu extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
-    public function cart()
+    public function carts()
     {
         return $this->belongsTo(Cart::class);
     }
