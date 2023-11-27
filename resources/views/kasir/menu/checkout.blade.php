@@ -119,8 +119,13 @@
                                                 <i class="fas fa-minus me-0 fs-0"></i>
                                             </span>
                                         </div>
+                                        <div class="ms-3 pt-4">
+                                            <strong>Catatan:</strong> {{ $cartItem->note }}
+                                        </div>
                                     </div>
+
                                 </div>
+
                                 <div
                                     class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                     <!-- Tampilkan informasi masing-masing item cart di sini -->
