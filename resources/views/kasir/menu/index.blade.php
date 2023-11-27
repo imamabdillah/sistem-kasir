@@ -1,5 +1,9 @@
 @extends('layout.base')
 
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
 <body>
     <!-- Spinner Start -->
     <div id="spinner"
@@ -133,9 +137,12 @@
                                                         onclick="removeFromCart('{{ $menu->id }}')">
                                                         <i class="fas fa-minus me-0 fs-0"></i>
                                                     </span>
+                                                    <span class="badge bg-primary p-2 ms-4 rounded-pill align-end"
+                                                        data-bs-toggle="modal" data-bs-target="#noteModal"
+                                                        onclick="setActiveMenu({{ $menu->id }})">
+                                                        <i class="fas fa-list-alt me-0 fs-0"></i>
+                                                    </span>
 
-                                                    <span class="badge bg-primary p-2 ms-4 rounded-pill"><i
-                                                            class="fas fa-list-alt me-0 fs-0"></i></span>
                                                 </div>
                                             </div>
                                             <div class="text-center p-4">
@@ -190,6 +197,27 @@
             </div>
         </div>
     </div>
+    <!-- Start Modal Note -->
+    <!-- Modal Note -->
+    <div class="modal fade" id="noteModal" tabindex="-1" aria-labelledby="noteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noteModalLabel">Menu Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <textarea id="menuNote" class="form-control" placeholder="Enter your note here..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveNote()">Save Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Modal Note -->
 
     <!-- Footer Start -->
     @include('layout.footer')
@@ -271,10 +299,6 @@
                 .catch(error => console.error('Error:', error));
         }
 
-
-
-
-
         function updateCartView() {
             fetch('{{ route('update-cart-view') }}', {
                     method: 'GET',
@@ -302,6 +326,71 @@
             // Fungsi untuk memformat angka ke format mata uang
             return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
         }
+
+        let activeMenuId;
+        let savedNote = '';
+
+        function setActiveMenu(menuId) {
+            activeMenuId = menuId;
+
+            // Fetch catatan dari server
+            fetch(`{{ route('get-menu-note', ['menuId' => '__menuId__']) }}`.replace('__menuId__', menuId))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Set catatan ke dalam variabel savedNote
+                        savedNote = data.note;
+
+                        // Set catatan ke dalam textarea
+                        document.getElementById('menuNote').value = savedNote;
+                    } else {
+                        console.error('Failed to fetch note:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+        // Mengubah saveNote untuk menangani respons dari server setelah menyimpan catatan
+        function saveNote() {
+            const menuNote = document.getElementById('menuNote').value;
+
+            // Pastikan terdapat activeMenuId sebelum mengirimkan permintaan
+            if (!activeMenuId) {
+                console.error('No active menu selected.');
+                return;
+            }
+
+            // Kirim permintaan HTTP ke server untuk menyimpan catatan
+            fetch('{{ route('save-menu-note') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        menu_id: activeMenuId,
+                        note: menuNote,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Note saved successfully:', data.message);
+                        // Tutup modal setelah catatan disimpan
+                        $('#noteModal').modal('hide');
+                    } else {
+                        console.error('Failed to save note:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Event listener untuk menanggapi peristiwa ketika modal ditampilkan
+        $('noteModal').on('shown.bs.modal', function() {
+            // Set catatan dari variabel savedNote ke dalam textarea
+            document.getElementById('menuNote').value = savedNote;
+        });
     </script>
 
 

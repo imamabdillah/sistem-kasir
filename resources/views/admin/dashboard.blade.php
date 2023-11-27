@@ -155,6 +155,47 @@
         <!--end::Content container-->
     </div>
     <script>
+        function confirmDelete(url, menuId) {
+            var confirmation = confirm('Apakah Anda yakin ingin menghapus menu ini?');
+            if (confirmation) {
+                // Jika pengguna menekan "OK", lakukan permintaan DELETE menggunakan fetch
+                fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Handle jika permintaan berhasil
+                            return response.json();
+                        } else {
+                            throw new Error('Gagal menghapus menu');
+                        }
+                    })
+                    .then(data => {
+                        // Handle data setelah penghapusan berhasil
+                        alert(data.message);
+
+                        // Perbarui tampilan atau hapus menu dari DOM
+                        var menuElement = document.getElementById('menu_' + menuId);
+                        if (menuElement) {
+                            menuElement.remove(); // Hapus elemen menu dari DOM
+                        }
+
+                        // Tambahkan logika lain setelah penghapusan jika diperlukan
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            } else {
+                // Jika pengguna membatalkan penghapusan
+                console.log('Penghapusan dibatalkan.');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var addToCartButtons = document.querySelectorAll('.btn-add-to-cart');
 

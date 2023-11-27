@@ -9,8 +9,7 @@ use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\LoginController;
-
-
+use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/menu', [MenuController::class, 'index'])->name('kasir.menu.index');
         Route::post('menu/add-to-cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
         Route::post('menu/remove-from-cart', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
+        Route::get('menu/get-note/{menuId}', [CartController::class, 'getMenuNote'])->name('get-menu-note');
+        Route::post('menu/save-menu-note', [CartController::class, 'saveMenuNote'])->name('save-menu-note');
         Route::get('menu/update-cart-view', [CartController::class, 'updateCartView'])->name('update-cart-view');
 
         Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('checkout');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Menu;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -34,7 +35,6 @@ class CartController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Item added to cart', 'cart' => $cart]);
     }
-
 
 
     public function removeFromCart(Request $request)
@@ -90,6 +90,37 @@ class CartController extends Controller
                 'totalPrice' => $totalPrice,
                 'cartItems' => $cartData, // Sertakan data item keranjang
             ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getMenuNote($menuId)
+    {
+        try {
+            $menuNote = Cart::where('menu_id', $menuId)->value('note');
+            return response()->json(['success' => true, 'note' => $menuNote]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function saveMenuNote(Request $request)
+    {
+        try {
+            // Validasi input
+            $request->validate([
+                'menu_id' => 'required|exists:carts,menu_id',
+                'note' => 'nullable|string',
+            ]);
+
+            $menuId = $request->input('menu_id');
+            $note = $request->input('note');
+
+            // Temukan atau buat objek Cart berdasarkan menu_id
+            $cart = Cart::updateOrCreate(['menu_id' => $menuId], ['note' => $note]);
+
+            return response()->json(['success' => true, 'message' => 'Note saved successfully']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
