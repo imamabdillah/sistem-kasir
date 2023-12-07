@@ -126,7 +126,3 @@ class CartController extends Controller
         }
     }
 }
-
-
-
-    // Tambahkan fungsi-fungsi lainnya sesuai kebutuhan

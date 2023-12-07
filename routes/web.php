@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cart;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -7,9 +8,9 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +62,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('menu/save-menu-note', [CartController::class, 'saveMenuNote'])->name('save-menu-note');
         Route::get('menu/update-cart-view', [CartController::class, 'updateCartView'])->name('update-cart-view');
 
-        Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('checkout');
+        Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('tampilancheckout');
+        Route::post('menu/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+        Route::post('menu/checkout/midtrans/notification', [PaymentController::class, 'midtransNotification'])->name('midtrans.notification');
+        Route::post('menu/checkout/process-payments', [PaymentController::class, 'processPayments'])->name('process-payments');
         // Tambahkan rute kasir lainnya di sini
     });
 

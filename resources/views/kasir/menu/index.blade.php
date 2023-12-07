@@ -158,7 +158,7 @@
                     </div>
                 @endforeach
 
-                <a href="{{ route('checkout') }}">
+                <a href="{{ route('tampilancheckout') }}">
                     <div class="col-xl-4 mb-5 mb-xl-10 right-table btn">
                         <!--begin::List widget 6-->
                         <div class="card card-flush">
@@ -248,21 +248,19 @@
                         harga: menuHarga,
                     }),
                 })
-
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
                         console.log('Item added to cart:', data.cart);
                         // Tetapkan data.cart ke keranjang di sisi klien jika perlu
                         cartItems.push(data.cart);
-                        updateCartView();
+                        updateCartView(); // Memanggil updateCartView() setelah menambah item
                     } else {
                         console.error('Failed to add item to cart:', data.message);
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
-
 
         function removeFromCart(menuId) {
             fetch('{{ route('cart.removeFromCart') }}', {

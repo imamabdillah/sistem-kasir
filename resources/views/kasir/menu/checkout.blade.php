@@ -230,10 +230,13 @@
                                 </div>
                             </div>
                         </div>
-                        <a class="btn btn-primary py-3 px-5" href="">Processing Payments <i
-                                class="ms-2 fas fa-arrow-right"></i></a>
+                        <form id="checkoutForm" action="{{ route('checkout') }}" method="post">
+                            @csrf
+                            <button type="button" class="btn btn-primary py-3 px-5" onclick="checkout()">
+                                Processing Payments <i class="ms-2 fas fa-arrow-right"></i>
+                            </button>
+                        </form>
                     </div>
-
                     {{-- <div class="job-item p-4 mb-4">
                             <div class="row g-4">
                                 <div class="col-sm-12 col-md-8 text-start">
@@ -405,6 +408,45 @@
 
     function formatCurrency(amount) {
         return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+    }
+
+    function checkout() {
+        // Menggunakan Ajax untuk mengirim formulir
+        fetch('{{ route('checkout') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    // Tambahkan data tambahan yang diperlukan untuk proses checkout, jika ada
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle respons dari server setelah checkout
+                if (data.success) {
+                    // Gunakan Snap.js untuk membuka pop-up pembayaran
+                    snap.pay(data.snapToken, {
+                        onSuccess: function(result) {
+                            // Handle ketika pembayaran berhasil
+                            console.log('Payment successful:', result);
+                        },
+                        onPending: function(result) {
+                            // Handle ketika pembayaran masih tertunda
+                            console.log('Payment pending:', result);
+                        },
+                        onError: function(result) {
+                            // Handle ketika pembayaran gagal
+                            console.error('Payment failed:', result);
+                        }
+                    });
+                } else {
+                    console.error('Failed to initiate checkout:', data.message);
+                    // Tampilkan pesan kesalahan kepada pengguna jika diperlukan
+                }
+            })
+            .catch(error => console.error('Error:', error));
     }
 </script>
 
