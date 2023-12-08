@@ -14,6 +14,7 @@ class Transaction extends Model
         'total_price',
         'payment_method',
         'status',
+        'snap_token',
     ];
 
     public function order()

@@ -56,7 +56,8 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
                     <!--begin::Table-->
-                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
+                    <table tabel-layout="fixed"class="table align-middle table-row-dashed fs-6 gy-5"
+                        id="kt_ecommerce_products_table">
                         <!--begin::Table head-->
                         <thead>
                             <!--begin::Table row-->

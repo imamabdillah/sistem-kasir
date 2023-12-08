@@ -12,8 +12,9 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->decimal('total_price', 10, 2);
-            $table->string('payment_method');
+            $table->string('payment_method')->nullable();
             $table->string('status')->default('pending');
+            $table->string('snap_token');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

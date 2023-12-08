@@ -230,13 +230,16 @@
                                 </div>
                             </div>
                         </div>
-                        <form id="checkoutForm" action="{{ route('checkout') }}" method="post">
+                        <form id="payment-form" action="{{ route('checkout') }}" method="post">
                             @csrf
-                            <button type="button" class="btn btn-primary py-3 px-5" onclick="checkout()">
+                            <button type="submit" class="btn btn-primary py-3 px-5" id="checkoutButton"
+                                data-bs-toggle="modal" data-bs-target="#checkoutModal">
                                 Processing Payments <i class="ms-2 fas fa-arrow-right"></i>
                             </button>
+
                         </form>
                     </div>
+
                     {{-- <div class="job-item p-4 mb-4">
                             <div class="row g-4">
                                 <div class="col-sm-12 col-md-8 text-start">
@@ -284,8 +287,6 @@
     </div>
 </div>
 
-<!-- Jobs End -->
-
 @include('layout.footer')
 
 
@@ -293,161 +294,171 @@
 <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
         class="bi bi-arrow-up"></i></a>
 
-<script>
-    const csrfTokenElement = document.head.querySelector('meta[name="csrf-token"]');
-    const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
+@section('script')
+    <script>
+        const csrfTokenElement = document.head.querySelector('meta[name="csrf-token"]');
+        const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
 
-    let cartItems = [];
+        let cartItems = [];
 
-    function addToCart(menuId, menuNama, menuHarga) {
-        fetch('{{ route('cart.addToCart') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify({
-                    menu_id: menuId,
-                    nama: menuNama,
-                    harga: menuHarga,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log('Item added to cart:', data.cart);
-                    // Update the entire cartItems array with the new data
-                    cartItems = data.cart;
+        function addToCart(menuId, menuNama, menuHarga) {
+            fetch('{{ route('cart.addToCart') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        menu_id: menuId,
+                        nama: menuNama,
+                        harga: menuHarga,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Item added to cart:', data.cart);
+                        // Update the entire cartItems array with the new data
+                        cartItems = data.cart;
 
-                    // Move the call to updateCartViewAJAX here
-                    updateCartViewAJAX();
-                } else {
-                    console.error('Failed to add item to cart:', data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                        // Move the call to updateCartViewAJAX here
+                        updateCartViewAJAX();
+                    } else {
+                        console.error('Failed to add item to cart:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-    function removeFromCart(menuId) {
-        fetch('{{ route('cart.removeFromCart') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify({
-                    menu_id: menuId
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    console.log(data.message);
-                    // Update the entire cartItems array with the new data
-                    cartItems = data.cart;
+        function removeFromCart(menuId) {
+            fetch('{{ route('cart.removeFromCart') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        menu_id: menuId
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log(data.message);
+                        // Update the entire cartItems array with the new data
+                        cartItems = data.cart;
 
-                    // Call the new function to update the view through AJAX
-                    updateCartViewAJAX();
-                    // Ensure this has an effect on the server (removing the item from the server-side cart)
-                    // ...
-                } else {
-                    console.error(data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                        // Call the new function to update the view through AJAX
+                        updateCartViewAJAX();
+                        // Ensure this has an effect on the server (removing the item from the server-side cart)
+                        // ...
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
 
-    function updateCartViewAJAX() {
-        fetch('{{ route('update-cart-view') }}', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Data from server:', data);
+        function updateCartViewAJAX() {
+            fetch('{{ route('update-cart-view') }}', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data from server:', data);
 
-                let totalItemsElement2 = document.getElementById('total-items2');
-                let totalPriceElement2 = document.getElementById('total-price2');
+                    let totalItemsElement2 = document.getElementById('total-items2');
+                    let totalPriceElement2 = document.getElementById('total-price2');
 
-                if (totalItemsElement2 && totalPriceElement2) {
-                    totalItemsElement2.innerText = data.totalItems;
-                    totalPriceElement2.innerText = formatCurrency(data.totalPrice);
-                } else {
-                    console.error('Error: total-items2 or total-price2 not found.');
-                }
+                    if (totalItemsElement2 && totalPriceElement2) {
+                        totalItemsElement2.innerText = data.totalItems;
+                        totalPriceElement2.innerText = formatCurrency(data.totalPrice);
+                    } else {
+                        console.error('Error: total-items2 or total-price2 not found.');
+                    }
 
-                console.log('Updating dynamic elements for cart items...');
+                    console.log('Updating dynamic elements for cart items...');
 
-                if (data.cartItems && Array.isArray(data.cartItems)) {
-                    data.cartItems.forEach(cartItem => {
-                        if (cartItem.menu && cartItem.menu.id) {
-                            let menuId = cartItem.menu.id;
-                            let totalItemsElement = document.getElementById(`total-items-${menuId}`);
-                            let totalPriceElement = document.getElementById(`total-price-${menuId}`);
+                    if (data.cartItems && Array.isArray(data.cartItems)) {
+                        data.cartItems.forEach(cartItem => {
+                            if (cartItem.menu && cartItem.menu.id) {
+                                let menuId = cartItem.menu.id;
+                                let totalItemsElement = document.getElementById(`total-items-${menuId}`);
+                                let totalPriceElement = document.getElementById(`total-price-${menuId}`);
 
-                            if (totalItemsElement && totalPriceElement) {
-                                totalItemsElement.innerText = cartItem.quantity;
-                                totalPriceElement.innerText = formatCurrency(cartItem.menu.harga * cartItem
-                                    .quantity);
-                            } else {
-                                console.error(
-                                    `Error: total-items-${menuId} or total-price-${menuId} not found.`);
+                                if (totalItemsElement && totalPriceElement) {
+                                    totalItemsElement.innerText = cartItem.quantity;
+                                    totalPriceElement.innerText = formatCurrency(cartItem.menu.harga * cartItem
+                                        .quantity);
+                                } else {
+                                    console.error(
+                                        `Error: total-items-${menuId} or total-price-${menuId} not found.`);
+                                }
                             }
+                        });
+                    } else {
+                        console.error('Error: cartItems is not defined or not an array.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function formatCurrency(amount) {
+            return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+        }
+
+
+        // Tangkap submit formulir
+        $(document).ready(function() {
+            // Tangkap submit formulir
+            $('#payment-form').submit(function(e) {
+                e.preventDefault();
+
+                // Lakukan AJAX request untuk checkout
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            // Tampilkan modal dengan data yang diterima
+                            $('#checkoutModal').modal('show');
+
+                            // Lakukan manipulasi modal sesuai kebutuhan
+                            // Misalnya, isi modal dengan data yang diterima
+                            $('#modalContent').html('Snap Token: ' + response.snap_token +
+                                '<br>Order ID: ' + response.order.id +
+                                '<br>Total Price: ' + response.order.total_price);
+
+                            // Kosongkan formulir atau lakukan tindakan lain
+                            // $('#payment-form')[0].reset();
+                        } else {
+                            // Tampilkan pesan kesalahan jika terjadi masalah
+                            console.error('Error:', response.error);
                         }
-                    });
-                } else {
-                    console.error('Error: cartItems is not defined or not an array.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
+                    },
+                    error: function(error) {
+                        // Tampilkan pesan kesalahan jika terjadi masalah
+                        console.error('Error:', error.responseText);
+                    }
+                });
+            });
+        });
 
+        // document.getElementById('pay-button').onclick = function() {
+        //     // Tampilkan konfirmasi
+        //     var isConfirmed = confirm('Apakah Anda yakin ingin melanjutkan pembayaran?');
 
-    function formatCurrency(amount) {
-        return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
-    }
-
-    function checkout() {
-        // Menggunakan Ajax untuk mengirim formulir
-        fetch('{{ route('checkout') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                },
-                body: JSON.stringify({
-                    // Tambahkan data tambahan yang diperlukan untuk proses checkout, jika ada
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle respons dari server setelah checkout
-                if (data.success) {
-                    // Gunakan Snap.js untuk membuka pop-up pembayaran
-                    snap.pay(data.snapToken, {
-                        onSuccess: function(result) {
-                            // Handle ketika pembayaran berhasil
-                            console.log('Payment successful:', result);
-                        },
-                        onPending: function(result) {
-                            // Handle ketika pembayaran masih tertunda
-                            console.log('Payment pending:', result);
-                        },
-                        onError: function(result) {
-                            // Handle ketika pembayaran gagal
-                            console.error('Payment failed:', result);
-                        }
-                    });
-                } else {
-                    console.error('Failed to initiate checkout:', data.message);
-                    // Tampilkan pesan kesalahan kepada pengguna jika diperlukan
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
-
+        //     // Jika pengguna mengonfirmasi, arahkan ke halaman pembayaran Snap
+        //     if (isConfirmed) {
+        //         window.location.href = "{{ route('checkout') }}";
+        //     }
+        // };
+    </script>
+@endsection
 </body>

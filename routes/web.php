@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Cart;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -8,9 +7,9 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
-use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,8 +63,12 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('tampilancheckout');
         Route::post('menu/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
-        Route::post('menu/checkout/midtrans/notification', [PaymentController::class, 'midtransNotification'])->name('midtrans.notification');
-        Route::post('menu/checkout/process-payments', [PaymentController::class, 'processPayments'])->name('process-payments');
+        Route::get('menu/checkout/payment/{id}', [CheckoutController::class, 'tampilanpayment'])->name('tampilanpayment');
+        Route::post('menu/checkout/payment/success', [CheckoutController::class, 'handlePaymentSuccess'])->name('handle-payment-success');
+
+
+        // Route::post('menu/checkout//initiate-payment', [CheckoutController::class, 'initiatePayment'])->name('initiate-payment');
+
         // Tambahkan rute kasir lainnya di sini
     });
 
