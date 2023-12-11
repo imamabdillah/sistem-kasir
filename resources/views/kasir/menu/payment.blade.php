@@ -82,6 +82,13 @@
                                     </button>
                                 </div>
                             </div>
+                            <!-- Tambahkan di dalam div job-item -->
+                            <div class="text-center mt-4">
+                                <button id="create-order-button" class="btn btn-success rounded-pill py-3 px-5 mx-auto"
+                                    style="display: none;">
+                                    Buat Pesanan Baru <i class="ms-2 fas fa-arrow-right"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -140,6 +147,7 @@
 
                 // Periksa apakah server berhasil menangani pembayaran
                 if (response.message && response.message === 'Pembayaran berhasil') {
+                    showCreateOrderButton();
                     // Redirect pengguna ke halaman sukses atau lakukan tindakan lain
                 } else {
                     // Tangani kasus di mana respons server menunjukkan kesalahan
@@ -154,7 +162,24 @@
             }
         });
     };
+    // Function to show "Buat Pesanan Baru" button
+    const showCreateOrderButton = () => {
+        // Temukan elemen tombol "Buat Pesanan Baru" dan tampilkan
+        let createOrderButton = document.getElementById('create-order-button');
+        if (createOrderButton) {
+            createOrderButton.style.display = 'block';
+        }
+    };
 
+    // Function to handle click on "Buat Pesanan Baru" button
+    const handleCreateOrderButtonClick = () => {
+        // Lakukan tindakan yang diperlukan saat tombol "Buat Pesanan Baru" diklik
+        // Contoh: Redirect pengguna ke halaman pembuatan pesanan baru
+        window.location.href = '{{ route('kasir.menu.index') }}';
+    };
+
+    // Setelah tombol "Buat Pesanan Baru" diklik, panggil fungsi handleCreateOrderButtonClick
+    document.getElementById('create-order-button').onclick = handleCreateOrderButtonClick;
 
     // Function to handle pending payment (optional)
     function handlePaymentPending(result) {
