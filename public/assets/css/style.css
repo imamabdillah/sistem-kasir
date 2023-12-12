@@ -494,7 +494,7 @@ h6,
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -711,12 +711,12 @@ h6,
 .input-group-icon {
     position: relative;
   }
-  
+
   .input-group-icon .input-box {
     padding-left: 2.8rem;
     vertical-align: middle;
   }
-  
+
   .input-group-icon .input-box-icon {
     position: absolute;
     top: 50%;
@@ -793,7 +793,7 @@ h6,
     -o-transition: opacity 0.15s linear;
     transition: opacity 0.15s linear;
   }
-  
+
   @media (prefers-reduced-motion: reduce) {
     .fade {
       -webkit-transition: none;
@@ -801,7 +801,7 @@ h6,
       transition: none;
     }
   }
-  
+
   .fade:not(.show) {
     opacity: 0;
 }
@@ -820,12 +820,12 @@ h6,
     text-decoration: none;
     transition: background-color .3s;
     }
-  
+
   .pagination a.active {
     background-color: #3CB815;
     color: white;
 }
-  
+
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
 /* Right table */

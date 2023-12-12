@@ -81,13 +81,11 @@
                                         Non-Tunai <i class="ms-2 fas fa-arrow-right"></i>
                                     </button>
                                 </div>
-                            </div>
-                            <!-- Tambahkan di dalam div job-item -->
-                            <div class="text-center mt-4">
-                                <button id="create-order-button" class="btn btn-success rounded-pill py-3 px-5 mx-auto"
-                                    style="display: none;">
-                                    Buat Pesanan Baru <i class="ms-2 fas fa-arrow-right"></i>
+                                <button id="order-button" type="button" class="btn btn-primary py-3 px-5"
+                                    onclick="redirectToKasirMenu()">
+                                    Buat Order <i class="ms-2 fas fa-arrow-right"></i>
                                 </button>
+
                             </div>
                         </div>
                     </div>
@@ -109,8 +107,10 @@
 </body>
 
 <script>
+    // Inisialisasi status pembayaran
+    let paymentStatus = 'pending'; // Default status pembayaran
     document.getElementById('pay-button').onclick = function() {
-        // SnapToken acquired from previous step
+        // SnapToken acquired from the previous step
         snap.pay('{{ $transaction->snap_token }}', {
             onSuccess: function(result) {
                 // Your custom JavaScript logic for success
@@ -126,7 +126,6 @@
             }
         });
     };
-
     // Function to handle payment success
     const handlePaymentSuccess = (result) => {
         // Dapatkan ID transaksi dari respons Midtrans
@@ -137,7 +136,7 @@
             type: 'POST',
             url: '{{ route('handle-payment-success') }}',
             data: {
-                order_id: orderId, // Ganti transaction_id dengan order_id
+                order_id: orderId,
                 payment_type: result.payment_type,
                 _token: '{{ csrf_token() }}',
             },
@@ -147,39 +146,41 @@
 
                 // Periksa apakah server berhasil menangani pembayaran
                 if (response.message && response.message === 'Pembayaran berhasil') {
-                    showCreateOrderButton();
-                    // Redirect pengguna ke halaman sukses atau lakukan tindakan lain
+                    // Set status pembayaran ke 'success'
+                    paymentStatus = 'success';
+
+                    // Tampilkan tombol "Buat Order"
+                    $('#order-button').show();
                 } else {
                     // Tangani kasus di mana respons server menunjukkan kesalahan
                     console.error('Server response indicates an error:', response);
-                    // Redirect pengguna ke halaman kesalahan atau lakukan tindakan lain
+
+                    // Set status pembayaran ke 'pending' atau 'error' tergantung pada kebutuhan
+                    paymentStatus = 'pending'; // Atau 'error'
                 }
             },
             error: function(error) {
                 // Tangani respons kesalahan dari server
                 console.error('Error handling payment success:', error.responseJSON);
-                // Redirect pengguna ke halaman kesalahan atau lakukan tindakan lain
+
+                // Set status pembayaran ke 'error'
+                paymentStatus = 'error';
             }
         });
-    };
-    // Function to show "Buat Pesanan Baru" button
-    const showCreateOrderButton = () => {
-        // Temukan elemen tombol "Buat Pesanan Baru" dan tampilkan
-        let createOrderButton = document.getElementById('create-order-button');
-        if (createOrderButton) {
-            createOrderButton.style.display = 'block';
+    }
+
+    // Function to handle order creation and redirect to kasir.menu.index
+    function redirectToKasirMenu() {
+        // Pemeriksaan status pembayaran
+        if (paymentStatus === 'success') {
+            // Jika pembayaran sukses, lanjutkan dengan membuat pesanan
+            console.log('Order created!');
+            window.location.href = '{{ route('kasir.menu.index') }}';
+        } else {
+            // Jika pembayaran belum sukses, tampilkan alert
+            alert('Selesaikan pembayaran terlebih dahulu.');
         }
-    };
-
-    // Function to handle click on "Buat Pesanan Baru" button
-    const handleCreateOrderButtonClick = () => {
-        // Lakukan tindakan yang diperlukan saat tombol "Buat Pesanan Baru" diklik
-        // Contoh: Redirect pengguna ke halaman pembuatan pesanan baru
-        window.location.href = '{{ route('kasir.menu.index') }}';
-    };
-
-    // Setelah tombol "Buat Pesanan Baru" diklik, panggil fungsi handleCreateOrderButtonClick
-    document.getElementById('create-order-button').onclick = handleCreateOrderButtonClick;
+    }
 
     // Function to handle pending payment (optional)
     function handlePaymentPending(result) {
@@ -191,4 +192,6 @@
         // Your custom JavaScript logic for error
         console.error('Payment error:', result);
     }
+
+    // Function to handle payment success
 </script>

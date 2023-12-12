@@ -182,6 +182,42 @@ class CheckoutController extends Controller
         ]);
     }
 
+    // public function handlePaymentSuccess(Request $request)
+    // {
+    //     try {
+    //         // Ambil ID transaksi dari permintaan
+    //         $transactionId = $request->input('transaction_id');
+
+    //         // Ambil transaksi dari database
+    //         $transaction = Transaction::find($transactionId);
+
+    //         // Perbarui status transaksi menjadi 'success'
+    //         if ($transaction) {
+    //             $transaction->status = 'success';
+    //             $transaction->save();
+
+    //             // Simpan informasi metode pembayaran (sesuaikan bagian ini sesuai kebutuhan Anda)
+    //             $paymentMethod = $request->input('payment_type');
+    //             $transaction->payment_method = $paymentMethod;
+    //             $transaction->save();
+
+    //             // Catat pesan sukses
+    //             Log::info('Pembayaran berhasil untuk ID transaksi: ' . $transactionId);
+
+    //             return response()->json(['message' => 'Pembayaran berhasil'], 200);
+    //         } else {
+    //             // Jika transaksi tidak ditemukan, kirim respons kesalahan
+    //             Log::error('Transaksi tidak ditemukan untuk ID: ' . $transactionId);
+    //             return response()->json(['error' => 'Transaksi tidak ditemukan'], 404);
+    //         }
+    //     } catch (\Exception $e) {
+    //         // Catat pesan kesalahan
+    //         Log::error('Error handling payment success: ' . $e->getMessage());
+
+    //         return response()->json(['error' => 'Gagal menangani pembayaran berhasil'], 500);
+    //     }
+    // }
+
     public function handlePaymentSuccess(Request $request)
     {
         try {
