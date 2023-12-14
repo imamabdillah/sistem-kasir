@@ -64,7 +64,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('tampilancheckout');
         Route::post('menu/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::get('menu/checkout/payment/{id}', [CheckoutController::class, 'tampilanpayment'])->name('tampilanpayment');
+        Route::get('menu/checkout/payment/status/{orderId}', [CheckoutController::class, 'handleCashPayment'])->name('get-payment-status');
+        Route::post('menu/checkout/payment/cash', [CheckoutController::class, 'handleCashPayment'])->name('handle-cash-payment');
         Route::post('menu/checkout/payment/success', [CheckoutController::class, 'handlePaymentSuccess'])->name('handle-payment-success');
+
+
 
 
         // Route::post('menu/checkout//initiate-payment', [CheckoutController::class, 'initiatePayment'])->name('initiate-payment');

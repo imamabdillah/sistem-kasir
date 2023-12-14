@@ -74,7 +74,8 @@
                                         {{ 'Rp ' . number_format($transaction->order->total_price, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="mt-4 d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-primary py-3 px-5">
+                                    <button id="tunai-button" onclick="openCashPaymentPopup()" type="submit"
+                                        class="btn btn-primary py-3 px-5">
                                         Tunai <i class="ms-2 fas fa-arrow-right"></i>
                                     </button>
                                     <button id="pay-button" type="submit" class="btn btn-primary py-3 px-5">
@@ -82,7 +83,7 @@
                                     </button>
                                 </div>
                                 <button id="order-button" type="button" class="btn btn-primary py-3 px-5"
-                                    onclick="redirectToKasirMenu()">
+                                    onclick="redirectToKasirMenu()" style="display: none">
                                     Buat Order <i class="ms-2 fas fa-arrow-right"></i>
                                 </button>
 
@@ -94,104 +95,172 @@
         </div>
     </div>
 
-    <!-- Payment Options End -->
+    <!-- Popup pembayaran tunai -->
+    <div id="cashPaymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCashPaymentPopup()">&times;</span>
+            <h2>Pembayaran Tunai</h2>
+            <p>
+            <div class="ms-4 p-0">
+                <span class="d-block">Order ID: {{ $transaction->order->id }}</span>
+                <span class="d-block">Total Price:
+                    {{ 'Rp ' . number_format($transaction->order->total_price, 0, ',', '.') }}</span>
+            </div>
+            </p>
+            <!-- Tambahkan tombol untuk menyelesaikan pembayaran tunai -->
+            <button onclick="payWithCash()">Selesaikan Pembayaran</button>
+        </div>
+    </div>
 
-
-    <!-- Payment Options End -->
 
     @include('layout.footer')
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
             class="bi bi-arrow-up"></i></a>
-</body>
 
-<script>
-    // Inisialisasi status pembayaran
-    let paymentStatus = 'pending'; // Default status pembayaran
-    document.getElementById('pay-button').onclick = function() {
-        // SnapToken acquired from the previous step
-        snap.pay('{{ $transaction->snap_token }}', {
-            onSuccess: function(result) {
-                // Your custom JavaScript logic for success
-                handlePaymentSuccess(result);
-            },
-            onPending: function(result) {
-                // Your custom JavaScript logic for pending
-                handlePaymentPending(result);
-            },
-            onError: function(result) {
-                // Your custom JavaScript logic for error
-                handlePaymentError(result);
-            }
-        });
-    };
-    // Function to handle payment success
-    const handlePaymentSuccess = (result) => {
-        // Dapatkan ID transaksi dari respons Midtrans
-        let orderId = result.order_id;
-
-        // Kirim permintaan AJAX untuk menangani pembayaran yang berhasil di sisi server
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('handle-payment-success') }}',
-            data: {
-                order_id: orderId,
-                payment_type: result.payment_type,
-                _token: '{{ csrf_token() }}',
-            },
-            success: function(response) {
-                // Handle respons sukses dari server
-                console.log('Payment success handled:', response);
-
-                // Periksa apakah server berhasil menangani pembayaran
-                if (response.message && response.message === 'Pembayaran berhasil') {
-                    // Set status pembayaran ke 'success'
-                    paymentStatus = 'success';
-
-                    // Tampilkan tombol "Buat Order"
-                    $('#order-button').show();
-                } else {
-                    // Tangani kasus di mana respons server menunjukkan kesalahan
-                    console.error('Server response indicates an error:', response);
-
-                    // Set status pembayaran ke 'pending' atau 'error' tergantung pada kebutuhan
-                    paymentStatus = 'pending'; // Atau 'error'
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        //pembayaran midtrans
+        document.getElementById('pay-button').onclick = function() {
+            // SnapToken acquired from the previous step
+            snap.pay('{{ $transaction->snap_token }}', {
+                onSuccess: function(result) {
+                    // Your custom JavaScript logic for success
+                    handlePaymentSuccess(result);
+                },
+                onPending: function(result) {
+                    // Your custom JavaScript logic for pending
+                    handlePaymentPending(result);
+                },
+                onError: function(result) {
+                    // Your custom JavaScript logic for error
+                    handlePaymentError(result);
                 }
-            },
-            error: function(error) {
-                // Tangani respons kesalahan dari server
-                console.error('Error handling payment success:', error.responseJSON);
+            });
+        };
+        // Inisialisasi status pembayaran
+        let paymentStatus = 'pending';
 
-                // Set status pembayaran ke 'error'
-                paymentStatus = 'error';
-            }
-        });
-    }
+        // Panggil fungsi untuk mendapatkan status pembayaran saat halaman dimuat
+        getPaymentStatus();
 
-    // Function to handle order creation and redirect to kasir.menu.index
-    function redirectToKasirMenu() {
-        // Pemeriksaan status pembayaran
-        if (paymentStatus === 'success') {
-            // Jika pembayaran sukses, lanjutkan dengan membuat pesanan
-            console.log('Order created!');
-            window.location.href = '{{ route('kasir.menu.index') }}';
-        } else {
-            // Jika pembayaran belum sukses, tampilkan alert
-            alert('Selesaikan pembayaran terlebih dahulu.');
+        // Fungsi untuk mendapatkan status pembayaran dari server
+        function getPaymentStatus() {
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('get-payment-status', ['orderId' => $transaction->order->id]) }}',
+                success: function(response) {
+                    if (response.status) {
+                        paymentStatus = response.status;
+                        handleOrderButtonVisibility();
+                    }
+                },
+                error: function(error) {
+                    console.error('Error getting payment status:', error.responseJSON);
+                }
+            });
         }
-    }
 
-    // Function to handle pending payment (optional)
-    function handlePaymentPending(result) {
-        // Your custom JavaScript logic for pending
-    }
+        // Fungsi untuk menangani tampilan tombol "Buat Order" berdasarkan status pembayaran
+        function handleOrderButtonVisibility() {
+            if (paymentStatus === 'success') {
+                $('#order-button').show();
+            } else {
+                $('#order-button').hide();
+            }
+        }
 
-    // Function to handle payment error (optional)
-    function handlePaymentError(result) {
-        // Your custom JavaScript logic for error
-        console.error('Payment error:', result);
-    }
+        // Fungsi untuk menangani pembayaran sukses
+        function handlePaymentSuccess(result) {
+            let orderId = result.order_id;
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('handle-payment-success') }}',
+                data: {
+                    order_id: orderId,
+                    payment_type: result.payment_type,
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    console.log('Payment success handled:', response);
+                    if (response.message && response.message === 'Pembayaran berhasil') {
+                        paymentStatus = 'success';
+                        handleOrderButtonVisibility();
+                    } else {
+                        console.error('Server response indicates an error:', response);
+                        paymentStatus = 'pending'; // atau 'error' sesuai kebutuhan
+                    }
+                },
+                error: function(error) {
+                    console.error('Error handling payment success:', error.responseJSON);
+                    paymentStatus = 'error';
+                }
+            });
+        }
 
-    // Function to handle payment success
-</script>
+        // Fungsi untuk membuat pesanan dan mengarahkan ke halaman kasir
+        function redirectToKasirMenu() {
+            if (paymentStatus === 'success') {
+                console.log('Order created!');
+                window.location.href = '{{ route('kasir.menu.index') }}';
+            } else {
+                alert('Selesaikan pembayaran terlebih dahulu.');
+            }
+        }
+
+        // Fungsi untuk menangani pembayaran pending (opsional)
+        function handlePaymentPending(result) {
+            // Logika khusus JavaScript untuk pembayaran yang tertunda
+        }
+
+        // Fungsi untuk menangani kesalahan pembayaran (opsional)
+        function handlePaymentError(result) {
+            console.error('Payment error:', result);
+        }
+
+        // Fungsi untuk membuka popup pembayaran tunai
+        function openCashPaymentPopup() {
+            var cashPaymentModal = document.getElementById('cashPaymentModal');
+            cashPaymentModal.style.display = 'block';
+        }
+
+        // Fungsi untuk menutup popup pembayaran tunai
+        function closeCashPaymentPopup() {
+            var cashPaymentModal = document.getElementById('cashPaymentModal');
+            cashPaymentModal.style.display = 'none';
+        }
+
+        // Fungsi untuk menangani pembayaran tunai
+        function payWithCash() {
+            console.log('Pembayaran tunai diproses!');
+            paymentStatus = 'cash';
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('handle-cash-payment') }}',
+                data: {
+                    order_id: '{{ $transaction->order->id }}',
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    console.log('Cash payment processed:', response);
+                    if (response.message && response.message === 'Pembayaran tunai berhasil') {
+                        paymentStatus = 'success';
+                        handleOrderButtonVisibility();
+                    } else {
+                        console.error('Server response indicates an error:', response);
+                    }
+
+                    // Setelah pemrosesan pembayaran tunai, panggil fungsi untuk menangani tampilan tombol "Buat Order"
+                    handleOrderButtonVisibility();
+                },
+                error: function(error) {
+                    console.error('Error processing cash payment:', error.responseJSON);
+                }
+            });
+            closeCashPaymentPopup();
+            $('#tunai-button').prop('disabled', true);
+        }
+    </script>
+
+</body>

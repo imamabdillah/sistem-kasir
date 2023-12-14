@@ -182,41 +182,61 @@ class CheckoutController extends Controller
         ]);
     }
 
-    // public function handlePaymentSuccess(Request $request)
-    // {
-    //     try {
-    //         // Ambil ID transaksi dari permintaan
-    //         $transactionId = $request->input('transaction_id');
+    public function getPaymentStatus($orderId)
+    {
+        try {
+            $transaction = Transaction::where('order_id', $orderId)->first();
 
-    //         // Ambil transaksi dari database
-    //         $transaction = Transaction::find($transactionId);
+            if ($transaction) {
+                $paymentStatus = $transaction->status;
 
-    //         // Perbarui status transaksi menjadi 'success'
-    //         if ($transaction) {
-    //             $transaction->status = 'success';
-    //             $transaction->save();
+                return response()->json(['status' => $paymentStatus], 200);
+            } else {
+                Log::error('Transaksi tidak ditemukan untuk order_id: ' . $orderId); // Tambahkan log ini
+                return response()->json(['error' => 'Transaksi tidak ditemukan'], 404);
+            }
+        } catch (\Exception $e) {
+            Log::error('Error mendapatkan status pembayaran: ' . $e->getMessage()); // Tambahkan log ini
+            return response()->json(['error' => 'Error mendapatkan status pembayaran: ' . $e->getMessage()], 500);
+        }
+    }
 
-    //             // Simpan informasi metode pembayaran (sesuaikan bagian ini sesuai kebutuhan Anda)
-    //             $paymentMethod = $request->input('payment_type');
-    //             $transaction->payment_method = $paymentMethod;
-    //             $transaction->save();
 
-    //             // Catat pesan sukses
-    //             Log::info('Pembayaran berhasil untuk ID transaksi: ' . $transactionId);
+    public function handleCashPayment(Request $request)
+    {
+        try {
+            // Ambil ID order dari permintaan (bukan transaction_id)
+            $orderId = $request->input('order_id');
 
-    //             return response()->json(['message' => 'Pembayaran berhasil'], 200);
-    //         } else {
-    //             // Jika transaksi tidak ditemukan, kirim respons kesalahan
-    //             Log::error('Transaksi tidak ditemukan untuk ID: ' . $transactionId);
-    //             return response()->json(['error' => 'Transaksi tidak ditemukan'], 404);
-    //         }
-    //     } catch (\Exception $e) {
-    //         // Catat pesan kesalahan
-    //         Log::error('Error handling payment success: ' . $e->getMessage());
+            // Ambil transaksi dari database berdasarkan order_id
+            $transaction = Transaction::where('order_id', $orderId)->first();
 
-    //         return response()->json(['error' => 'Gagal menangani pembayaran berhasil'], 500);
-    //     }
-    // }
+            // Perbarui status transaksi menjadi 'success'
+            if ($transaction) {
+                // Simpan informasi metode pembayaran (sesuaikan bagian ini sesuai kebutuhan Anda)
+                $transaction->status = 'success';
+                $transaction->payment_method = 'cash'; // Sesuaikan dengan metode pembayaran Anda
+                $transaction->save();
+
+                // Lakukan langkah-langkah tambahan yang diperlukan untuk menyelesaikan pembayaran tunai
+                // Misalnya, Anda dapat memperbarui stok atau melibatkan proses bisnis tambahan
+
+                // Catat pesan sukses
+                Log::info('Pembayaran tunai berhasil untuk order_id: ' . $orderId);
+
+                return response()->json(['message' => 'Pembayaran tunai berhasil'], 200);
+            } else {
+                // Jika transaksi tidak ditemukan, kirim respons kesalahan
+                Log::error('Transaksi tidak ditemukan untuk order_id: ' . $orderId);
+                return response()->json(['error' => 'Transaksi tidak ditemukan'], 404);
+            }
+        } catch (\Exception $e) {
+            // Catat pesan kesalahan
+            Log::error('Error handling cash payment: ' . $e->getMessage());
+
+            return response()->json(['error' => 'Gagal menangani pembayaran tunai'], 500);
+        }
+    }
 
     public function handlePaymentSuccess(Request $request)
     {
@@ -229,6 +249,7 @@ class CheckoutController extends Controller
 
             // Perbarui status transaksi menjadi 'success'
             if ($transaction) {
+                // Simpan informasi metode pembayaran (sesuaikan bagian ini sesuai kebutuhan Anda)
                 $transaction->status = 'success';
                 $transaction->save();
 

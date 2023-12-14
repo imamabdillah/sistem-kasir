@@ -35,14 +35,18 @@
 
     <!-- Template Stylesheet -->
     <link href="{!! asset('assets/css/style.css') !!}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
 </head>
 
 <body> <!-- JavaScript Libraries -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js">
+        < />
+
+        <
+        script src = "https://code.jquery.com/jquery-3.6.4.min.js" >
+    </script>
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
