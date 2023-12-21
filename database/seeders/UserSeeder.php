@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'role' => 'admin',
             'password' => Hash::make('admin123'),
+            'is_active' => true
         ]);
 
         DB::table('users')->insert([
@@ -26,6 +27,8 @@ class UserSeeder extends Seeder
             'email' => 'owner@example.com',
             'role' => 'owner',
             'password' => Hash::make('owner123'),
+            'tenant_id' => '1',
+            'is_active' => true
         ]);
 
         DB::table('users')->insert([
@@ -33,6 +36,8 @@ class UserSeeder extends Seeder
             'email' => 'kasir@example.com',
             'role' => 'kasir',
             'password' => Hash::make('kasir123'),
+            'tenant_id' => '1',
+            'is_active' => true
         ]);
 
         // DB::table('users')->insert([

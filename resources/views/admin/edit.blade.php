@@ -5,25 +5,7 @@
     data-kt-app-sidebar-push-header="true" data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true"
     data-kt-app-toolbar-enabled="true" class="app-default">
     <!--begin::Theme mode setup on page load-->
-    <script>
-        var defaultThemeMode = "light";
-        var themeMode;
-        if (document.documentElement) {
-            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
-                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
-            } else {
-                if (localStorage.getItem("data-bs-theme") !== null) {
-                    themeMode = localStorage.getItem("data-bs-theme");
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            if (themeMode === "system") {
-                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            }
-            document.documentElement.setAttribute("data-bs-theme", themeMode);
-        }
-    </script>
+
 
     <!--begin::Main-->
     <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
@@ -109,7 +91,7 @@
                                                     title="Change avatar">
                                                     <i class="bi bi-pencil-fill fs-7"></i>
                                                     <!--begin::Inputs-->
-                                                    <input type="file" name="foto_produk"
+                                                    <input type="file" name="foto_produk"id="foto_produk_input"
                                                         accept=".png, .jpg, .jpeg" />
                                                     <input type="hidden" name="avatar_remove" />
                                                     <!--end::Inputs-->
@@ -203,21 +185,7 @@
                                 <!--begin::Main column-->
                                 <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
                                     <!--begin::Tabs-->
-                                    <ul
-                                        class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
-                                        <!--begin::Tab item-->
-                                        <li class="nav-item">
-                                            <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                                                href="#kt_ecommerce_add_product_general">General</a>
-                                        </li>
-                                        <!--end::Tab item-->
-                                        <!--begin::Tab item-->
-                                        <li class="nav-item">
-                                            <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                                href="#kt_ecommerce_add_product_advanced">Advanced</a>
-                                        </li>
-                                        <!--end::Tab item-->
-                                    </ul>
+
                                     <!--end::Tabs-->
                                     <!--begin::Tab content-->
                                     <div class="tab-content">
@@ -309,12 +277,8 @@
                                     </div>
                                     <!--end::Tab content-->
                                     <div class="d-flex justify-content-end">
-                                        <!--begin::Button-->
-                                        <a href="../../demo1/dist/apps/ecommerce/catalog/products.html"
-                                            id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
-                                        <!--end::Button-->
-                                        <!--begin::Button-->
-                                        <!--begin::Button-->
+                                        <a href="" id="kt_ecommerce_add_product_cancel"
+                                            class="btn btn-light me-5">Cancel</a>
                                         <button type="submit" class="btn btn-primary">
                                             <span class="indicator-label">Update</span>
                                             <span class="indicator-progress">Please wait...
@@ -322,9 +286,6 @@
                                                     class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                             </span>
                                         </button>
-                                        <!--end::Button-->
-
-                                        <!--end::Button-->
                                     </div>
                                 </div>
                                 <!--end::Main column-->
@@ -341,4 +302,62 @@
         </div>
     </div>
     <!--end:::Main-->
+    <script>
+        //foto_produk
+        document.addEventListener('DOMContentLoaded', function() {
+            var imageInput = document.querySelector('[data-kt-image-input="true"]');
+            var inputFile = document.getElementById('foto_produk_input');
+            var previewWrapper = document.querySelector('[data-kt-image-input="true"] .image-input-wrapper');
+
+
+            inputFile.addEventListener('change', function() {
+                var file = this.files[0];
+
+                if (file) {
+                    // Buat objek URL untuk file yang dipilih
+                    var objectUrl = URL.createObjectURL(file);
+
+                    // Ganti background image pada preview wrapper dengan objek URL
+                    previewWrapper.style.backgroundImage = 'url(' + objectUrl + ')';
+                } else {
+                    // Jika tidak ada file yang dipilih, tampilkan gambar placeholder
+                    previewWrapper.style.backgroundImage = 'url("{!! asset('assets/media/svg/files/blank-image.svg') !!}")';
+                }
+            });
+
+            // Hapus gambar dari penyimpanan saat tombol remove diklik
+            imageInput.querySelector('[data-kt-image-input-action="remove"]').addEventListener('click', function() {
+                // Hapus file yang dipilih dari input file
+                inputFile.value = null;
+
+                // Tampilkan gambar placeholder
+                previewWrapper.style.backgroundImage = 'url("{!! asset('assets/media/svg/files/blank-image.svg') !!}")';
+            });
+        });
+
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                } else {
+                    themeMode = defaultThemeMode;
+                }
+            }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('form').addEventListener('submit', function() {
+                document.querySelector('.indicator-label').classList.add('d-none');
+                document.querySelector('.indicator-progress').classList.remove('d-none');
+            });
+        });
+    </script>
 </body>

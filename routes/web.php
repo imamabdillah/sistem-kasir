@@ -38,6 +38,17 @@ Route::middleware(['auth'])->group(function () {
     // Rute berdasarkan peran
     Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'check.role:admin']], function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/datamenu', [AdminController::class, 'datamenu'])->name('admin.datamenu');
+        Route::get('/transaksi', [AdminController::class, 'showTransaksi'])->name('admin.transaksi');
+        Route::get('/tenant', [AdminController::class, 'tenant'])->name('admin.tenant');
+
+        Route::get('/owner', [AdminController::class, 'userowner'])->name('admin.owner');
+        Route::get('/kasir', [AdminController::class, 'userkasir'])->name('admin.kasir');
+        Route::put('/{user}/activate', [AdminController::class, 'activate'])->name('users.activate');
+        Route::put('/{user}/deactivate', [AdminController::class, 'deactivate'])->name('users.deactivate');
+
+
+
         Route::get('/dashboard/create', [MenuController::class, 'create'])->name('create');
         Route::post('/dashboard', [MenuController::class, 'store'])->name('store');
         Route::delete('/dashboard/{id}', [MenuController::class, 'destroy'])->name('destroy');

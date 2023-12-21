@@ -8,6 +8,7 @@ use App\Models\Tenant;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -92,12 +93,6 @@ class MenuController extends Controller
     {
         $menu = Menu::find($id);
 
-        // Periksa apakah gambar ada sebelum memanipulasinya
-        // if ($menu && $menu->foto_produk) {
-        //     $img = Image::make(public_path('storage/foto_produk/' . $menu->foto_produk));
-        //     $img->fit(150, 150);
-        //     $img->save();
-        // }
 
         $categories = Category::all();
         $tenants = Tenant::all();
@@ -105,63 +100,84 @@ class MenuController extends Controller
         return view('admin.edit', compact('menu', 'categories', 'tenants'));
     }
 
-
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'deskripsi' => 'required',
-            'foto_produk' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => [
-                'required',
-                Rule::exists('categories', 'id'),
-            ],
-            'tenant_id' => [
-                'required',
-                Rule::exists('tenants', 'id'),
-            ],
-        ]);
+        try {
+            $request->validate([
+                'nama' => 'required',
+                'harga' => [
+                    'required',
+                    'regex:/^(Rp\s)?\d{1,3}(\.\d{3})*(,\d+)?$/',
+                ],
+                'deskripsi' => 'required',
+                'foto_produk' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'category_id' => [
+                    'required',
+                    Rule::exists('categories', 'id'),
+                ],
+                'tenant_id' => [
+                    'required',
+                    Rule::exists('tenants', 'id'),
+                ],
+            ]);
 
-        $menu = Menu::find($id);
-        $menu->nama = $request->input('nama');
-        $menu->harga = $request->input('harga');
-        $menu->deskripsi = $request->input('deskripsi');
-        $menu->category_id = $request->input('category_id');
-        $menu->tenant_id = $request->input('tenant_id');
+            $menu = Menu::find($id);
 
-        if ($menu->foto_produk) {
-            $oldImagePath = 'public/storage/foto_produk/' . $menu->foto_produk;
-
-            // Hapus gambar lama dari penyimpanan
-            Storage::delete($oldImagePath);
-
-            // Hapus gambar lama dari URL publik
-            $publicPath = public_path('storage/foto_produk/' . $menu->foto_produk);
-            if (file_exists($publicPath)) {
-                unlink($publicPath);
+            if (!$menu) {
+                Log::error("Menu not found with ID: $id");
+                return redirect()->route('admin.dashboard')->with('error', 'Menu not found');
             }
+
+            $menu->nama = $request->input('nama');
+
+            // Menghilangkan tanda mata uang sebelum menyimpan harga
+            $menu->harga = str_replace(['Rp', ' ', ',', '.'], '', $request->input('harga'));
+
+            $menu->deskripsi = $request->input('deskripsi');
+            $menu->category_id = $request->input('category_id');
+            $menu->tenant_id = $request->input('tenant_id');
+
+            if ($request->hasFile('foto_produk')) {
+                // Hapus foto lama jika ada
+                if ($menu->foto_produk) {
+                    $oldImagePath = public_path('storage/foto_produk/') . $menu->foto_produk;
+                    if (file_exists($oldImagePath)) {
+                        unlink($oldImagePath);
+                    }
+                }
+
+                // Upload foto baru
+                $image = $request->file('foto_produk');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/foto_produk/'), $imageName);
+                $menu->foto_produk = $imageName;
+            }
+
+            $menu->save();
+
+            Log::info("Menu updated successfully. ID: $id");
+            return redirect()->route('admin.dashboard')->with('success', 'Menu has been updated successfully');
+        } catch (\Exception $e) {
+            Log::error("Error updating menu. ID: $id, Error: " . $e->getMessage());
+
+            return redirect()->route('admin.dashboard')->with('error', 'Error updating menu');
         }
-
-        if ($request->hasFile('foto_produk')) {
-            // Upload gambar baru dengan nama yang sama
-            $image = $request->file('foto_produk');
-            $imageName = $menu->foto_produk;
-
-            // Simpan gambar ke penyimpanan (storage)
-            $image->storeAs('public/storage/foto_produk', $imageName);
-        }
-
-        $menu->save();
-
-        return redirect()->route('admin.dashboard')->with('success', 'Menu telah diperbarui!');
     }
 
     public function destroy($id)
     {
-        $menu = Menu::find($id);
+        try {
+            $menu = Menu::find($id);
 
-        if ($menu) {
+            if (!$menu) {
+                // Jika menu tidak ditemukan, kembalikan respons sesuai kebutuhan
+                if (request()->expectsJson()) {
+                    return response()->json(['message' => 'Menu tidak ditemukan'], 404);
+                } else {
+                    return redirect()->route('admin.dashboard')->with('error', 'Menu tidak ditemukan');
+                }
+            }
+
             // Hapus gambar dari penyimpanan sebelum menghapus entitas dari database
             if ($menu->foto_produk) {
                 $path = 'storage/foto_produk/' . $menu->foto_produk;
@@ -178,9 +194,22 @@ class MenuController extends Controller
 
             $menu->delete();
 
-            return response()->json(['message' => 'Menu berhasil dihapus'], 200);
-        } else {
-            return response()->json(['message' => 'Menu tidak ditemukan'], 404);
+            // Redirect ke dashboard setelah penghapusan
+            if (request()->expectsJson()) {
+                return response()->json(['message' => 'Menu berhasil dihapus']);
+            } else {
+                return redirect()->route('admin.dashboard')->with('success', 'Menu berhasil dihapus');
+            }
+        } catch (\Exception $e) {
+            // Tangani kesalahan dan log
+            Log::error("Error deleting menu. ID: $id, Error: " . $e->getMessage());
+
+            // Kembalikan respons sesuai kebutuhan
+            if (request()->expectsJson()) {
+                return response()->json(['message' => 'Terjadi kesalahan saat menghapus menu'], 500);
+            } else {
+                return redirect()->route('admin.dashboard')->with('error', 'Terjadi kesalahan saat menghapus menu');
+            }
         }
     }
 }
