@@ -1,6 +1,5 @@
 @extends('layout.base')
 
-
 <!-- Spinner Start -->
 <div id="spinner"
     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -136,31 +135,6 @@
                             </div>
                         </div>
                     @endforeach
-                    {{-- <div class="job-item p-4 mb-4">
-                            <div class="row g-4">
-                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid border rounded-pill" src="img/mie-goreng.jpg"
-                                        alt="" style="width: 80px; height: 80px;">
-                                    <div class="text-start ps-4">
-                                        <h5 class="mb-3"><strong>Mie Goreng</strong></h5>
-                                        <span class="text-truncate me-3">Super pedas</span>
-                                        <div class="text-start pt-3">
-                                            <span class=" btn btn-primary badge bg-primary p-2 rounded-pill"><i
-                                                    class="fas fa-plus me-0 fs-0"></i></span>
-                                            <span class="ms-2"><Strong>1</Strong></span>
-                                            <span class="btn btn-primary badge bg-danger me-1 p-2 ms-2 rounded-pill"><i
-                                                    class="fas fa-minus me-0 fs-0"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                    <div class="d-flex mb-3">
-                                    </div>
-                                    <h5 class="text-primary pt-5">Rp. 10.000,-</h5>
-                                </div>
-                            </div>
-                        </div> --}}
 
                     <div class="job-item2 p-2 mb-4">
                         <div class="row g-4 table-responsive">
@@ -294,171 +268,171 @@
 <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
         class="bi bi-arrow-up"></i></a>
 
-@section('script')
-    <script>
-        const csrfTokenElement = document.head.querySelector('meta[name="csrf-token"]');
-        const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
 
-        let cartItems = [];
+<script>
+    const csrfTokenElement = document.head.querySelector('meta[name="csrf-token"]');
+    const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
 
-        function addToCart(menuId, menuNama, menuHarga) {
-            fetch('{{ route('cart.addToCart') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    body: JSON.stringify({
-                        menu_id: menuId,
-                        nama: menuNama,
-                        harga: menuHarga,
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Item added to cart:', data.cart);
-                        // Update the entire cartItems array with the new data
-                        cartItems = data.cart;
+    let cartItems = [];
 
-                        // Move the call to updateCartViewAJAX here
-                        updateCartViewAJAX();
-                    } else {
-                        console.error('Failed to add item to cart:', data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
+    function addToCart(menuId, menuNama, menuHarga) {
+        fetch('{{ route('cart.addToCart') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    menu_id: menuId,
+                    nama: menuNama,
+                    harga: menuHarga,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Item added to cart:', data.cart);
+                    // Update the entire cartItems array with the new data
+                    cartItems = data.cart;
 
-        function removeFromCart(menuId) {
-            fetch('{{ route('cart.removeFromCart') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    body: JSON.stringify({
-                        menu_id: menuId
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log(data.message);
-                        // Update the entire cartItems array with the new data
-                        cartItems = data.cart;
+                    // Move the call to updateCartViewAJAX here
+                    updateCartViewAJAX();
+                } else {
+                    console.error('Failed to add item to cart:', data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
-                        // Call the new function to update the view through AJAX
-                        updateCartViewAJAX();
-                        // Ensure this has an effect on the server (removing the item from the server-side cart)
-                        // ...
-                    } else {
-                        console.error(data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
+    function removeFromCart(menuId) {
+        fetch('{{ route('cart.removeFromCart') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+                body: JSON.stringify({
+                    menu_id: menuId
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(data.message);
+                    // Update the entire cartItems array with the new data
+                    cartItems = data.cart;
 
-        function updateCartViewAJAX() {
-            fetch('{{ route('update-cart-view') }}', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Data from server:', data);
+                    // Call the new function to update the view through AJAX
+                    updateCartViewAJAX();
+                    // Ensure this has an effect on the server (removing the item from the server-side cart)
+                    // ...
+                } else {
+                    console.error(data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
-                    let totalItemsElement2 = document.getElementById('total-items2');
-                    let totalPriceElement2 = document.getElementById('total-price2');
+    function updateCartViewAJAX() {
+        fetch('{{ route('update-cart-view') }}', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data from server:', data);
 
-                    if (totalItemsElement2 && totalPriceElement2) {
-                        totalItemsElement2.innerText = data.totalItems;
-                        totalPriceElement2.innerText = formatCurrency(data.totalPrice);
-                    } else {
-                        console.error('Error: total-items2 or total-price2 not found.');
-                    }
+                let totalItemsElement2 = document.getElementById('total-items2');
+                let totalPriceElement2 = document.getElementById('total-price2');
 
-                    console.log('Updating dynamic elements for cart items...');
+                if (totalItemsElement2 && totalPriceElement2) {
+                    totalItemsElement2.innerText = data.totalItems;
+                    totalPriceElement2.innerText = formatCurrency(data.totalPrice);
+                } else {
+                    console.error('Error: total-items2 or total-price2 not found.');
+                }
 
-                    if (data.cartItems && Array.isArray(data.cartItems)) {
-                        data.cartItems.forEach(cartItem => {
-                            if (cartItem.menu && cartItem.menu.id) {
-                                let menuId = cartItem.menu.id;
-                                let totalItemsElement = document.getElementById(`total-items-${menuId}`);
-                                let totalPriceElement = document.getElementById(`total-price-${menuId}`);
+                console.log('Updating dynamic elements for cart items...');
 
-                                if (totalItemsElement && totalPriceElement) {
-                                    totalItemsElement.innerText = cartItem.quantity;
-                                    totalPriceElement.innerText = formatCurrency(cartItem.menu.harga * cartItem
-                                        .quantity);
-                                } else {
-                                    console.error(
-                                        `Error: total-items-${menuId} or total-price-${menuId} not found.`);
-                                }
+                if (data.cartItems && Array.isArray(data.cartItems)) {
+                    data.cartItems.forEach(cartItem => {
+                        if (cartItem.menu && cartItem.menu.id) {
+                            let menuId = cartItem.menu.id;
+                            let totalItemsElement = document.getElementById(`total-items-${menuId}`);
+                            let totalPriceElement = document.getElementById(`total-price-${menuId}`);
+
+                            if (totalItemsElement && totalPriceElement) {
+                                totalItemsElement.innerText = cartItem.quantity;
+                                totalPriceElement.innerText = formatCurrency(cartItem.menu.harga * cartItem
+                                    .quantity);
+                            } else {
+                                console.error(
+                                    `Error: total-items-${menuId} or total-price-${menuId} not found.`);
                             }
-                        });
-                    } else {
-                        console.error('Error: cartItems is not defined or not an array.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function formatCurrency(amount) {
-            return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
-        }
-
-
-        // Tangkap submit formulir
-        $(document).ready(function() {
-            // Tangkap submit formulir
-            $('#payment-form').submit(function(e) {
-                e.preventDefault();
-
-                // Lakukan AJAX request untuk checkout
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                            // Tampilkan modal dengan data yang diterima
-                            $('#checkoutModal').modal('show');
-
-                            // Lakukan manipulasi modal sesuai kebutuhan
-                            // Misalnya, isi modal dengan data yang diterima
-                            $('#modalContent').html('Snap Token: ' + response.snap_token +
-                                '<br>Order ID: ' + response.order.id +
-                                '<br>Total Price: ' + response.order.total_price);
-
-                            // Kosongkan formulir atau lakukan tindakan lain
-                            // $('#payment-form')[0].reset();
-                        } else {
-                            // Tampilkan pesan kesalahan jika terjadi masalah
-                            console.error('Error:', response.error);
                         }
-                    },
-                    error: function(error) {
+                    });
+                } else {
+                    console.error('Error: cartItems is not defined or not an array.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function formatCurrency(amount) {
+        return 'Rp ' + amount.toFixed(0).replace(/\d(?=(\d{3})+$)/g, '$&,');
+    }
+
+
+    // Tangkap submit formulir
+    $(document).ready(function() {
+        // Tangkap submit formulir
+        $('#payment-form').submit(function(e) {
+            e.preventDefault();
+
+            // Lakukan AJAX request untuk checkout
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Tampilkan modal dengan data yang diterima
+                        $('#checkoutModal').modal('show');
+
+                        // Lakukan manipulasi modal sesuai kebutuhan
+                        // Misalnya, isi modal dengan data yang diterima
+                        $('#modalContent').html('Snap Token: ' + response.snap_token +
+                            '<br>Order ID: ' + response.order.id +
+                            '<br>Total Price: ' + response.order.total_price);
+
+                        // Kosongkan formulir atau lakukan tindakan lain
+                        // $('#payment-form')[0].reset();
+                    } else {
                         // Tampilkan pesan kesalahan jika terjadi masalah
-                        console.error('Error:', error.responseText);
+                        console.error('Error:', response.error);
                     }
-                });
+                },
+                error: function(error) {
+                    // Tampilkan pesan kesalahan jika terjadi masalah
+                    console.error('Error:', error.responseText);
+                }
             });
         });
+    });
 
-        // document.getElementById('pay-button').onclick = function() {
-        //     // Tampilkan konfirmasi
-        //     var isConfirmed = confirm('Apakah Anda yakin ingin melanjutkan pembayaran?');
+    // document.getElementById('pay-button').onclick = function() {
+    //     // Tampilkan konfirmasi
+    //     var isConfirmed = confirm('Apakah Anda yakin ingin melanjutkan pembayaran?');
 
-        //     // Jika pengguna mengonfirmasi, arahkan ke halaman pembayaran Snap
-        //     if (isConfirmed) {
-        //         window.location.href = "{{ route('checkout') }}";
-        //     }
-        // };
-    </script>
-@endsection
+    //     // Jika pengguna mengonfirmasi, arahkan ke halaman pembayaran Snap
+    //     if (isConfirmed) {
+    //         window.location.href = "{{ route('checkout') }}";
+    //     }
+    // };
+</script>
+
 </body>

@@ -51,7 +51,7 @@
                             <!--end::Select2-->
                         </div>
                         <!--begin::Add product-->
-                        <a href="{{ route('create') }}" class="btn btn-primary">Tambah User</a>
+                        <a href="{{ route('tenants.create') }}" class="btn btn-primary">Tambah User</a>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -79,13 +79,20 @@
                                     <td>{{ $tenant->nama }}</td>
                                     <td>{{ $tenant->deskripsi }}</td>
                                     <td class="text-center min-w-70px">
-                                        <a href="" class="btn btn-sm btn-icon btn-primary">
+                                        <a href="{{ route('tenants.edit', $tenant->id) }}"
+                                            class="btn btn-sm btn-icon btn-primary">
                                             <i class="bi bi-pencil"></i>
                                         </a>
 
-                                        <button class="btn btn-sm btn-icon btn-danger" onclick="">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                        <form action="{{ route('tenants.destroy', $tenant->id) }}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-icon btn-danger"
+                                                onclick="return confirm('Yakin hapus?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

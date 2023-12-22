@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cart;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
@@ -7,9 +8,9 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\TenantController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Models\Cart;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,13 +48,14 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{user}/activate', [AdminController::class, 'activate'])->name('users.activate');
         Route::put('/{user}/deactivate', [AdminController::class, 'deactivate'])->name('users.deactivate');
 
-
-
         Route::get('/dashboard/create', [MenuController::class, 'create'])->name('create');
         Route::post('/dashboard', [MenuController::class, 'store'])->name('store');
         Route::delete('/dashboard/{id}', [MenuController::class, 'destroy'])->name('destroy');
         Route::get('/dashboard/{id}/edit', [MenuController::class, 'edit'])->name('edit');
         Route::put('/dashboard/{id}', [MenuController::class, 'update'])->name('update');
+
+        Route::resource('tenants', TenantController::class);
+
 
         // Tambahkan rute admin lainnya di sini
     });

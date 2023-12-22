@@ -62,6 +62,6 @@ class AdminController extends Controller
     {
         $tenants = Tenant::all();
 
-        return view('admin.tenant', compact('tenants'));
+        return view('admin.tenant.tenant', compact('tenants'));
     }
 }
