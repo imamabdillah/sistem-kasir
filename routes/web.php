@@ -5,11 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\UserkasirController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\UserownerController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -42,11 +44,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/datamenu', [AdminController::class, 'datamenu'])->name('admin.datamenu');
         Route::get('/transaksi', [AdminController::class, 'showTransaksi'])->name('admin.transaksi');
         Route::get('/tenant', [AdminController::class, 'tenant'])->name('admin.tenant');
+        Route::resource('tenants', TenantController::class);
 
-        Route::get('/owner', [AdminController::class, 'userowner'])->name('admin.owner');
-        Route::get('/kasir', [AdminController::class, 'userkasir'])->name('admin.kasir');
-        Route::put('/{user}/activate', [AdminController::class, 'activate'])->name('users.activate');
-        Route::put('/{user}/deactivate', [AdminController::class, 'deactivate'])->name('users.deactivate');
 
         Route::get('/dashboard/create', [MenuController::class, 'create'])->name('create');
         Route::post('/dashboard', [MenuController::class, 'store'])->name('store');
@@ -54,10 +53,25 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/{id}/edit', [MenuController::class, 'edit'])->name('edit');
         Route::put('/dashboard/{id}', [MenuController::class, 'update'])->name('update');
 
-        Route::resource('tenants', TenantController::class);
+        // Rute untuk pengguna dengan peran owner
+        Route::get('/owner', [UserownerController::class, 'index'])->name('admin.owner.index');
+        Route::get('/owner/create', [UserownerController::class, 'create'])->name('admin.owner.create');
+        Route::post('/owner', [UserownerController::class, 'store'])->name('admin.owner.store');
+        Route::get('/owner/{user}/edit', [UserownerController::class, 'edit'])->name('admin.owner.edit');
+        Route::put('/owner/{user}', [UserownerController::class, 'update'])->name('admin.owner.update');
+        Route::delete('/owner/{id}', [UserownerController::class, 'destroy'])->name('admin.owner.destroy');
 
+        // Rute untuk pengguna dengan peran kasir
+        Route::get('/kasir', [UserkasirController::class, 'index'])->name('admin.kasir.index');
+        Route::get('/kasir/create', [UserkasirController::class, 'create'])->name('admin.kasir.create');
+        Route::post('/kasir', [UserkasirController::class, 'store'])->name('admin.kasir.store');
+        Route::get('/kasir/{user}/edit', [UserkasirController::class, 'edit'])->name('admin.kasir.edit');
+        Route::put('/kasir/{user}', [UserkasirController::class, 'update'])->name('admin.kasir.update');
+        Route::delete('/kasir/{user}', [UserkasirController::class, 'destroy'])->name('admin.kasir.destroy');
 
-        // Tambahkan rute admin lainnya di sini
+        // Rute untuk aksi aktivasi dan nonaktifkan pengguna
+        Route::put('/{user}/activate', [AdminController::class, 'activate'])->name('users.activate');
+        Route::put('/{user}/deactivate', [AdminController::class, 'deactivate'])->name('users.deactivate');
     });
 
     Route::group(['prefix' => 'owner', 'middleware' => ['auth', 'check.role:owner']], function () {

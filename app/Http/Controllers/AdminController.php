@@ -27,6 +27,19 @@ class AdminController extends Controller
         return view('admin.datamenu', compact('menus', 'categories', 'tenants'));
     }
 
+
+    public function showTransaksi()
+    {
+        $transactions = Transaction::all();
+
+        return view('admin.transaksi', compact('transactions'));
+    }
+    public function Tenant()
+    {
+        $tenants = Tenant::all();
+
+        return view('admin.tenant.tenant', compact('tenants'));
+    }
     public function activate(User $user)
     {
         $user->update(['is_active' => true]);
@@ -39,29 +52,5 @@ class AdminController extends Controller
         $user->update(['is_active' => false]);
 
         return redirect()->back();
-    }
-    public function userowner()
-    {
-        $tenants = Tenant::all();
-        $users = User::where('role', 'owner')->get();
-        return view('admin.userowner', compact('users'));
-    }
-    public function userkasir()
-    {
-        $tenants = Tenant::all();
-        $users = User::where('role', 'kasir')->get();
-        return view('admin.userkasir', compact('users'));
-    }
-    public function showTransaksi()
-    {
-        $transactions = Transaction::all();
-
-        return view('admin.transaksi', compact('transactions'));
-    }
-    public function Tenant()
-    {
-        $tenants = Tenant::all();
-
-        return view('admin.tenant.tenant', compact('tenants'));
     }
 }

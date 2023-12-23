@@ -51,7 +51,7 @@
                             <!--end::Select2-->
                         </div>
                         <!--begin::Add product-->
-                        <a href="{{ route('create') }}" class="btn btn-primary">Tambah User</a>
+                        <a href="{{ route('admin.owner.create') }}" class="btn btn-primary">Tambah User</a>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -67,7 +67,7 @@
                             <!--begin::Table row-->
                             <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
 
-                                <th class="w-10px pe-2">No</th>
+                                <th class="w-10px py-5 gap-2 gap-md-5">No</th>
                                 <th class="text-center min-w-0px">Nama</th>
                                 <th class="text-center min-w-100px">Email</th>
                                 <th class="text-center min-w-100px">Role</th>
@@ -82,7 +82,7 @@
                         <tbody class="fw-semibold text-gray-600 text-center pe-0">
                             <!--begin::Table row-->
                             @foreach ($users as $user)
-                                @if ($user->role === 'kasir')
+                                @if ($user->role === 'owner')
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td class="text-gray-800 text-center pe-0">
@@ -114,13 +114,19 @@
                                             @endif
                                         </td>
                                         <td class="text-center min-w-70px">
-                                            <a href="" class="btn btn-sm btn-icon btn-primary">
+                                            <a href="{{ route('admin.owner.edit', $user->id) }}"
+                                                class="btn btn-sm btn-icon btn-primary">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-
-                                            <button class="btn btn-sm btn-icon btn-danger" onclick="">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            <form action="{{ route('admin.owner.destroy', $user->id) }}" method="POST"
+                                                style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-icon btn-danger"
+                                                    onclick="return confirm('Yakin hapus?')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endif

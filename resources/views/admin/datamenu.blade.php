@@ -41,12 +41,12 @@
                         <div class="w-100 mw-150px">
                             <!--begin::Select2-->
                             <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
-                                data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                                data-placeholder="Tenant" data-kt-ecommerce-product-filter="tenant" id="selectTenant">
                                 <option></option>
                                 <option value="all">All</option>
-                                <option value="published">Published</option>
-                                <option value="scheduled">Scheduled</option>
-                                <option value="inactive">Inactive</option>
+                                @foreach ($tenants as $tenant)
+                                    <option value="{{ $tenant->id }}">{{ $tenant->nama }}</option>
+                                @endforeach
                             </select>
                             <!--end::Select2-->
                         </div>
@@ -184,6 +184,32 @@
                 console.log('Penghapusan dibatalkan.');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ambil elemen select
+            const selectTenant = document.getElementById('selectTenant');
+
+            // Tambahkan event listener untuk mendeteksi perubahan pada select
+            selectTenant.addEventListener('change', function() {
+                const selectedTenantId = this.value;
+
+                // Ambil semua item menu
+                const menuItems = document.querySelectorAll('.menu-item');
+
+                // Loop melalui setiap item menu
+                menuItems.forEach(function(menuItem) {
+                    // Dapatkan data-tenant-id untuk setiap item menu
+                    const menuItemTenantId = menuItem.getAttribute('data-tenant-id');
+
+                    // Tentukan apakah item menu harus ditampilkan atau disembunyikan
+                    if (selectedTenantId === 'all' || selectedTenantId === menuItemTenantId) {
+                        menuItem.style.display = 'block'; // Tampilkan item menu
+                    } else {
+                        menuItem.style.display = 'none'; // Sembunyikan item menu
+                    }
+                });
+            });
+        });
     </script>
 
 

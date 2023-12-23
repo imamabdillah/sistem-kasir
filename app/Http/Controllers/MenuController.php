@@ -79,7 +79,7 @@ class MenuController extends Controller
 
         $menu->save();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Menu baru telah ditambahkan!');
+        return redirect()->route('admin.datamenu')->with('success', 'Menu baru telah ditambahkan!');
     }
 
 
@@ -125,7 +125,7 @@ class MenuController extends Controller
 
             if (!$menu) {
                 Log::error("Menu not found with ID: $id");
-                return redirect()->route('admin.dashboard')->with('error', 'Menu not found');
+                return redirect()->route('admin.datamenu')->with('error', 'Menu not found');
             }
 
             $menu->nama = $request->input('nama');
@@ -156,11 +156,11 @@ class MenuController extends Controller
             $menu->save();
 
             Log::info("Menu updated successfully. ID: $id");
-            return redirect()->route('admin.dashboard')->with('success', 'Menu has been updated successfully');
+            return redirect()->route('admin.datamenu')->with('success', 'Menu has been updated successfully');
         } catch (\Exception $e) {
             Log::error("Error updating menu. ID: $id, Error: " . $e->getMessage());
 
-            return redirect()->route('admin.dashboard')->with('error', 'Error updating menu');
+            return redirect()->route('admin.datamenu')->with('error', 'Error updating menu');
         }
     }
 
@@ -174,7 +174,7 @@ class MenuController extends Controller
                 if (request()->expectsJson()) {
                     return response()->json(['message' => 'Menu tidak ditemukan'], 404);
                 } else {
-                    return redirect()->route('admin.dashboard')->with('error', 'Menu tidak ditemukan');
+                    return redirect()->route('admin.datamenu')->with('error', 'Menu tidak ditemukan');
                 }
             }
 
@@ -198,7 +198,7 @@ class MenuController extends Controller
             if (request()->expectsJson()) {
                 return response()->json(['message' => 'Menu berhasil dihapus']);
             } else {
-                return redirect()->route('admin.dashboard')->with('success', 'Menu berhasil dihapus');
+                return redirect()->route('admin.datamenu')->with('success', 'Menu berhasil dihapus');
             }
         } catch (\Exception $e) {
             // Tangani kesalahan dan log
@@ -208,7 +208,7 @@ class MenuController extends Controller
             if (request()->expectsJson()) {
                 return response()->json(['message' => 'Terjadi kesalahan saat menghapus menu'], 500);
             } else {
-                return redirect()->route('admin.dashboard')->with('error', 'Terjadi kesalahan saat menghapus menu');
+                return redirect()->route('admin.datamenu')->with('error', 'Terjadi kesalahan saat menghapus menu');
             }
         }
     }

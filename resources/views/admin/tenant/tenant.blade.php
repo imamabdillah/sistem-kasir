@@ -12,6 +12,11 @@
         <div id="kt_app_content_container" class="app-container container-xxl">
             <!--begin::Products-->
             <div class="card card-flush">
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <div class="card-title">
+                        <h2 class="fw-bolder">List Tenant</h2>
+                    </div>
+                </div>
                 <!--begin::Card header-->
                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                     <!--begin::Card title-->
@@ -51,7 +56,7 @@
                             <!--end::Select2-->
                         </div>
                         <!--begin::Add product-->
-                        <a href="{{ route('tenants.create') }}" class="btn btn-primary">Tambah User</a>
+                        <a href="{{ route('tenants.create') }}" class="btn btn-primary">Tambah Tenant</a>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -65,7 +70,7 @@
                         <!--begin::Table head-->
                         <thead>
                             <tr>
-                                <th class="w-10px pe-2">No</th>
+                                <th class="w-10px  py-5 gap-2 gap-md-5">No</th>
                                 <th class="text-center min-w-0px">Nama</th>
                                 <th class="text-center min-w-100px">Deskripsi</th>
                                 <th class="text-center min-w-70px">Actions</th>
