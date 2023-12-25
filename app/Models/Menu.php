@@ -16,6 +16,8 @@ class Menu extends Model
         'harga',
         'deskripsi',
         'foto_produk',
+        'category_id',
+        'tenant_id',
     ];
 
     public function category()

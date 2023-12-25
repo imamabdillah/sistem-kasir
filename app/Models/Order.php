@@ -10,7 +10,9 @@ class Order extends Model
 {
     protected $fillable = [
         'id',
-        'total_price'
+        'total_price',
+        'tenant_id',
+
     ];
     // Relasi dengan OrderItem
 

@@ -16,6 +16,8 @@ class CreateOrderItemsTable extends Migration
             $table->decimal('harga', 10, 2);
             $table->integer('quantity');
             $table->text('note')->nullable();
+            $table->unsignedBigInteger('tenant_id')->nullable();
+
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

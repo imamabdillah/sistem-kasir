@@ -18,6 +18,8 @@ return new class extends Migration
             $table->decimal('harga', 10, 2);
             $table->text('deskripsi');
             $table->string('foto_produk')->nullable();
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->timestamps();
         });
     }

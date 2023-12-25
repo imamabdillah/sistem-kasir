@@ -11,6 +11,8 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->decimal('total_price', 10, 2)->default(0);
+            $table->unsignedBigInteger('tenant_id')->nullable();
+
             $table->timestamps();
         });
     }

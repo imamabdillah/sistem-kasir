@@ -14,6 +14,8 @@ class CreateCartsTable extends Migration
             $table->string('nama');
             $table->decimal('harga', 10, 2);
             $table->integer('quantity')->default(1);
+            $table->unsignedBigInteger('tenant_id')->nullable();
+
             $table->timestamps();
 
             // Menambahkan foreign key ke tabel menu

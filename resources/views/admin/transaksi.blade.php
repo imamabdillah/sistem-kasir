@@ -77,7 +77,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $transaction->order_id }}</td>
-                                    <td>{{ $transaction->total_price }}</td>
+                                    <td> {{ 'Rp ' . number_format($transaction->total_price, 0, ',', '.') }}</td>
                                     <td>{{ $transaction->payment_method }}</td>
                                     <td>{{ $transaction->status }}</td>
                                 </tr>
