@@ -5,7 +5,7 @@
     data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"
     class="app-default">
 
-    @include('layout.adminnav')
+    @include('layout.ownernav')
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
@@ -51,7 +51,7 @@
                             <!--end::Select2-->
                         </div>
                         <!--begin::Add product-->
-                        <a href="{{ route('create') }}" class="btn btn-primary">Tambah User</a>
+                        <a href="{{ route('owner.kasir.create') }}" class="btn btn-primary">Tambah User</a>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -64,27 +64,75 @@
                         id="kt_ecommerce_products_table">
                         <!--begin::Table head-->
                         <thead>
-                            <tr>
-                                <th class="w-10px pe-2">No</th>
-                                <th class="text-center min-w-0px">Order ID</th>
-                                <th class="text-center min-w-100px">Total Price</th>
-                                <th class="text-center min-w-100px">Payment Method</th>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+
+                                <th class="w-10px py-5 gap-2 gap-md-5">No</th>
+                                <th class="text-center min-w-0px">Nama</th>
+                                <th class="text-center min-w-100px">Email</th>
+                                <th class="text-center min-w-100px">Role</th>
                                 <th class="text-center min-w-100px">Status</th>
-                                <th class="text-center min-w-100px">Tenant</th>
+                                <th class="text-center min-w-70px">Actions</th>
                             </tr>
+                            <!--end::Table row-->
                         </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
                         <tbody class="fw-semibold text-gray-600 text-center pe-0">
-                            @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $transaction->order_id }}</td>
-                                    <td> {{ 'Rp ' . number_format($transaction->total_price, 0, ',', '.') }}</td>
-                                    <td>{{ $transaction->payment_method }}</td>
-                                    <td>{{ $transaction->status }}</td>
-                                    <td>{{ $transaction->tenant->nama }}</td>
-                                </tr>
+                            <!--begin::Table row-->
+                            @foreach ($users as $user)
+                                @if ($user->role === 'kasir' && $user->tenant_id === Auth::user()->tenant_id)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="text-gray-800 text-center pe-0">
+                                            {{ $user->name }}
+                                        </td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->role }}</td>
+                                        <td class="text-center min-w-70px">
+                                            @if ($user->is_active)
+                                                <form action="{{ route('users.deactivate', $user->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-sm btn-warning"
+                                                        onclick="return confirm('Nonaktifkan pengguna?')">
+                                                        Nonaktifkan
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form action="{{ route('users.activate', $user->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-sm btn-success"
+                                                        onclick="return confirm('Aktifkan pengguna?')">
+                                                        Aktifkan
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </td>
+                                        <td class="text-center min-w-70px">
+                                            <a href="{{ route('owner.kasir.edit', $user->id) }}"
+                                                class="btn btn-sm btn-icon btn-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <form action="{{ route('owner.kasir.destroy', $user->id) }}" method="POST"
+                                                style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-icon btn-danger"
+                                                    onclick="return confirm('Yakin hapus?')">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
+
                         </tbody>
+
                         <!--end::Table body-->
                     </table>
                     <!--end::Table-->

@@ -18,6 +18,10 @@ class Transaction extends Model
         'tenant_id',
     ];
 
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
     public function order()
     {
         return $this->belongsTo(Order::class);

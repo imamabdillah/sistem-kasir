@@ -22,12 +22,15 @@ class HomeController extends Controller
     }
     public function home()
     {
-        if (auth()->user()->role == 'admin') {
-            return redirect('admin.dashboard');
-        } elseif (auth()->user()->role == 'owner') {
-            return redirect('owner.dashboard');
-        } elseif (auth()->user()->role == 'kasir') {
-            return redirect('kasir.menu.index');
+        $user = auth()->user();
+
+        if ($user->role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->role == 'owner') {
+            return redirect()->route('owner.dashboard');
+        } elseif ($user->role == 'kasir') {
+            // Mengarahkan ke halaman menu dengan menyertakan tenant_id
+            return redirect()->route('kasir.menu.index', ['tenant' => $user->tenant_id]);
         } else {
             return auth()->logout();
         }

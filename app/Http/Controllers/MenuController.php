@@ -17,12 +17,14 @@ use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
-    public function index()
+    public function index(Request $request, $tenant)
     {
-        $menus = Menu::all();
+        $menus = Menu::where('tenant_id', $tenant)->get();
         $categories = Category::all();
         $tenants = Tenant::all();
         $cart = Cart::all();
+
+        $currentTenant = Tenant::findOrFail($tenant);
 
         // Menghitung total item dan total harga
         $totalItems = $cart->sum('quantity');
@@ -30,14 +32,9 @@ class MenuController extends Controller
             return $item->quantity * $item->menu->harga;
         });
 
-        return view('kasir.menu.index', compact('cart', 'totalItems', 'totalPrice', 'menus', 'categories', 'tenants'));
+        return view('kasir.menu.index', compact('cart', 'totalItems', 'totalPrice', 'menus', 'categories', 'tenants', 'currentTenant', 'tenant'));
     }
 
-    // Ambil tenant berdasarkan category_id masing-masing menu
-    // $tenants = [];
-    // foreach ($menus as $menu) {
-    //     $tenants[$menu->category_id] = $menu->tenant;
-    // }
 
     public function create()
     {

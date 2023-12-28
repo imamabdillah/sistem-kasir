@@ -7,7 +7,7 @@
     <!--begin::Theme mode setup on page load-->
     <!-- end::Theme mode setup on page load -->
     <!-- begin::App -->
-    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+    {{-- <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
         <!--begin::Page-->
         <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
             <!--begin::Header-->
@@ -443,22 +443,57 @@
                             <div class="menu menu-column menu-rounded menu-sub-indention px-3"
                                 id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                                 <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                <div class="menu-item">
                                     <!--begin:Menu link-->
-                                    <span class="menu-link">
+                                    <a class="menu-link" href="{{ route('admin.dashboard') }}">
                                         <span class="menu-icon">
-                                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
                                             <span class="svg-icon svg-icon-2">
-
+                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path opacity="0.3"
+                                                        d="M11.8 5.2L17.7 8.6V15.4L11.8 18.8L5.90001 15.4V8.6L11.8 5.2ZM11.8 2C11.5 2 11.2 2.1 11 2.2L3.8 6.4C3.3 6.7 3 7.3 3 7.9V16.2C3 16.8 3.3 17.4 3.8 17.7L11 21.9C11.3 22 11.5 22.1 11.8 22.1C12.1 22.1 12.4 22 12.6 21.9L19.8 17.7C20.3 17.4 20.6 16.8 20.6 16.2V7.9C20.6 7.3 20.3 6.7 19.8 6.4L12.6 2.2C12.4 2.1 12.1 2 11.8 2Z"
+                                                        fill="currentColor" />
+                                                    <path
+                                                        d="M11.8 8.69995L8.90001 10.3V13.7L11.8 15.3L14.7 13.7V10.3L11.8 8.69995Z"
+                                                        fill="currentColor" />
+                                                </svg>
                                             </span>
                                             <!--end::Svg Icon-->
                                         </span>
-                                        <span class="menu-title">Dashboards</span>
-                                    </span>
+                                        <span class="menu-title">Dashboard</span>
+                                    </a>
                                     <!--end:Menu link-->
                                 </div>
+                                <div class="menu-item">
+                                    <!--begin:Menu link-->
+                                    <a class="menu-link" href="{{ route('admin.datamenu') }}">
+                                        <span class="menu-icon">
+                                            <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
+                                            <span class="svg-icon svg-icon-2">
+                                                <svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path opacity="0.3"
+                                                        d="M11.8 5.2L17.7 8.6V15.4L11.8 18.8L5.90001 15.4V8.6L11.8 5.2ZM11.8 2C11.5 2 11.2 2.1 11 2.2L3.8 6.4C3.3 6.7 3 7.3 3 7.9V16.2C3 16.8 3.3 17.4 3.8 17.7L11 21.9C11.3 22 11.5 22.1 11.8 22.1C12.1 22.1 12.4 22 12.6 21.9L19.8 17.7C20.3 17.4 20.6 16.8 20.6 16.2V7.9C20.6 7.3 20.3 6.7 19.8 6.4L12.6 2.2C12.4 2.1 12.1 2 11.8 2Z"
+                                                        fill="currentColor" />
+                                                    <path
+                                                        d="M11.8 8.69995L8.90001 10.3V13.7L11.8 15.3L14.7 13.7V10.3L11.8 8.69995Z"
+                                                        fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                            <!--end::Svg Icon-->
+                                        </span>
+                                        <span class="menu-title">Data Menu</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
+
                                 <!--end:Menu item-->
                             </div>
+
+                            <!--begin:Menu item-->
+
+
                             <!--end::Menu-->
                         </div>
                         <!--end::Menu wrapper-->
@@ -466,239 +501,197 @@
                     <!--end::sidebar menu-->
                     <!--begin::Footer-->
                     <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
-                        <a href="https://preview.keenthemes.com/html/metronic/docs"
-                            class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss-="click"
-                            title="200+ in-house components and 3rd-party plugins">
-                            <span class="btn-label">Docs & Components</span>
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
-                            <span class="svg-icon btn-icon svg-icon-2 m-0">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path opacity="0.3"
-                                        d="M19 22H5C4.4 22 4 21.6 4 21V3C4 2.4 4.4 2 5 2H14L20 8V21C20 21.6 19.6 22 19 22ZM12.5 18C12.5 17.4 12.6 17.5 12 17.5H8.5C7.9 17.5 8 17.4 8 18C8 18.6 7.9 18.5 8.5 18.5L12 18C12.6 18 12.5 18.6 12.5 18ZM16.5 13C16.5 12.4 16.6 12.5 16 12.5H8.5C7.9 12.5 8 12.4 8 13C8 13.6 7.9 13.5 8.5 13.5H15.5C16.1 13.5 16.5 13.6 16.5 13ZM12.5 8C12.5 7.4 12.6 7.5 12 7.5H8C7.4 7.5 7.5 7.4 7.5 8C7.5 8.6 7.4 8.5 8 8.5H12C12.6 8.5 12.5 8.6 12.5 8Z"
-                                        fill="currentColor" />
-                                    <rect x="7" y="17" width="6" height="2" rx="1"
-                                        fill="currentColor" />
-                                    <rect x="7" y="12" width="10" height="2" rx="1"
-                                        fill="currentColor" />
-                                    <rect x="7" y="7" width="6" height="2" rx="1"
-                                        fill="currentColor" />
-                                    <path d="M15 8H20L14 2V7C14 7.6 14.4 8 15 8Z" fill="currentColor" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="btn btn-flex flex-center btn-custom btn-primary overflow-hidden text-nowrap px-0 h-40px w-100">
+                                <span class="btn-label">Logout</span>
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
+                                <span class="svg-icon btn-icon svg-icon-2 m-0">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <!-- SVG paths here -->
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </button>
+                        </form>
                     </div>
                     <!--end::Footer-->
                 </div>
                 <!--end::Sidebar-->
                 <!--begin::Main-->
-                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-                    <!--begin::Content wrapper-->
-                    <div class="d-flex flex-column flex-column-fluid">
-                        <!--begin::Toolbar-->
-                        <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-                            <!--begin::Toolbar container-->
-                            <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
-                                <!--begin::Page title-->
-                                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                                    <!--begin::Title-->
-                                    <h1
-                                        class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                                        eCommerce Dashboard</h1>
-                                    <!--end::Title-->
-                                    <!--begin::Breadcrumb-->
-                                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
-                                        <!--begin::Item-->
-                                        <li class="breadcrumb-item text-muted">
-                                            <a href="../../demo1/dist/index.html"
-                                                class="text-muted text-hover-primary">Home</a>
-                                        </li>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <li class="breadcrumb-item">
-                                            <span class="bullet bg-gray-400 w-5px h-2px"></span>
-                                        </li>
-                                        <!--end::Item-->
-                                        <!--begin::Item-->
-                                        <li class="breadcrumb-item text-muted">Dashboards</li>
-                                        <!--end::Item-->
-                                    </ul>
-                                    <!--end::Breadcrumb-->
-                                </div>
-                                <!--end::Page title-->
-                                <!--begin::Actions-->
-                                <div class="d-flex align-items-center gap-2 gap-lg-3">
-                                    <!--begin::Secondary button-->
-                                    <a href="../../demo1/dist/apps/ecommerce/sales/listing.html"
-                                        class="btn btn-sm fw-bold bg-body btn-color-gray-700 btn-active-color-primary">Manage
-                                        Sales</a>
-                                    <!--end::Secondary button-->
-                                    <!--begin::Primary button-->
-                                    <a href="../../demo1/dist/apps/ecommerce/catalog/add-product.html"
-                                        class="btn btn-sm fw-bold btn-primary">Add Product</a>
-                                    <!--end::Primary button-->
-                                </div>
-                                <!--end::Actions-->
-                            </div>
-                            <!--end::Toolbar container-->
-                        </div>
-                        <!--end::Toolbar-->
-                        <!--begin::Content-->
-                        <div id="kt_app_content" class="app-content flex-column-fluid">
-                            <!--begin::Content container-->
-                            <div id="kt_app_content_container" class="app-container container-xxl">
-                                <!--begin::Row-->
-                                <div class="row g-5 g-xl-10 mb-xl-10">
-                                    <!--begin::Col-->
-                                    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                                        <!--begin::Card widget 4-->
-                                        <div class="card card-flush h-md-50 mb-5 mb-xl-10">
-                                            <!--begin::Header-->
-                                            <div class="card-header pt-5">
-                                                <!--begin::Title-->
-                                                <div class="card-title d-flex flex-column">
-                                                    <!--begin::Info-->
-                                                    <div class="d-flex align-items-center">
-                                                        <!--begin::Currency-->
-                                                        <span
-                                                            class="fs-4 fw-semibold text-gray-400 me-1 align-self-start">$</span>
-                                                        <!--end::Currency-->
-                                                        <!--begin::Amount-->
-                                                        <span
-                                                            class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">69,700</span>
-                                                        <!--end::Amount-->
-                                                        <!--begin::Badge-->
-                                                        <span class="badge badge-light-success fs-base">
-                                                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                            <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                                <svg width="24" height="24"
-                                                                    viewBox="0 0 24 24" fill="none"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <rect opacity="0.5" x="13" y="6" width="13"
-                                                                        height="2" rx="1"
-                                                                        transform="rotate(90 13 6)"
-                                                                        fill="currentColor" />
-                                                                    <path
-                                                                        d="M12.5657 8.56569L16.75 12.75C17.1642 13.1642 17.8358 13.1642 18.25 12.75C18.6642 12.3358 18.6642 11.6642 18.25 11.25L12.7071 5.70711C12.3166 5.31658 11.6834 5.31658 11.2929 5.70711L5.75 11.25C5.33579 11.6642 5.33579 12.3358 5.75 12.75C6.16421 13.1642 6.83579 13.1642 7.25 12.75L11.4343 8.56569C11.7467 8.25327 12.2533 8.25327 12.5657 8.56569Z"
-                                                                        fill="currentColor" />
-                                                                </svg>
-                                                            </span>
-                                                            <!--end::Svg Icon-->2.2%</span>
-                                                        <!--end::Badge-->
-                                                    </div>
-                                                    <!--end::Info-->
-                                                    <!--begin::Subtitle-->
-                                                    <span class="text-gray-400 pt-1 fw-semibold fs-6">Expected
-                                                        Earnings</span>
-                                                    <!--end::Subtitle-->
-                                                </div>
-                                                <!--end::Title-->
-                                            </div>
-                                            <!--end::Header-->
-                                            <!--begin::Card body-->
-                                            <div class="card-body pt-2 pb-4 d-flex align-items-center">
-                                                <!--begin::Chart-->
-                                                <div class="d-flex flex-center me-5 pt-2">
-                                                    <div id="kt_card_widget_4_chart"
-                                                        style="min-width: 70px; min-height: 70px" data-kt-size="70"
-                                                        data-kt-line="11"></div>
-                                                </div>
-                                                <!--end::Chart-->
-                                                <!--begin::Labels-->
-                                                <div class="d-flex flex-column content-justify-center w-100">
-                                                    <!--begin::Label-->
-                                                    <div class="d-flex fs-6 fw-semibold align-items-center">
-                                                        <!--begin::Bullet-->
-                                                        <div class="bullet w-8px h-6px rounded-2 bg-danger me-3"></div>
-                                                        <!--end::Bullet-->
-                                                        <!--begin::Label-->
-                                                        <div class="text-gray-500 flex-grow-1 me-4">Shoes</div>
-                                                        <!--end::Label-->
-                                                        <!--begin::Stats-->
-                                                        <div class="fw-bolder text-gray-700 text-xxl-end">$7,660</div>
-                                                        <!--end::Stats-->
-                                                    </div>
-                                                    <!--end::Label-->
-                                                    <!--begin::Label-->
-                                                    <div class="d-flex fs-6 fw-semibold align-items-center my-3">
-                                                        <!--begin::Bullet-->
-                                                        <div class="bullet w-8px h-6px rounded-2 bg-primary me-3">
-                                                        </div>
-                                                        <!--end::Bullet-->
-                                                        <!--begin::Label-->
-                                                        <div class="text-gray-500 flex-grow-1 me-4">Gaming</div>
-                                                        <!--end::Label-->
-                                                        <!--begin::Stats-->
-                                                        <div class="fw-bolder text-gray-700 text-xxl-end">$2,820</div>
-                                                        <!--end::Stats-->
-                                                    </div>
-                                                    <!--end::Label-->
-                                                    <!--begin::Label-->
-                                                    <div class="d-flex fs-6 fw-semibold align-items-center">
-                                                        <!--begin::Bullet-->
-                                                        <div class="bullet w-8px h-6px rounded-2 me-3"
-                                                            style="background-color: #E4E6EF"></div>
-                                                        <!--end::Bullet-->
-                                                        <!--begin::Label-->
-                                                        <div class="text-gray-500 flex-grow-1 me-4">Others</div>
-                                                        <!--end::Label-->
-                                                        <!--begin::Stats-->
-                                                        <div class="fw-bolder text-gray-700 text-xxl-end">$45,257</div>
-                                                        <!--end::Stats-->
-                                                    </div>
-                                                    <!--end::Label-->
-                                                </div>
-                                                <!--end::Labels-->
-                                            </div>
-                                            <!--end::Card body-->
-                                        </div>
-                                        <!--end::Card widget 4-->
 
-                                    </div>
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-
-                                    <!--end::Col-->
-                                    <!--begin::Col-->
-
-                                    <!--end::Col-->
-                                </div>
-                                <!--end::Row-->
-                                <!--begin::Row-->
-                                <!--end::Row-->
-                            </div>
-                            <!--end::Content container-->
-                        </div>
-                        <!--end::Content-->
-                    </div>
-                    <!--end::Content wrapper-->
-                    <!--begin::Footer-->
-                    <div id="kt_app_footer" class="app-footer">
-                        <!--begin::Footer container-->
-                        <!--end::Footer container-->
-                    </div>
-                    <!--end::Footer-->
-                </div>
                 <!--end:::Main-->
             </div>
             <!--end::Wrapper-->
         </div>
         <!--end::Page-->
-    </div>
+    </div> --}}
+
+    @include('layout.ownernav')
     <!--end::App-->
     <!--begin::Drawers-->
 
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <!--begin::Content container-->
+        <div id="kt_app_content_container" class="app-container container-xxl">
+            <!--begin::Products-->
+            <div class="card card-flush">
+                <!--begin::Card header-->
+                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                    <!--begin::Card title-->
+                    <div class="card-title">
+                        <!--begin::Search-->
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1 position-absolute ms-4">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2"
+                                        rx="1" transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
+                                    <path
+                                        d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <input type="text" data-kt-ecommerce-product-filter="search"
+                                class="form-control form-control-solid w-250px ps-14" placeholder="Search Product" />
+                        </div>
+                        <!--end::Search-->
+                    </div>
+                    <!--end::Card title-->
+                    <!--begin::Card toolbar-->
+                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                        <div class="w-100 mw-150px">
+                            <!--begin::Select2-->
+                            <select class="form-select form-select-solid" data-control="select2" data-hide-search="true"
+                                data-placeholder="Status" data-kt-ecommerce-product-filter="status">
+                                <option></option>
+                                <option value="all">All</option>
+                                <option value="published">Published</option>
+                                <option value="scheduled">Scheduled</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                            <!--end::Select2-->
+                        </div>
+                        <!--begin::Add product-->
+                        <a href="{{ route('create') }}" class="btn btn-primary">Add
+                            Product</a>
+                        <!--end::Add product-->
+                    </div>
+                    <!--end::Card toolbar-->
+                </div>
+                <!--end::Card header-->
+                <!--begin::Card body-->
+                <div class="card-body pt-0">
+                    <!--begin::Table-->
+                    <table tabel-layout="fixed"class="table align-middle table-row-dashed fs-6 gy-5"
+                        id="kt_ecommerce_products_table">
+                        <!--begin::Table head-->
+                        <thead>
+                            <!--begin::Table row-->
+                            <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                <th class="w-10px pe-2">
+                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                        <input class="form-check-input" type="checkbox" data-kt-check="true"
+                                            data-kt-check-target="#kt_ecommerce_products_table .form-check-input"
+                                            value="1" />
+                                    </div>
+                                </th>
+                                <th class="min-w-100px">Nama Menu</th>
+                                <th class="text-end min-w-100px">deskripsi</th>
+                                <th class="text-end min-w-100px">harga</th>
+                                <th class="text-end min-w-100px">kategori</th>
+                                <th class="text-end min-w-100px">tenant</th>
+                                <th class="text-end min-w-70px">Actions</th>
+                            </tr>
+                            <!--end::Table row-->
+                        </thead>
+                        <!--end::Table head-->
+                        <!--begin::Table body-->
+                        <tbody class="fw-semibold text-gray-600">
+                            <!--begin::Table row-->
+                            @foreach ($menus as $menu)
+                                <tr>
+                                    <!-- Checkbox -->
+                                    <td>
+                                        <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                            <input class="form-check-input" type="checkbox"
+                                                value="{{ $menu->id }}" />
+                                        </div>
+                                    </td>
 
+                                    <!-- Nama Menu -->
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <a href="" class="symbol symbol-50px">
+                                                <span class="symbol-label"
+                                                    style="background-image: url('{{ asset('storage/foto_produk/' . $menu->foto_produk) }}');"></span>
+                                            </a>
+                                            <div class="ms-5">
+                                                <a href="" class="text-gray-800 text-hover-primary fs-5 fw-bold"
+                                                    data-kt-ecommerce-product-filter="product_name">{{ $menu->nama }}</a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Deskripsi -->
+                                    <td class="text-end pe-0">
+                                        <span class="fw-bold">{{ $menu->deskripsi }}</span>
+                                    </td>
+
+                                    <!-- Harga -->
+                                    <td class="text-end pe-0">{{ 'Rp ' . number_format($menu->harga, 0, ',', '.') }}
+                                    </td>
+
+                                    <!-- Kategori -->
+                                    <td class="text-end pe-0">
+                                        {{ $menu->category->nama }}
+                                    </td>
+
+                                    <!-- Tenant -->
+                                    <td class="text-end pe-0">
+                                        {{ $menu->tenant->nama }}
+                                    </td>
+
+
+                                    <!-- Actions (Edit, Delete, etc.) -->
+                                    <td class="text-end min-w-70px">
+                                        <a href="{{ route('edit', $menu->id) }}"
+                                            class="btn btn-sm btn-icon btn-primary">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+
+                                        <button class="btn btn-sm btn-icon btn-danger"
+                                            onclick="confirmDelete('{{ route('destroy', $menu->id) }}')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            <!--end::Table row-->
+                        </tbody>
+
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </div>
+
+                <!--end::Card body-->
+            </div>
+            <!--end::Products-->
+        </div>
+        <!--end::Content container-->
+    </div>
 
     <!--end::Drawers-->
     <!--begin::Scrolltop-->
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
         <span class="svg-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect opacity="0.5" x="13" y="6" width="13" height="2" rx="1"
                     transform="rotate(90 13 6)" fill="currentColor" />
                 <path

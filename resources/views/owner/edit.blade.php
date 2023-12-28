@@ -33,7 +33,7 @@
                 </div>
                 <!--end::Toolbar-->
                 <!--begin::Content-->
-                <form action="{{ route('update', $menu->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('owner.update', $menu->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -166,9 +166,9 @@
                                                 class="form-select form-select-solid form-select-lg mb-2"
                                                 data-control="select2">
                                                 @foreach ($tenants as $tenant)
-                                                    <option value="{{ $tenant->id }}"
-                                                        @if ($tenant->id === $menu->tenant_id) selected @endif>
-                                                        {{ $tenant->nama }}</option>
+                                                    @if ($tenant->id == Auth::user()->tenant_id)
+                                                        <option value="{{ $tenant->id }}">{{ $tenant->nama }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                             <!--end::Select2-->

@@ -1,4 +1,4 @@
-@extends('layout.base')
+@include('layout.base')
 
 <body>
     <!-- Spinner Start -->
@@ -121,6 +121,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        let tenantValue = '{{ auth()->user()->tenant_id }}';
         //pembayaran midtrans
         document.getElementById('pay-button').onclick = function() {
             // SnapToken acquired from the previous step
@@ -203,7 +204,8 @@
         function redirectToKasirMenu() {
             if (paymentStatus === 'success') {
                 console.log('Order created!');
-                window.location.href = '{{ route('kasir.menu.index') }}';
+                window.location.href = '{{ route('kasir.menu.index', ['tenant' => ':tenant']) }}'.replace(':tenant',
+                    tenantValue);
             } else {
                 alert('Selesaikan pembayaran terlebih dahulu.');
             }

@@ -31,8 +31,8 @@ class AdminController extends Controller
     public function showTransaksi()
     {
         $transactions = Transaction::all();
-
-        return view('admin.transaksi', compact('transactions'));
+        $tenants = Tenant::all();
+        return view('admin.transaksi', compact('transactions', 'tenants'));
     }
     public function Tenant()
     {

@@ -21,6 +21,10 @@ class Tenant extends Model
     {
         return $this->hasMany(Menu::class);
     }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 
     use HasFactory;
     // Tambahkan metode atau kriteria khusus di sini sesuai kebutuhan Anda

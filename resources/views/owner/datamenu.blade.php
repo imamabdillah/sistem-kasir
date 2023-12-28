@@ -5,7 +5,7 @@
     data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"
     class="app-default">
 
-    @include('layout.adminnav')
+    @include('layout.ownernav')
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
@@ -51,7 +51,7 @@
                             <!--end::Select2-->
                         </div>
                         <!--begin::Add product-->
-                        <a href="{{ route('create') }}" class="btn btn-primary">Tambah Menu</a>
+                        <a href="{{ route('owner.create') }}" class="btn btn-primary">Tambah Menu</a>
                         <!--end::Add product-->
                     </div>
                     <!--end::Card toolbar-->
@@ -81,55 +81,58 @@
                         <tbody class="fw-semibold text-gray-600">
                             <!--begin::Table row-->
                             @foreach ($menus as $menu)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <a href="" class="symbol symbol-50px">
-                                                <span class="symbol-label"
-                                                    style="background-image: url('{{ asset('storage/foto_produk/' . $menu->foto_produk) }}');"></span>
-                                            </a>
-                                            <div class="ms-5">
-                                                <a href="" class="text-gray-900 text-hover-primary fs-5 fw-bold"
-                                                    data-kt-ecommerce-product-filter="product_name">{{ $menu->nama }}</a>
+                                @if ($menu->tenant_id == auth()->user()->tenant_id)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <a href="" class="symbol symbol-50px">
+                                                    <span class="symbol-label"
+                                                        style="background-image: url('{{ asset('storage/foto_produk/' . $menu->foto_produk) }}');"></span>
+                                                </a>
+                                                <div class="ms-5">
+                                                    <a href=""
+                                                        class="text-gray-900 text-hover-primary fs-5 fw-bold"
+                                                        data-kt-ecommerce-product-filter="product_name">{{ $menu->nama }}</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
 
-                                    <!-- Deskripsi -->
-                                    <td class="text-center pe-0">
-                                        <span class="text-gray-800">{{ $menu->deskripsi }}</span>
-                                    </td>
+                                        <!-- Deskripsi -->
+                                        <td class="text-center pe-0">
+                                            <span class="text-gray-800">{{ $menu->deskripsi }}</span>
+                                        </td>
 
-                                    <!-- Harga -->
-                                    <td class="text-gray-800 text-center pe-0">
-                                        {{ 'Rp ' . number_format($menu->harga, 0, ',', '.') }}
-                                    </td>
+                                        <!-- Harga -->
+                                        <td class="text-gray-800 text-center pe-0">
+                                            {{ 'Rp ' . number_format($menu->harga, 0, ',', '.') }}
+                                        </td>
 
-                                    <!-- Kategori -->
-                                    <td class="text-gray-800 text-center pe-0">
-                                        {{ $menu->category->nama }}
-                                    </td>
+                                        <!-- Kategori -->
+                                        <td class="text-gray-800 text-center pe-0">
+                                            {{ $menu->category->nama }}
+                                        </td>
 
-                                    <!-- Tenant -->
-                                    <td class="text-gray-800 text-center pe-0">
-                                        {{ $menu->tenant->nama }}
-                                    </td>
+                                        <!-- Tenant -->
+                                        <td class="text-gray-800 text-center pe-0">
+                                            {{ $menu->tenant->nama }}
+                                        </td>
 
 
-                                    <!-- Actions (Edit, Delete, etc.) -->
-                                    <td class="text-center min-w-70px">
-                                        <a href="{{ route('edit', $menu->id) }}"
-                                            class="btn btn-sm btn-icon btn-primary">
-                                            <i class="bi bi-pencil"></i>
-                                        </a>
+                                        <!-- Actions (Edit, Delete, etc.) -->
+                                        <td class="text-center min-w-70px">
+                                            <a href="{{ route('owner.edit', $menu->id) }}"
+                                                class="btn btn-sm btn-icon btn-primary">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
 
-                                        <button class="btn btn-sm btn-icon btn-danger"
-                                            onclick="confirmDelete('{{ route('destroy', $menu->id) }}')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                            <button class="btn btn-sm btn-icon btn-danger"
+                                                onclick="confirmDelete('{{ route('owner.destroy', $menu->id) }}')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endif
                             @endforeach
                             <!--end::Table row-->
                         </tbody>
@@ -172,7 +175,7 @@
                         alert(data.message);
 
                         // Redirect ke halaman dashboard setelah penghapusan
-                        window.location.href = '{{ route('admin.datamenu') }}';
+                        window.location.href = '{{ route('owner.datamenu') }}';
 
                         // Tambahkan logika lain setelah penghapusan jika diperlukan
                     })

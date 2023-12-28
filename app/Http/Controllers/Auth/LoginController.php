@@ -35,7 +35,7 @@ class LoginController extends Controller
         } elseif ($user->role === 'owner') {
             return redirect()->route('owner.dashboard');
         } elseif ($user->role === 'kasir') {
-            return redirect()->route('kasir.menu.index');
+            return redirect()->route('kasir.menu.index', ['tenant' => $user->tenant_id]);
         }
 
         // Default redirect for other roles

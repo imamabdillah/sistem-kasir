@@ -1,4 +1,4 @@
-@extends('layout.base')
+@include('layout.base')
 
 <body>
 

@@ -5,7 +5,7 @@
     data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"
     class="app-default">
 
-    @include('layout.adminnav')
+    @include('layout.ownernav')
 
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->

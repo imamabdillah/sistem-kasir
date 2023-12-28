@@ -9,35 +9,45 @@ use App\Models\OrderItem;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
-        $carts = Cart::with('menu')->get();
-        $menus = Menu::all();
-        $transaction = Transaction::all();
+        // Get the authenticated user
+        $user = Auth::user();
 
+        // Check if the user is authenticated
+        if ($user) {
+            $tenant = $user->tenant_id;
 
-        // Menghitung total item dan total harga
-        $totalItems = $carts->sum('quantity');
-        $totalPrice = $carts->sum(function ($item) {
-            return $item->quantity * $item->menu->harga;
-        });
+            // Now you can use $tenant in your view or other logic
+            $carts = Cart::with('menu')->get();
+            $menus = Menu::all();
+            $transaction = Transaction::all();
 
-        // Kemudian, kirimkan data ke tampilan
-        return view('kasir.menu.checkout', [
-            'carts' => $carts,
-            'totalItems' => $totalItems,
-            'totalPrice' => $totalPrice,
-            'menus' => $menus,
-            'transaction' => $transaction,
+            // Menghitung total item dan total harga
+            $totalItems = $carts->sum('quantity');
+            $totalPrice = $carts->sum(function ($item) {
+                return $item->quantity * $item->menu->harga;
+            });
 
-            // ... tambahkan variabel lain yang diperlukan di sini
-        ]);
+            // Kemudian, kirimkan data ke tampilan
+            return view('kasir.menu.checkout', [
+                'carts' => $carts,
+                'totalItems' => $totalItems,
+                'totalPrice' => $totalPrice,
+                'menus' => $menus,
+                'transaction' => $transaction,
+                'tenant' => $tenant,
+            ]);
+        } else {
+            // User is not authenticated, show an error message
+            return view('errors.unauthenticated');
+        }
     }
-
 
     private function calculateTotalPrice($cartItems)
     {
@@ -81,6 +91,7 @@ class CheckoutController extends Controller
 
     public function checkout(Request $request)
     {
+        $tenant = Auth::user()->tenant_id;
         Log::info('Checkout method called.');
 
         // Ambil item di keranjang
@@ -97,6 +108,7 @@ class CheckoutController extends Controller
         $order = Order::create([
             'id' => $uniqueId,
             'total_price' => $this->calculateTotalPrice($cartItems),
+            'tenant_id' => $tenant,
         ]);
 
         // Pindahkan item dari keranjang ke order_items
@@ -108,6 +120,7 @@ class CheckoutController extends Controller
                 'harga' => $cartItem->harga,
                 'quantity' => $cartItem->quantity,
                 'note' => $cartItem->note,
+                'tenant_id' => $tenant,
             ]);
         }
 
@@ -144,6 +157,7 @@ class CheckoutController extends Controller
             $transaction->order_id = $order->id;
             $transaction->total_price = $order->total_price;
             $transaction->snap_token = $snapToken;
+            $transaction->tenant_id = $tenant;
             $transaction->save();
             Log::info('Transaction saved successfully.');
 

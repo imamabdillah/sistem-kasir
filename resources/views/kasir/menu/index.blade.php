@@ -1,4 +1,4 @@
-@extends('layout.base')
+@include('layout.base')
 
 <head>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -29,8 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About Us</a>
-                    <a href="tenant.html" class="nav-item nav-link">Tenant</a>
+                    <a href="{{ route('presensimasuk') }}" class="nav-item nav-link">Presensi</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0">
@@ -42,7 +41,7 @@
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact Us</a>
                 </div>
-                <div class="text-center mt-3">
+                <div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5">Logout</button>
@@ -50,13 +49,7 @@
                 </div>
                 <div class="d-none d-lg-flex ms-2">
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-search text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
                         <small class="fa fa-user text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-shopping-bag text-body"></small>
                     </a>
                 </div>
             </div>
@@ -69,7 +62,7 @@
         <div class="container">
             <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
                 <h2 class="text-primary font-secondary">Menu</h2>
-                <h1 class="display-4 text-uppercase">Menu Tenant 1</h1>
+                <h1 class="display-4 text-uppercase">{{ $currentTenant->nama }}</h1>
             </div>
             <form class="row gx-4 gy-2 align-items-center justify-content-center">
                 <div class="col-xl-4  mb-xl-10">
@@ -87,9 +80,9 @@
 
             <div class="position-relative text-center wow slideInRight" data-wow-delay="0.1s">
                 <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                    <li class="nav-item me-2">
+                    {{-- <li class="nav-item me-2">
                         <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#tab-1">All</a>
-                    </li>
+                    </li> --}}
                     @foreach ($categories as $category)
                         <li class="nav-item me-2">
                             <a class="btn btn-outline-primary border-2" data-bs-toggle="pill"
@@ -99,14 +92,11 @@
                 </ul>
             </div>
 
-
-
-
             <h4 class="text-primary font-secondary">Menu</h4>
             <div class="row g-0 gx-5 align-items-end">
                 <div class="col-lg-6">
                     <div>
-                        <h1 class="display-5 mb-3">Daftar Menu Tenant 1</h1>
+                        <h1 class="display-5 mb-3">Daftar Menu</h1>
                     </div>
                 </div>
             </div>
@@ -117,7 +107,7 @@
                         class="tab-pane fade @if ($category->id === 1) show active @endif">
                         <div class="row g-4">
                             @foreach ($menus as $menu)
-                                @if ($menu->category_id == $category->id)
+                                @if ($menu->category_id == $category->id && $menu->tenant_id == auth()->user()->tenant_id)
                                     <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.075s">
                                         <div class="product-item">
                                             <div class="position-relative bg-light overflow-hidden">
@@ -127,8 +117,7 @@
                                                     style="object-fit: cover; object-position: center; height: 200px; width: 100%;">
 
                                                 <div class="card-img-overlay ps-0">
-                                                    <span
-                                                        class="badge bg-primary p-2 ms-3 rounded-pill btn-add-to-cart"
+                                                    <span class="badge bg-primary p-2 ms-3 rounded-pill btn-add-to-cart"
                                                         data-menu-id="{{ $menu->id }}"
                                                         onclick="addToCart({{ $menu->id }}, '{{ $menu->nama }}', {{ $menu->harga }})">
                                                         <i class="fas fa-plus me-0 fs-0"></i>
@@ -158,7 +147,9 @@
                     </div>
                 @endforeach
 
-                <a href="{{ route('tampilancheckout') }}">
+                <a href="{{ route('tampilancheckout', ['tenant' => $tenant]) }}">
+
+
                     <div class="col-xl-4 mb-5 mb-xl-10 right-table btn">
                         <!--begin::List widget 6-->
                         <div class="card card-flush">
@@ -234,9 +225,9 @@
 
         let cartItems = []; // Array untuk menyimpan item yang dipilih
 
-        function addToCart(menuId, menuNama, menuHarga) {
+        function addToCart(menuId, menuNama, menuHarga, tenant) {
             // Kirim permintaan HTTP ke server untuk menambahkan item ke database
-            fetch('{{ route('cart.addToCart') }}', {
+            fetch(`{{ route('cart.addToCart', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -262,15 +253,15 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        function removeFromCart(menuId) {
-            fetch('{{ route('cart.removeFromCart') }}', {
+        function removeFromCart(menuId, tenant) {
+            fetch(`{{ route('cart.removeFromCart', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     },
                     body: JSON.stringify({
-                        menu_id: menuId
+                        menu_id: menuId,
                     }),
                 })
                 .then(response => response.json())
@@ -278,11 +269,11 @@
                     if (data.success) {
                         console.log(data.message);
 
-                        // Perbarui tampilan setelah menghapus item dari server
-                        updateCartView();
-
                         // Pastikan ini memberikan efek pada server (menghapus item dari keranjang di sisi server)
                         // ...
+
+                        // Perbarui tampilan setelah menghapus item dari server
+                        updateCartView();
                     } else {
                         console.error(data.message);
                     }
@@ -297,8 +288,9 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        function updateCartView() {
-            fetch('{{ route('update-cart-view') }}', {
+
+        function updateCartView(tenant) {
+            fetch(`{{ route('update-cart-view', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

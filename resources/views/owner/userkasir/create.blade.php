@@ -5,12 +5,12 @@
         <div class="card card-flush">
             <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                 <div class="card-title">
-                    <h2 class="fw-bolder">Tambah Owner</h2>
+                    <h2 class="fw-bolder">Tambah kasir</h2>
                 </div>
             </div>
             <div class="card-body">
                 <!-- Tambahkan formulir create di sini -->
-                <form action="{{ route('admin.owner.store') }}" method="POST">
+                <form action="{{ route('owner.kasir.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
@@ -44,7 +44,9 @@
                             required>
                             <option value="" selected disabled>Pilih Tenant</option>
                             @foreach ($tenants as $tenant)
-                                <option value="{{ $tenant->id }}">{{ $tenant->nama }}</option>
+                                @if ($tenant->id == Auth::user()->tenant_id)
+                                    <option value="{{ $tenant->id }}">{{ $tenant->nama }}</option>
+                                @endif
                             @endforeach
                         </select>
                         @error('tenant')

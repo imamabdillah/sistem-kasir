@@ -61,12 +61,7 @@
 <!-- Order Start -->
 <div class="row" style="margin-top: 80px;">
     <div class="col-md-3 d-flex flex-column align-items-start align-items-md-end me-4">
-        <a href="{{ route('kasir.menu.index') }}">
-            <button class="carousel-control-prev badge" type="button">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-        </a>
+
         <h4>Your Order</h4>
     </div>
 </div>
@@ -206,8 +201,7 @@
                         </div>
                         <form id="payment-form" action="{{ route('checkout') }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-primary py-3 px-5" id="checkoutButton"
-                                data-bs-toggle="modal" data-bs-target="#checkoutModal">
+                            <button type="submit" class="btn btn-primary py-3 px-5" id="checkoutButton">
                                 Processing Payments <i class="ms-2 fas fa-arrow-right"></i>
                             </button>
 
@@ -269,14 +263,15 @@
         class="bi bi-arrow-up"></i></a>
 
 
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script>
     const csrfTokenElement = document.head.querySelector('meta[name="csrf-token"]');
     const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
 
     let cartItems = [];
 
-    function addToCart(menuId, menuNama, menuHarga) {
-        fetch('{{ route('cart.addToCart') }}', {
+    function addToCart(menuId, menuNama, menuHarga, tenant) {
+        fetch(`{{ route('cart.addToCart', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -304,8 +299,8 @@
             .catch(error => console.error('Error:', error));
     }
 
-    function removeFromCart(menuId) {
-        fetch('{{ route('cart.removeFromCart') }}', {
+    function removeFromCart(menuId, tenant) {
+        fetch(`{{ route('cart.removeFromCart', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -333,8 +328,8 @@
             .catch(error => console.error('Error:', error));
     }
 
-    function updateCartViewAJAX() {
-        fetch('{{ route('update-cart-view') }}', {
+    function updateCartViewAJAX(tenant) {
+        fetch(`{{ route('update-cart-view', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

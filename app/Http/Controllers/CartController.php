@@ -14,6 +14,8 @@ class CartController extends Controller
         $menuName = $request->input('nama');
         $menuPrice = $request->input('harga');
 
+        // Mengambil nilai parameter tenant dari route
+        $tenant = $request->route('tenant');
         // Cek apakah item dengan menu_id sudah ada dalam keranjang
         $existingCartItem = Cart::where('menu_id', $menuId)->first();
 
@@ -25,12 +27,13 @@ class CartController extends Controller
             return response()->json(['success' => true, 'message' => 'Item quantity increased in cart', 'cart' => $existingCartItem]);
         }
 
-        // Jika belum ada, tambahkan item baru ke dalam keranjang
+
         $cart = Cart::create([
             'menu_id' => $menuId,
             'nama' => $menuName,
             'harga' => $menuPrice,
             'quantity' => 1,
+
         ]);
 
         return response()->json(['success' => true, 'message' => 'Item added to cart', 'cart' => $cart]);
@@ -40,6 +43,7 @@ class CartController extends Controller
     public function removeFromCart(Request $request)
     {
         $menuId = $request->input('menu_id');
+        $tenant = $request->route('tenant');
 
         // Validasi jika menu dengan ID tertentu ada dalam keranjang
         $cartItem = Cart::where('menu_id', $menuId)->first();
