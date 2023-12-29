@@ -13,17 +13,8 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\UserownerController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Middleware\OwnerMiddleware;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 
 
@@ -45,7 +36,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/transaksi', [AdminController::class, 'showTransaksi'])->name('admin.transaksi');
         Route::get('/tenant', [AdminController::class, 'tenant'])->name('admin.tenant');
         Route::resource('tenants', TenantController::class);
-
 
         Route::get('/dashboard/create', [MenuController::class, 'create'])->name('create');
         Route::post('/dashboard', [MenuController::class, 'store'])->name('store');
@@ -76,31 +66,51 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'owner', 'middleware' => ['auth', 'check.role:owner']], function () {
         Route::get('/dashboard', [OwnerController::class, 'dashboard'])->name('owner.dashboard');
-        // Tambahkan rute owner lainnya di sini
+        Route::get('/datamenu', [OwnerController::class, 'datamenu'])->name('owner.datamenu');
+        Route::get('/transaksi', [OwnerController::class, 'showTransaksi'])->name('owner.transaksi');
+        Route::get('/tenant', [OwnerController::class, 'tenant'])->name('owner.tenant');
+        // Route::resource('tenants', TenantController::class);
+
+        Route::get('/menu/create', [OwnerController::class, 'create'])->name('owner.create');
+        Route::post('/menu', [OwnerController::class, 'store'])->name('owner.store');
+        Route::delete('/menu/{id}', [OwnerController::class, 'destroy'])->name('owner.destroy');
+        Route::get('/menu/{id}/edit', [OwnerController::class, 'edit'])->name('owner.edit');
+        Route::put('/menu/{id}', [OwnerController::class, 'update'])->name('owner.update');
+
+        // Rute untuk pengguna dengan peran kasir
+        Route::get('/kasir', [OwnerController::class, 'kasir'])->name('owner.kasir.index');
+        Route::get('/kasir/create', [UserkasirController::class, 'createkasir'])->name('owner.kasir.create');
+        Route::post('/kasir', [UserkasirController::class, 'storekasir'])->name('owner.kasir.store');
+        Route::get('/kasir/{user}/edit', [UserkasirController::class, 'editkasir'])->name('owner.kasir.edit');
+        Route::put('/kasir/{user}', [UserkasirController::class, 'updatekasir'])->name('owner.kasir.update');
+        Route::delete('/kasir/{user}', [UserkasirController::class, 'destroykasir'])->name('owner.kasir.destroy');
+
+        // Rute untuk aksi aktivasi dan nonaktifkan pengguna
+        Route::put('/{user}/activate', [OwnerController::class, 'activate'])->name('users.activate');
+        Route::put('/{user}/deactivate', [OwnerController::class, 'deactivate'])->name('users.deactivate');
     });
+
 
     Route::group(['prefix' => 'kasir', 'middleware' => ['auth', 'check.role:kasir']], function () {
         Route::get('/menu', [KasirController::class, 'index'])->name('kasir.menu.index');
-        Route::get('/menu', [MenuController::class, 'index'])->name('kasir.menu.index');
-        Route::post('menu/add-to-cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
-        Route::post('menu/remove-from-cart', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
+        Route::get('/menu/{tenant}', [MenuController::class, 'index'])->name('kasir.menu.index');
+        Route::post('menu/add-to-cart/{tenant}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+        Route::post('menu/remove-from-cart/{tenant}', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
+        Route::get('menu/update-cart-view/{tenant}', [CartController::class, 'updateCartView'])->name('update-cart-view');
         Route::get('menu/get-note/{menuId}', [CartController::class, 'getMenuNote'])->name('get-menu-note');
         Route::post('menu/save-menu-note', [CartController::class, 'saveMenuNote'])->name('save-menu-note');
-        Route::get('menu/update-cart-view', [CartController::class, 'updateCartView'])->name('update-cart-view');
 
-        Route::get('menu/checkout', [CheckoutController::class, 'index'])->name('tampilancheckout');
+        Route::get('menu/checkout/{tenant}', [CheckoutController::class, 'index'])->name('tampilancheckout');
         Route::post('menu/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::get('menu/checkout/payment/{id}', [CheckoutController::class, 'tampilanpayment'])->name('tampilanpayment');
         Route::get('menu/checkout/payment/status/{orderId}', [CheckoutController::class, 'handleCashPayment'])->name('get-payment-status');
         Route::post('menu/checkout/payment/cash', [CheckoutController::class, 'handleCashPayment'])->name('handle-cash-payment');
         Route::post('menu/checkout/payment/success', [CheckoutController::class, 'handlePaymentSuccess'])->name('handle-payment-success');
 
-
-
-
-        // Route::post('menu/checkout//initiate-payment', [CheckoutController::class, 'initiatePayment'])->name('initiate-payment');
-
-        // Tambahkan rute kasir lainnya di sini
+        Route::get('PresensiMasuk', [KasirController::class, 'presensimasuk'])->name('presensimasuk');
+        Route::get('PresensiKeluar', [KasirController::class, 'presensikeluar'])->name('presensikeluar');
+        Route::post('checkin', [KasirController::class, 'checkIn'])->name('checkin');
+        Route::post('checkout', [KasirController::class, 'checkOut'])->name('checkout');
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
