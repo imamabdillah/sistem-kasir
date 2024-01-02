@@ -31,6 +31,8 @@
 
     <link href="{!! asset('assets/plugins/global/plugins.bundle.css') !!}" rel="stylesheet" type="text/css" />
     <link href="{!! asset('assets/css/style.bundle.css') !!}" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!--end::Global Stylesheets Bundle-->
 </head>

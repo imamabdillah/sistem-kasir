@@ -66,7 +66,8 @@
                     <script src="js/drag&drop.js"></script>
                     <br><br>
                     <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.1s">
-                        <button type="submit" class="btn btn-primary presensi2">Check Out</button>
+                        <button type="submit" class="btn btn-primary presensi2" onclick="showSuccessAlert()">Check
+                            Out</button>
                     </div>
                 </div>
             </form>
@@ -143,6 +144,10 @@
 
 
     <script>
+        function showSuccessAlert() {
+            alert('Presensi Berhasil!\nTerima kasih, presensi Anda berhasil dicatat!');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Mendapatkan elemen-elemen formulir
             const latitudeInput = document.querySelector('input[name="latitude"]');
