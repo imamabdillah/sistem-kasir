@@ -11,7 +11,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="" class="nav-item nav-link active">Home</a>
+                <a href="{{ route('kasir.menu.index', ['tenant' => '$tenant']) }}"
+                    class="nav-item nav-link active">Home</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Presensi</a>
                     <div class="dropdown-menu m-0">
@@ -19,8 +20,9 @@
                         <a href="{{ route('presensikeluar') }}" class="dropdown-item">Keluar</a>
                     </div>
                 </div>
-                <a href="" class="nav-item nav-link">Transaksi</a>
+                <a href="{{ route('kasir.transaksi') }}" class="nav-item nav-link">Transaksi</a>
             </div>
+
             <div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

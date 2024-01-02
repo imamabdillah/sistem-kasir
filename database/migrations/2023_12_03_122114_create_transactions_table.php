@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
             $table->string('status')->default('pending');
             $table->string('snap_token');
             $table->unsignedBigInteger('tenant_id')->nullable();
-
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

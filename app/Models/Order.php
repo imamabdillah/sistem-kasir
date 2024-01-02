@@ -12,6 +12,7 @@ class Order extends Model
         'id',
         'total_price',
         'tenant_id',
+        'user_id',
 
     ];
     // Relasi dengan OrderItem

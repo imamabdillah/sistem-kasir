@@ -71,6 +71,7 @@
                                 <th class="text-center min-w-100px">Payment Method</th>
                                 <th class="text-center min-w-100px">Status</th>
                                 <th class="text-center min-w-100px">Tenant</th>
+                                <th class="text-center min-w-100px">Operator</th>
                             </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600 text-center pe-0">
@@ -82,6 +83,7 @@
                                     <td>{{ $transaction->payment_method }}</td>
                                     <td>{{ $transaction->status }}</td>
                                     <td>{{ $transaction->tenant->nama }}</td>
+                                    <td>{{ $transaction->users->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

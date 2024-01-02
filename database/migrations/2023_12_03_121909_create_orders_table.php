@@ -12,7 +12,7 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
             $table->decimal('total_price', 10, 2)->default(0);
             $table->unsignedBigInteger('tenant_id')->nullable();
-
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });
     }

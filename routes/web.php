@@ -35,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/datamenu', [AdminController::class, 'datamenu'])->name('admin.datamenu');
         Route::get('/transaksi', [AdminController::class, 'showTransaksi'])->name('admin.transaksi');
         Route::get('/tenant', [AdminController::class, 'tenant'])->name('admin.tenant');
+        Route::get('/presensimasuk', [AdminController::class, 'presensimasuk'])->name('admin.presensimasuk');
+        Route::get('/presensikeluar', [AdminController::class, 'presensikeluar'])->name('admin.presensikeluar');
+
         Route::resource('tenants', TenantController::class);
 
         Route::get('/dashboard/create', [MenuController::class, 'create'])->name('create');
@@ -69,7 +72,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/datamenu', [OwnerController::class, 'datamenu'])->name('owner.datamenu');
         Route::get('/transaksi', [OwnerController::class, 'showTransaksi'])->name('owner.transaksi');
         Route::get('/tenant', [OwnerController::class, 'tenant'])->name('owner.tenant');
-        // Route::resource('tenants', TenantController::class);
+        Route::get('/presensimasuk', [OwnerController::class, 'masuk'])->name('owner.presensimasuk');
+        Route::get('/presensikeluar', [OwnerController::class, 'keluar'])->name('owner.presensikeluar');
+
 
         Route::get('/menu/create', [OwnerController::class, 'create'])->name('owner.create');
         Route::post('/menu', [OwnerController::class, 'store'])->name('owner.store');
@@ -109,8 +114,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('PresensiMasuk', [KasirController::class, 'presensimasuk'])->name('presensimasuk');
         Route::get('PresensiKeluar', [KasirController::class, 'presensikeluar'])->name('presensikeluar');
-        Route::post('checkin', [KasirController::class, 'checkIn'])->name('checkin');
-        Route::post('checkout', [KasirController::class, 'checkOut'])->name('checkout');
+        Route::get('transaksi', [KasirController::class, 'transaksi'])->name('kasir.transaksi');
+        Route::post('checkin', [KasirController::class, 'checkIn'])->name('presensiIn');
+        Route::post('checkout', [KasirController::class, 'checkOut'])->name('presensiOut');
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

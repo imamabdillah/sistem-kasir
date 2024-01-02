@@ -17,6 +17,7 @@ class OrderItem extends Model
         'quantity',
         'note',
         'tenant_id',
+        'user_id',
     ];
 
     // Definisikan relasi dengan order

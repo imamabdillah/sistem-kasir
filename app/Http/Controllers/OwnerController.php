@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\User;
 use App\Models\Tenant;
 use App\Models\Category;
 use App\Models\Transaction;
-use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Auth;
-
-use App\Models\User;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
+
+use App\Models\PresensiMasuk;
+use App\Models\PresensiKeluar;
+use Illuminate\Validation\Rule;
+
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -72,15 +74,39 @@ class OwnerController extends Controller
 
         // Mendapatkan data tenant (jika diperlukan)
         $tenants = Tenant::all();
+        $users = User::all();
 
         return view('owner.transaksi', compact('transactions', 'tenants'));
     }
+
     public function Tenant()
     {
         $tenants = Tenant::all();
 
         return view('owner.tenant.tenant', compact('tenants'));
     }
+
+    public function masuk()
+    {
+        $presensiMasuk = PresensiMasuk::all();
+        $presensiKeluar = PresensiKeluar::all();
+
+        $tenants = Tenant::all();
+
+        // $combinedData = $presensiMasuk->merge($presensiKeluar)->sortBy('checkout_date');
+
+        return view('owner.presensimasuk', compact('presensiMasuk', 'tenants'));
+    }
+    public function keluar()
+    {
+        $presensiMasuk = PresensiMasuk::all();
+        $presensiKeluar = PresensiKeluar::all();
+
+        // $combinedData = $presensiMasuk->merge($presensiKeluar)->sortBy('checkout_date');
+
+        return view('owner.presensikeluar', compact('presensiKeluar'));
+    }
+
     public function activate(User $user)
     {
         $user->update(['is_active' => true]);

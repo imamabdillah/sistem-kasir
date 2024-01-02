@@ -27,9 +27,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Tenant::class);
     }
-    public function presensi()
+
+    public function presensiMasuk()
     {
-        return $this->hasMany(Presensi::class);
+        return $this->hasOne(PresensiMasuk::class);
     }
 
     protected $hidden = [

@@ -12,13 +12,17 @@ class CreatePresensiKeluarTable extends Migration
         Schema::create('presensi_keluars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('tenant_id');
             $table->date('checkout_date');
             $table->time('checkout_time');
             $table->text('checkout_note')->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->string('photo')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants');
+
             $table->timestamps();
         });
     }

@@ -9,57 +9,11 @@
 
 
 <!-- Navbar Start -->
-<div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-    <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
-    </div>
-
-    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-        <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
-            <h1 class="fw-bold text-primary m-0">F<span class="text-secondary">oo</span>dy</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About Us</a>
-                <a href="tenant.html" class="nav-item nav-link">Tenant</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu m-0">
-                        <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                        <a href="feature.html" class="dropdown-item">Our Features</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
-                    </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact Us</a>
-            </div>
-            <div class="text-center mt-3">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5">Logout</button>
-                </form>
-            </div>
-            <div class="d-none d-lg-flex ms-2">
-                <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                    <small class="fa fa-search text-body"></small>
-                </a>
-                <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                    <small class="fa fa-user text-body"></small>
-                </a>
-                <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                    <small class="fa fa-shopping-bag text-body"></small>
-                </a>
-            </div>
-        </div>
-    </nav>
-</div>
+@include('layout.kasirnav')
 <!-- Navbar End -->
 
 <!-- Order Start -->
-<div class="row" style="margin-top: 80px;">
+<div class="row" style="margin-top: 100px;">
     <div class="col-md-3 d-flex flex-column align-items-start align-items-md-end me-4">
 
         <h4>Your Order</h4>
@@ -70,25 +24,7 @@
         <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
-                    <div class="job-item p-4 mb-4">
-                        <div class="row g-4">
-                            <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                <div class="text-start ps-4">
-                                    <h5 class="mb-3"><strong>Order ID 00001</strong></h5>
-                                    <span class="text-truncate me-3"><i
-                                            class="text-primary me-2"></i><strong>Dinar</strong></span>
-                                </div>
-                            </div>
-                            <div
-                                class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                <div class="d-flex mb-4"></div>
-                                <small class="text-truncate"><strong>Dine in</strong>
-                                    <span class="ms-2"><strong>&middot;</strong></span>
-                                    <span class="ms-2"><strong>T-10</strong></span>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
+
                     @foreach ($carts as $cartItem)
                         <div class="job-item p-4 mb-4">
                             <div class="row g-4">
@@ -131,7 +67,7 @@
                         </div>
                     @endforeach
 
-                    <div class="job-item2 p-2 mb-4">
+                    {{-- <div class="job-item2 p-2 mb-4">
                         <div class="row g-4 table-responsive">
                             <div class="col-sm-12 col-md-8 d-flex align-items-center">
                                 <span class="btn p-2 text-start">
@@ -147,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="job-item p-4 mb-4">
                         <div class="row g-4">
                             <div class="col-sm-12 col-md-8 text-start">

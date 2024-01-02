@@ -11,6 +11,7 @@ class PresensiKeluar extends Model
 
     protected $fillable = [
         'user_id',
+        'tenant_id',
         'checkout_date',
         'checkout_time',
         'checkout_note',
@@ -23,5 +24,9 @@ class PresensiKeluar extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
     }
 }

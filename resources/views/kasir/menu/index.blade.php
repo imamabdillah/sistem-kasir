@@ -18,7 +18,7 @@
     <!-- Navbar End -->
 
     <!-- About Start -->
-    <div class="container-fluid pt-5"style="margin-top: 80px;">
+    <div class="container-fluid pt-5" style="margin-top: 80px;">
         <div class="container">
             <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
                 <h2 class="text-primary font-secondary">Menu</h2>

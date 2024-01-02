@@ -11,13 +11,17 @@ class CreatePresensiMasukTable extends Migration
         Schema::create('presensi_masuks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('tenant_id');
             $table->date('checkin_date');
             $table->time('checkin_time');
             $table->text('checkin_note')->nullable();
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->string('photo')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants');
+
             $table->timestamps();
         });
     }

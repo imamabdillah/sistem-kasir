@@ -11,6 +11,7 @@ class PresensiMasuk extends Model
 
     protected $fillable = [
         'user_id',
+        'tenant_id',
         'checkin_date',
         'checkin_time',
         'checkin_note',
@@ -23,5 +24,10 @@ class PresensiMasuk extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
     }
 }

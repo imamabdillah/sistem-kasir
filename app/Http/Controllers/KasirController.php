@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\PresensiMasuk;
 use App\Models\PresensiKeluar;
@@ -24,6 +26,27 @@ class KasirController extends Controller
         return view('kasir.presensikeluar');
     }
 
+    public function transaksi()
+    {
+        $operatorId = Auth::user()->id;
+
+        // Mendapatkan transaksi berdasarkan user_id
+        $transactions = Transaction::where('user_id', $operatorId)->get();
+
+        // Mendapatkan tenant_id dari pengguna yang saat ini masuk
+        // $tenantId = Auth::user()->tenant_id;
+
+        // // Mendapatkan transaksi berdasarkan tenant_id
+        // $transactions = Transaction::whereHas('tenant', function ($query) use ($tenantId) {
+        //     $query->where('id', $tenantId);
+        // })->get();
+
+        // Mendapatkan data tenant (jika diperlukan)
+        $tenants = Tenant::all();
+
+        return view('kasir.transaksi', compact('transactions', 'tenants'));
+    }
+
     public function checkIn(Request $request)
     {
         // Validasi data formulir
@@ -43,6 +66,7 @@ class KasirController extends Controller
 
         $presensiMasuk = new PresensiMasuk([
             'user_id' => $currentUser->id,
+            'tenant_id' => $currentUser->tenant->id,
             'checkin_date' => $request->checkin_date,
             'checkin_time' => $request->checkin_time,
             'checkin_note' => $request->checkin_note,
@@ -81,6 +105,7 @@ class KasirController extends Controller
 
         $presensiKeluar = new PresensiKeluar([
             'user_id' => $currentUser->id,
+            'tenant_id' => $currentUser->tenant->id,
             'checkout_date' => $request->checkout_date,
             'checkout_time' => $request->checkout_time,
             'checkout_note' => $request->checkout_note,

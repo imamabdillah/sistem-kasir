@@ -57,30 +57,97 @@
                 </div>
                 <!--end::Card header-->
                 <!--begin::Card body-->
-                <div class="card-body pt-0">
+                {{-- <div class="card-body pt-0">
                     <!--begin::Table-->
-                    <table tabel-layout="fixed"class="table align-middle table-row-dashed fs-6 gy-5"
-                        id="kt_ecommerce_products_table">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
                         <!--begin::Table head-->
                         <thead>
                             <tr>
                                 <th class="w-10px pe-2">No</th>
-                                <th class="text-center min-w-0px">Order ID</th>
-                                <th class="text-center min-w-100px">Total Price</th>
-                                <th class="text-center min-w-100px">Payment Method</th>
-                                <th class="text-center min-w-100px">Status</th>
-                                <th class="text-center min-w-100px">Tenant</th>
+                                <th>User ID</th>
+                                <th>Checkin Date</th>
+                                <th>Checkin Time</th>
+                                <th>Checkout Date</th>
+                                <th>Checkout Time</th>
+                                <!-- Add other columns as needed -->
                             </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600 text-center pe-0">
-                            @foreach ($transactions as $transaction)
+                            @foreach ($combinedData as $index => $data)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $data->user_id }}</td>
+                                    <td>{{ $data->checkin_date }}</td>
+                                    <td>{{ $data->checkin_time }}</td>
+                                    <td>{{ $data->checkout_date }}</td>
+                                    <td>{{ $data->checkout_time }}</td>
+                                    <!-- Add other columns as needed -->
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
+                </div> --}}
+                <div class="card-body pt-0">
+                    <!--begin::Table-->
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_products_table">
+                        <!--begin::Table head-->
+                        <thead>
+                            <tr>
+                                <th class="w-10px  py-5 gap-2 gap-md-5">No</th>
+                                <th class="text-center min-w-0px">User</th>
+                                <th class="text-center min-w-0px">Tenant</th>
+                                <th class="text-center min-w-100px">Checkout Date</th>
+                                <th class="text-center min-w-100px">Checkout Time</th>
+                                <th class="text-center min-w-100px">Checkout Note</th>
+                                <th class="text-center min-w-100px">Lokasi</th>
+                                <th class="text-center min-w-70px">Foto</th>
+                            </tr>
+                        </thead>
+                        <tbody class="fw-semibold text-gray-600 text-center pe-0">
+                            @foreach ($presensiKeluar as $presensi)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $transaction->order_id }}</td>
-                                    <td> {{ 'Rp ' . number_format($transaction->total_price, 0, ',', '.') }}</td>
-                                    <td>{{ $transaction->payment_method }}</td>
-                                    <td>{{ $transaction->status }}</td>
-                                    <td>{{ $transaction->tenant->nama }}</td>
+                                    <td>{{ $presensi->user->name }}</td>
+                                    <td>{{ $presensi->tenant->nama }}</td>
+                                    <td>{{ $presensi->checkout_date }}</td>
+                                    <td>{{ $presensi->checkout_time }}</td>
+                                    <td>{{ $presensi->checkout_note }}</td>
+                                    <td>
+                                        <!-- Tautan ke Google Maps -->
+                                        <a href="https://www.google.com/maps?q={{ $presensi->latitude }},{{ $presensi->longitude }}"
+                                            target="_blank">
+                                            Lihat Lokasi
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <!-- Tombol untuk melihat foto -->
+                                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#fotoModal{{ $presensi->id }}">
+                                            Lihat Foto
+                                        </button>
+
+                                        <!-- Modal untuk menampilkan foto -->
+                                        <div class="modal fade" id="fotoModal{{ $presensi->id }}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Foto Checkin</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+                                                        <!-- Tampilkan foto di sini -->
+                                                        <img src="{{ asset('storage/photo/' . $presensi->photo) }}"
+                                                            alt="Checkin Photo" class="img-fluid">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
                                 </tr>
                             @endforeach
                         </tbody>
@@ -88,6 +155,7 @@
                     </table>
                     <!--end::Table-->
                 </div>
+
 
                 <!--end::Card body-->
             </div>

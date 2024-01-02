@@ -92,6 +92,7 @@ class CheckoutController extends Controller
     public function checkout(Request $request)
     {
         $tenant = Auth::user()->tenant_id;
+        $currentUser = Auth::user();
         Log::info('Checkout method called.');
 
         // Ambil item di keranjang
@@ -109,6 +110,7 @@ class CheckoutController extends Controller
             'id' => $uniqueId,
             'total_price' => $this->calculateTotalPrice($cartItems),
             'tenant_id' => $tenant,
+            'user_id' => $currentUser->id,
         ]);
 
         // Pindahkan item dari keranjang ke order_items
@@ -121,6 +123,7 @@ class CheckoutController extends Controller
                 'quantity' => $cartItem->quantity,
                 'note' => $cartItem->note,
                 'tenant_id' => $tenant,
+                'user_id' => $currentUser->id,
             ]);
         }
 
@@ -158,6 +161,7 @@ class CheckoutController extends Controller
             $transaction->total_price = $order->total_price;
             $transaction->snap_token = $snapToken;
             $transaction->tenant_id = $tenant;
+            $transaction->user_id = $currentUser->id;
             $transaction->save();
             Log::info('Transaction saved successfully.');
 
@@ -170,6 +174,9 @@ class CheckoutController extends Controller
 
     public function tampilanpayment($id)
     {
+        // Mengambil semua order items dari database
+        $orderItems = OrderItem::all();
+
         // Mengambil transaksi berdasarkan ID
         $transaction = Transaction::find($id);
 
@@ -178,12 +185,19 @@ class CheckoutController extends Controller
             return redirect()->route('tampilanpayment')->with('error', 'Transaksi tidak ditemukan.');
         }
 
+        // Filter order items berdasarkan order id pada transaksi
+        $orderItemsForOrderId = $orderItems->filter(function ($item) use ($transaction) {
+            return $item->order_id == $transaction->order_id;
+        });
+
         // Mengambil data lain yang diperlukan
         $carts = Cart::with('menu')->get();
         $menus = Menu::all();
-        $totalItems = $carts->sum('quantity');
-        $totalPrice = $carts->sum(function ($item) {
-            return $item->quantity * $item->menu->harga;
+
+        // Menghitung total items dan total price dari order items yang sesuai
+        $totalItems = $orderItemsForOrderId->sum('quantity');
+        $totalPrice = $orderItemsForOrderId->sum(function ($item) {
+            return $item->quantity * $item->harga;
         });
 
         // Mengirimkan data ke tampilan
@@ -193,8 +207,11 @@ class CheckoutController extends Controller
             'totalPrice' => $totalPrice,
             'menus' => $menus,
             'transaction' => $transaction,
+            'orderItems' => $orderItems,
+            'order_id' => $transaction->order_id // Menyesuaikan variabel order_id
         ]);
     }
+
 
     public function getPaymentStatus($orderId)
     {

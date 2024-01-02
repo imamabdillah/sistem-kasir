@@ -16,6 +16,7 @@ class Transaction extends Model
         'status',
         'snap_token',
         'tenant_id',
+        'user_id',
     ];
 
     public function tenant()
@@ -25,5 +26,9 @@ class Transaction extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
