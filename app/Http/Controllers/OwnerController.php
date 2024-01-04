@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Menu;
 use App\Models\User;
 use App\Models\Tenant;
 use App\Models\Category;
+
 use App\Models\Transaction;
 
 use Illuminate\Http\Request;
-
 use App\Models\PresensiMasuk;
 use App\Models\PresensiKeluar;
-use Illuminate\Validation\Rule;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,11 +26,56 @@ class OwnerController extends Controller
 
     public function dashboard()
     {
+        // Mendapatkan ID Tenant dari pengguna yang login
+        $tenantId = auth()->user()->tenant_id;
+
+        // Mengambil transaksi yang berhasil sesuai dengan ID Tenant
+        $successTransactions = Transaction::where('status', 'success')
+            ->where('tenant_id', $tenantId)
+            ->get();
+
+        // Menghitung total transaksi yang berhasil
+        $totalSuccessTransactions = $successTransactions->sum('total_price');
+
+        // Mendapatkan metode pembayaran unik dari transaksi yang berhasil
+        $paymentMethods = $successTransactions->pluck('payment_method')->unique()->values();
+
+        $totalPrices = [];
+
+        // Menghitung total harga untuk setiap metode pembayaran
+        foreach ($paymentMethods as $method) {
+            $totalPrices[] = $successTransactions->where('payment_method', $method)->sum('total_price');
+        }
+
+        // Tambahkan logika untuk mendapatkan data transaksi harian
+        $dailyTransactions = $successTransactions->groupBy(function ($transaction) {
+            return Carbon::parse($transaction->created_at)->toDateString();
+        });
+
+        $dailyTransactionDates = $dailyTransactions->keys()->toArray();
+        $dailyTransactionTotalPrices = $dailyTransactions->map(function ($transactions) {
+            return $transactions->sum('total_price');
+        })->values()->toArray();
+
+        // Mendapatkan data transaksi, menu, kategori, dan tenant (jika diperlukan)
+        $transactions = Transaction::all();
         $menus = Menu::all();
         $categories = Category::all();
         $tenants = Tenant::all();
-        return view('owner.dashboard', compact('menus', 'categories', 'tenants'));
+
+        return view('owner.dashboard', compact(
+            'menus',
+            'transactions',
+            'categories',
+            'tenants',
+            'totalSuccessTransactions',
+            'paymentMethods',
+            'totalPrices',
+            'dailyTransactionDates',
+            'dailyTransactionTotalPrices'
+        ));
     }
+
 
     public function datamenu()
     {

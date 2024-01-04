@@ -19,7 +19,7 @@ class MenuController extends Controller
 {
     public function index(Request $request, $tenant)
     {
-        $menus = Menu::where('tenant_id', $tenant)->get();
+        $menus = Menu::where('tenant_id', $tenant)->paginate(12); // Sesuaikan jumlah item per halaman sesuai kebutuhan
         $categories = Category::all();
         $tenants = Tenant::all();
         $cart = Cart::all();

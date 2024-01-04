@@ -104,8 +104,14 @@
                                 @endif
                             @endforeach
                         </div>
+                        {{-- <div class="d-flex justify-content-center">
+                            {{ $menus->links() }}
+                        </div> --}}
                     </div>
                 @endforeach
+
+                <!-- Add pagination links -->
+
 
                 <a href="{{ route('tampilancheckout', ['tenant' => $tenant]) }}">
 
