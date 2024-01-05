@@ -5,15 +5,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
-use App\Http\Controllers\UserkasirController;
+use App\Http\Middleware\OwnerMiddleware;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\UserkasirController;
 use App\Http\Controllers\UserownerController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Middleware\OwnerMiddleware;
+use App\Http\Controllers\Auth\RegisterController;
 
 
 
@@ -23,9 +24,10 @@ Route::get('/aboutus', [HomeController::class, 'AboutUs'])->name('aboutus');
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 // Rute Auth
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 // Rute Dashboard
 Route::middleware(['auth'])->group(function () {

@@ -74,7 +74,7 @@
                                                 class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{ number_format($totalSuccessTransactions, 0, ',', '.') }}</span>
                                             <!--end::Amount-->
                                             <!--begin::Badge-->
-                                            <span class="badge badge-light-success fs-base">
+                                            {{-- <span class="badge badge-light-success fs-base">
                                                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                 <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
                                                     <svg width="24" height="24" viewBox="0 0 24 24"
@@ -87,7 +87,7 @@
                                                             fill="currentColor" />
                                                     </svg>
                                                 </span>
-                                                <!--end::Svg Icon-->2.2%</span>
+                                                <!--end::Svg Icon-->2.2%</span> --}}
                                             <!--end::Badge-->
                                         </div>
                                         <!--end::Info-->
