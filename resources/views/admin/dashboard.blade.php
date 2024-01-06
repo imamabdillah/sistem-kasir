@@ -206,14 +206,10 @@
                                             <span
                                                 class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ $totalSuccessTransactions }}</span>
                                         </div>
-                                        <!--end::Statistics-->
-                                        <!--begin::Description-->
-                                        <!--end::Description-->
+
                                     </div>
-                                    <!--end::Statistics-->
-                                    <!--begin::Chart-->
-                                    <div id="dailySalesChart" class="min-h-auto ps-4 pe-6" style="height: 300px">
-                                        <!-- Chart placeholder -->
+                                    <div style="height: 300px">
+                                        <canvas id="dailySalesChart" class="min-h-auto ps-4 pe-6"></canvas>
                                     </div>
                                     <!--end::Chart-->
                                 </div>
@@ -221,12 +217,10 @@
                             </div>
                             <!--end::Chart widget 3-->
                         </div>
-
                         <!--end::Col-->
                     </div>
                     <!--end::Row-->
-                    <!--begin::Row-->
-                    <!--end::Row-->
+
                     <div class="card card-flush">
                         <!--begin::Card header-->
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
