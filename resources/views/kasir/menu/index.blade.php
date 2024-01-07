@@ -24,15 +24,16 @@
                 <h2 class="text-primary font-secondary">Menu</h2>
                 <h1 class="display-4 text-uppercase">{{ $currentTenant->nama }}</h1>
             </div>
-            <form class="row gx-4 gy-2 align-items-center justify-content-center">
-                <div class="col-xl-4  mb-xl-10">
-                    <div class="input-group-icon"><i class="fa fa-search text-body input-box-icon"></i>
+            <form class="row gx-4 gy-2 align-items-center justify-content-center" id="menuSearchForm">
+                <div class="col-xl-4 mb-xl-10">
+                    <div class="input-group-icon">
+                        <i class="fa fa-search text-body input-box-icon"></i>
                         <input class="form-control input-box form-food-control" id="inputPickup" type="text"
-                            placeholder="Search" />
+                            placeholder="Search" name="search" />
                     </div>
                 </div>
                 <div class="d-grid gap-3 col-sm-auto">
-                    <button class="btn btn-primary search-border" type="submit">SEARCH</button>
+                    <button class="btn btn-primary search-border" type="button" onclick="searchMenu()">SEARCH</button>
                 </div>
             </form>
             <br>
@@ -40,9 +41,6 @@
 
             <div class="position-relative text-center wow slideInRight" data-wow-delay="0.1s">
                 <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                    {{-- <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2 active" data-bs-toggle="pill" href="#tab-1">All</a>
-                    </li> --}}
                     @foreach ($categories as $category)
                         <li class="nav-item me-2">
                             <a class="btn btn-outline-primary border-2" data-bs-toggle="pill"
@@ -104,13 +102,14 @@
                                 @endif
                             @endforeach
                         </div>
-                        {{-- <div class="d-flex justify-content-center">
-                            {{ $menus->links() }}
-                        </div> --}}
+
                     </div>
                 @endforeach
 
                 <!-- Add pagination links -->
+                <div class="d-flex justify-content-center mt-4">
+                    {{ $menus->onEachSide(1)->links('pagination::bootstrap-4') }}
+                </div>
 
 
                 <a href="{{ route('tampilancheckout', ['tenant' => $tenant]) }}">
@@ -347,6 +346,23 @@
             // Set catatan dari variabel savedNote ke dalam textarea
             document.getElementById('menuNote').value = savedNote;
         });
+
+        function searchMenu() {
+            var searchQuery = document.getElementById('inputPickup').value.trim().toLowerCase();
+            console.log('Search Query:', searchQuery);
+
+            var allMenus = document.querySelectorAll('.product-item');
+            allMenus.forEach(function(menu) {
+                var menuName = menu.querySelector('.d-block.h5').innerText.toLowerCase();
+                console.log('Menu Name:', menuName);
+
+                if (menuName.includes(searchQuery)) {
+                    menu.style.display = 'block';
+                } else {
+                    menu.style.display = 'none';
+                }
+            });
+        }
     </script>
 
 
