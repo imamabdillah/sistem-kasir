@@ -16,7 +16,7 @@
     <!-- Navbar End -->
 
     <!-- Check In Section Start -->
-    <div class="container-fluid pt-5" style="margin-top: 100px;">
+    <div class="container-fluid pt-5">
         <div class="container">
             <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
                 <h2 class="text-primary font-secondary">Check In</h2>
@@ -26,7 +26,7 @@
                 <!-- Google Maps Embed -->
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.9741307531685!2d110.778449!3d-7.577794599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a15ebf40a24db%3A0x45924a20fea02b47!2sFOOD%20COURT%20%22KENANGAN%22!5e0!3m2!1sen!2sid!4v1702871802155!5m2!1sen!2sid"
-                    width="1280" height="720" style="border:0;" allowfullscreen="" loading="lazy"
+                    width="100%" height="720" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
@@ -74,26 +74,9 @@
             <br>
         </div>
     </div>
+
     <!-- Check In Section End -->
 
-    <!-- Success Modal Start -->
-    {{-- <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Presensi Berhasil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Terima kasih, presensi Anda berhasil dicatat!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- Success Modal End -->
 
     <!-- ... (Footer dan Back to Top) ... -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

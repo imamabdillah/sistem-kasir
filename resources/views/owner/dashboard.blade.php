@@ -215,9 +215,8 @@
                                     </div>
                                     <!--end::Statistics-->
                                     <!--begin::Chart-->
-                                    <div id="dailySalesChart" class="min-h-auto ps-4 pe-6" style="height: 300px">
-                                        <!-- Chart placeholder -->
-                                    </div>
+                                    <canvas id="dailySalesChart" class="min-h-auto ps-4 pe-6"></canvas>
+
                                     <!--end::Chart-->
                                 </div>
                                 <!--end::Card body-->

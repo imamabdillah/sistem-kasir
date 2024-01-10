@@ -11,6 +11,8 @@ use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\UserkasirController;
 use App\Http\Controllers\UserownerController;
 use App\Http\Controllers\Auth\LoginController;
@@ -76,6 +78,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/tenant', [OwnerController::class, 'tenant'])->name('owner.tenant');
         Route::get('/presensimasuk', [OwnerController::class, 'masuk'])->name('owner.presensimasuk');
         Route::get('/presensikeluar', [OwnerController::class, 'keluar'])->name('owner.presensikeluar');
+
+        //CRUD supplier
+        Route::resource('suppliers', SupplierController::class);
+        //CRUD bahanbaku
+        Route::resource('bahanbaku', BahanBakuController::class);
 
 
         Route::get('/menu/create', [OwnerController::class, 'create'])->name('owner.create');

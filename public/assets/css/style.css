@@ -1,4 +1,39 @@
 /********** Template CSS **********/
+/* CSS untuk modal */
+#cashPaymentModal {
+    display: none; /* Modal defaultnya tersembunyi */
+    position: fixed; /* Tetap di tempat ketika scroll */
+    z-index: 1; /* Letakkan modal di atas konten */
+    left: 0;
+    top: 0;
+    width: 100%; /* Lebar modal 100% */
+    height: 100%; /* Tinggi modal 100% */
+    overflow: auto; /* Aktifkan scroll jika diperlukan */
+    background-color: rgba(0,0,0,0.4); /* Warna latar belakang transparan */
+    padding-top: 50px; /* Letakkan modal di bawah header */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* Tempatkan modal di tengah layar */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Lebar kontennya */
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
 :root {
     --primary: #3CB815;
     --secondary: #F65005;
@@ -897,7 +932,7 @@ h6,
 
 
 input {
-    width: 1290px;
+    width: 100%;
     margin-bottom: 15px;
     border-radius: 5px;
     padding: 10px 10px;
@@ -908,7 +943,7 @@ input {
 .drag-area{
     border: 2px solid #3CB815;
     height: 500px;
-    width: 1290px;
+    width: 100%;
     border-radius: 5px;
     display: flex;
     align-items: center;

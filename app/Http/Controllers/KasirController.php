@@ -29,22 +29,11 @@ class KasirController extends Controller
     public function transaksi()
     {
         $operatorId = Auth::user()->id;
-
         // Mendapatkan transaksi berdasarkan user_id
         $transactions = Transaction::where('user_id', $operatorId)->get();
-
-        // Mendapatkan tenant_id dari pengguna yang saat ini masuk
-        // $tenantId = Auth::user()->tenant_id;
-
-        // // Mendapatkan transaksi berdasarkan tenant_id
-        // $transactions = Transaction::whereHas('tenant', function ($query) use ($tenantId) {
-        //     $query->where('id', $tenantId);
-        // })->get();
-
-        // Mendapatkan data tenant (jika diperlukan)
-        $tenants = Tenant::all();
-
-        return view('kasir.transaksi', compact('transactions', 'tenants'));
+        // Menghitung total transaksi sukses
+        $totalHargaTransaksi = $transactions->where('status', 'success')->sum('total_price');
+        return view('kasir.transaksi', compact('transactions', 'totalHargaTransaksi'));
     }
 
     public function checkIn(Request $request)

@@ -21,11 +21,10 @@
                 <h1 class="display-4 text-uppercase">Presensi Keluar</h1>
             </div>
             <div class="justify-content-center text-center">
+                <!-- Google Maps Embed -->
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.9741307531685!2d110.778449!3d-7.577794599999999!2m3!1f0!
-                2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a15ebf40a24db%3A0x45924a20fea02b47!2sFOOD%20COURT%20%22KENANGAN%22!5e0!3m2!1sen!
-                2sid!4v1702871802155!5m2!1sen!2sid"
-                    width="1280" height="720" style="border:0;" allowfullscreen="" loading="lazy"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.9741307531685!2d110.778449!3d-7.577794599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a15ebf40a24db%3A0x45924a20fea02b47!2sFOOD%20COURT%20%22KENANGAN%22!5e0!3m2!1sen!2sid!4v1702871802155!5m2!1sen!2sid"
+                    width="100%" height="720" style="border:0;" allowfullscreen="" loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div> <br>
