@@ -160,7 +160,7 @@
                                     <div class="col-md-6" style="min-height: 400px;">
                                         <div class="position-relative h-100">
                                             <img class="position-absolute img-fluid w-100 h-100"
-                                                src="assets/img/Tempat.png" style="object-fit: cover;"
+                                                src='{!! asset('assets/img/Tempat.png') !!}' style="object-fit: cover;"
                                                 alt="">
                                         </div>
                                     </div>
