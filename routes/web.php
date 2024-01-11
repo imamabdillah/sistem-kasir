@@ -9,6 +9,7 @@ use App\Http\Middleware\OwnerMiddleware;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\SupplierController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\BahanBakuController;
 use App\Http\Controllers\UserkasirController;
 use App\Http\Controllers\UserownerController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TenantInfoController;
 use App\Http\Controllers\Auth\RegisterController;
 
 
@@ -83,6 +85,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('suppliers', SupplierController::class);
         //CRUD bahanbaku
         Route::resource('bahanbaku', BahanBakuController::class);
+        //CRUD tenantinfo
+        Route::resource('tenantinfos', TenantInfoController::class);
+
 
 
         Route::get('/menu/create', [OwnerController::class, 'create'])->name('owner.create');
@@ -126,6 +131,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('transaksi', [KasirController::class, 'transaksi'])->name('kasir.transaksi');
         Route::post('checkin', [KasirController::class, 'checkIn'])->name('presensiIn');
         Route::post('checkout', [KasirController::class, 'checkOut'])->name('presensiOut');
+    });
+
+    Route::group(['prefix' => 'member', 'middleware' => ['auth', 'check.role:member']], function () {
+        Route::get('/home', [MemberController::class, 'home'])->name('member.home');
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

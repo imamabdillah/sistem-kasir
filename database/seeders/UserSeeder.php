@@ -40,11 +40,12 @@ class UserSeeder extends Seeder
             'is_active' => true
         ]);
 
-        // DB::table('users')->insert([
-        //     'name' => 'Member',
-        //     'email' => 'member@example.com',
-        //     'role' => 'member',
-        //     'password' => Hash::make('member123'),
-        // ]);
+        DB::table('users')->insert([
+            'name' => 'Member',
+            'email' => 'member@example.com',
+            'role' => 'member',
+            'password' => Hash::make('member123'),
+            'is_active' => true
+        ]);
     }
 }

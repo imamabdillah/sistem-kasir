@@ -26,8 +26,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        // Debugging statement
-        // dd($user->role);
+
 
         // Redirect based on user role
         if ($user->role === 'admin') {
@@ -36,7 +35,11 @@ class LoginController extends Controller
             return redirect()->route('owner.dashboard');
         } elseif ($user->role === 'kasir') {
             return redirect()->route('kasir.menu.index', ['tenant' => $user->tenant_id]);
+        } elseif ($user->role === 'member') {
+            // Customize this route based on where you want members to be redirected
+            return redirect()->route('member.home');
         }
+
 
         // Default redirect for other roles
         return redirect()->route('home');
