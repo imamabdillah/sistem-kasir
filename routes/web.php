@@ -71,6 +71,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/kasir/{user}', [UserkasirController::class, 'update'])->name('admin.kasir.update');
         Route::delete('/kasir/{user}', [UserkasirController::class, 'destroy'])->name('admin.kasir.destroy');
 
+        // Rute untuk pengguna dengan peran member
+        Route::get('/member', [MemberController::class, 'index'])->name('admin.member.index');
+
         // Rute untuk aksi aktivasi dan nonaktifkan pengguna
         Route::put('/{user}/activate', [AdminController::class, 'activate'])->name('users.activate');
         Route::put('/{user}/deactivate', [AdminController::class, 'deactivate'])->name('users.deactivate');
