@@ -20,6 +20,14 @@ class HomeController extends Controller
     {
         return view('aboutus');
     }
+    public function ContactUs()
+    {
+        return view('contactus');
+    }
+    public function tenant()
+    {
+        return view('tenant');
+    }
     public function home()
     {
         $user = auth()->user();

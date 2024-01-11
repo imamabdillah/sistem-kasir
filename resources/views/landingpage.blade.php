@@ -26,19 +26,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="{{ '/' }}" class="nav-item nav-link active">Home</a>
                     <a href="{{ '/aboutus' }}" class="nav-item nav-link">About Us</a>
 
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="blog.html" class="dropdown-item">Blog Grid</a>
-                            <a href="feature.html" class="dropdown-item">Our Features</a>
-                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                            <a href="404.html" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                    <a href="{{ '/tenant' }}" class="nav-item nav-link">Tenant</a>
+
+                    <a href="{{ '/contactus' }}" class="nav-item nav-link">Contact Us</a>
                 </div>
                 <div>
                     <a href="{{ '/login' }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>

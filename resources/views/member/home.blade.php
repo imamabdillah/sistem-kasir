@@ -177,6 +177,14 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+
+                    </div>
+                    <div>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit"
+                                class="btn btn-secondary rounded-pill py-sm-3 px-sm-5">Logout</button>
+                        </form>
                     </div>
                 </li>
                 </ul>
@@ -184,6 +192,8 @@
         </nav>
     </div>
     <!-- Navbar End -->
+
+
 
 
     <!-- About Start -->
@@ -216,88 +226,21 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
+
                         <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                             <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100 gambar-kecil" src="img/cimol.jpeg" alt="">
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="tenant1.html">Tenant 1</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100 gambar-kecil" src="img/miegoreng.jpg" alt="">
-                                    <!-- <div class="card-img-overlay ps-0">
-                                        <span class="badge bg-primary p-2 ms-3 rounded-pill"><i class="fas fa-plus me-0 fs-0"></i></span>
-                                        <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i class="fas fa-minus me-0 fs-0"></i></span>
-                                        <span class="badge bg-primary p-2 ms-4 rounded-pill"><i class="fas fa-list-alt me-0 fs-0"></i></span>
-                                        <span class="badge bg-danger ms-6 me-1 p-2 rounded-pill">2</span>
-                                    </div> -->
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Tenant 2</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100 gambar-kecil" src="img/ayamgorengkremes.jpeg"
-                                        alt="">
-                                    <!-- <div class="card-img-overlay ps-0">
-                                        <span class="badge bg-primary p-2 ms-3 rounded-pill"><i class="fas fa-plus me-0 fs-0"></i></span>
-                                        <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i class="fas fa-minus me-0 fs-0"></i></span>
-                                    </div> -->
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Tenant 3</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100 gambar-kecil" src="img/esteh.jpg" alt="">
-                                    <!-- <div class="card-img-overlay ps-0">
-                                        <span class="badge bg-primary p-2 ms-3 rounded-pill"><i class="fas fa-plus me-0 fs-0"></i></span>
-                                        <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i class="fas fa-minus me-0 fs-0"></i></span>
-                                    </div> -->
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Tenant 4</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100 gambar-kecil" src="img/esjeruk.jpg" alt="">
-                                    <!-- <div class="card-img-overlay ps-0">
-                                        <span class="badge bg-primary p-2 ms-3 rounded-pill"><i class="fas fa-plus me-0 fs-0"></i></span>
-                                        <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i class="fas fa-minus me-0 fs-0"></i></span>
-                                    </div> -->
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Tenant 5</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="product-item">
-                                <div class="position-relative bg-light overflow-hidden">
-                                    <img class="img-fluid w-100 gambar-kecil" src="img/susucoklat.jpg"
-                                        alt="">
-                                    <!-- <div class="card-img-overlay ps-0">
-                                        <span class="badge bg-primary p-2 ms-3 rounded-pill"><i class="fas fa-plus me-0 fs-0"></i></span>
-                                        <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"><i class="fas fa-minus me-0 fs-0"></i></span>
-                                    </div> -->
-                                </div>
-                                <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2" href="">Tenant 6</a>
-                                </div>
+                                @foreach ($tenantInfos as $tenantInfo)
+                                    <div class="position-relative bg-light overflow-hidden">
+                                        <img class="img-fluid w-100 gambar-kecil"
+                                            src="{{ asset('storage/tenant/foto/' . $tenantInfo->foto_tenant) }}"
+                                            alt="Tenant Image">
+                                    </div>
+                                    <div class="text-center p-4">
+                                        <a class="d-block h5 mb-2"
+                                            href="{{ route('tenant.detail', ['id' => $tenantInfo->tenant_id]) }}">{{ $tenantInfo->tenant->nama }}</a>
+                                        <!-- Add more details from TenantInfo model as needed -->
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

@@ -25,6 +25,9 @@ use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', [HomeController::class, 'index'])->name('landingpage');
 Route::get('/aboutus', [HomeController::class, 'AboutUs'])->name('aboutus');
+Route::get('/contactus', [HomeController::class, 'ContactUs'])->name('contactus');
+Route::get('/tenant', [HomeController::class, 'tenant'])->name('tenant');
+
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
 // Rute Auth
@@ -135,6 +138,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::group(['prefix' => 'member', 'middleware' => ['auth', 'check.role:member']], function () {
         Route::get('/home', [MemberController::class, 'home'])->name('member.home');
+        Route::get('/tenant/{id}', [MemberController::class, 'showTenantDetails'])->name('tenant.detail');
     });
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
