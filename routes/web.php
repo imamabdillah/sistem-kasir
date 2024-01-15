@@ -27,6 +27,8 @@ Route::get('/', [HomeController::class, 'index'])->name('landingpage');
 Route::get('/aboutus', [HomeController::class, 'AboutUs'])->name('aboutus');
 Route::get('/contactus', [HomeController::class, 'ContactUs'])->name('contactus');
 Route::get('/tenant', [HomeController::class, 'tenant'])->name('tenant');
+Route::get('/inactive', [HomeController::class, 'userinactive'])->name('userincative');
+
 
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 
@@ -111,8 +113,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/kasir/{user}', [UserkasirController::class, 'destroykasir'])->name('owner.kasir.destroy');
 
         // Rute untuk aksi aktivasi dan nonaktifkan pengguna
-        Route::put('/{user}/activate', [OwnerController::class, 'activate'])->name('users.activate');
-        Route::put('/{user}/deactivate', [OwnerController::class, 'deactivate'])->name('users.deactivate');
+        // Route::put('/{user}/activate', [OwnerController::class, 'activate'])->name('users.activate');
+        // Route::put('/{user}/deactivate', [OwnerController::class, 'deactivate'])->name('users.deactivate');
     });
 
 

@@ -196,10 +196,11 @@
                     console.log('Payment success handled:', response);
                     if (response.message && response.message === 'Pembayaran berhasil') {
                         paymentStatus = 'success';
-                        handleOrderButtonVisibility();
+                        alert('Pembayaran berhasil!');
+                        redirectToKasirMenu();
                     } else {
                         console.error('Server response indicates an error:', response);
-                        paymentStatus = 'pending'; // atau 'error' sesuai kebutuhan
+                        paymentStatus = 'pending';
                     }
                 },
                 error: function(error) {
@@ -257,13 +258,11 @@
                     console.log('Cash payment processed:', response);
                     if (response.message && response.message === 'Pembayaran tunai berhasil') {
                         paymentStatus = 'success';
-                        handleOrderButtonVisibility();
+                        alert('Pembayaran tunai berhasil!');
+                        redirectToKasirMenu(); // Redirect directly after cash payment success
                     } else {
                         console.error('Server response indicates an error:', response);
                     }
-
-                    // Setelah pemrosesan pembayaran tunai, panggil fungsi untuk menangani tampilan tombol "Buat Order"
-                    handleOrderButtonVisibility();
                 },
                 error: function(error) {
                     console.error('Error processing cash payment:', error.responseJSON);

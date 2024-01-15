@@ -19,12 +19,67 @@
         <h4>Your Order</h4>
     </div>
 </div>
+
 <div class="container-xxl py-5">
     <div class="container">
         <div class="tab-class text-center wow fadeInUp" data-wow-delay="0.3s">
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
+                    <div class="job-item p-4 mb-4">
+                        <div class="row g-4">
+                            <div class="col-sm-12 col-md-8 text-start">
+                                <span class="badge bg-primary p-2 ms-3 rounded-pill">
+                                    <i class="fas fa-dollar me-0 fs-0"></i>
+                                </span>
+                                <span class="ms-2"><strong>Payment Details</strong></span>
 
+                                <div class="text-start">
+                                    <div class="ms-4 p-0">
+                                        <!-- Menampilkan jumlah total item -->
+                                        <span class="">Total Items:</span>
+
+                                        <!-- Menampilkan subtotal -->
+                                        <span class="d-block">Subtotal:</span>
+
+                                        <!-- Jika Anda memiliki informasi TAX, Discount, Payable Account, tampilkan di sini -->
+                                        <!-- Contoh: -->
+                                        {{--
+                                            <span class="d-block">TAX: {{ 'Rp ' . number_format($tax, 0, ',', '.') }}</span>
+                                            <span class="d-block">Discount: {{ 'Rp ' . number_format($discount, 0, ',', '.') }}</span>
+                                            <span class="d-block">Payable Account: {{ 'Rp ' . number_format($payableAccount, 0, ',', '.') }}</span>
+                                        --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                <div class="btn pt-0 text-end text-align">
+
+                                </div>
+                                <div class="text-start p-3">
+                                    <div class="pt-1">
+                                        <!-- Menampilkan informasi total item dan total harga -->
+                                        <span class="d-block ms-4" id="total-items2">{{ $totalItems }} Items</span>
+                                        <span class="d-block ms-4"
+                                            id="total-price2">{{ 'Rp ' . number_format($totalPrice, 0, ',', '.') }}</span>
+
+                                        <!-- Menampilkan informasi TAX, Discount, Payable Account jika diperlukan -->
+                                        {{--
+                                            <span class="d-block ms-4">{{ 'Rp ' . number_format($tax, 0, ',', '.') }}</span>
+                                            <span class="d-block ms-4">{{ 'Rp ' . number_format($discount, 0, ',', '.') }}</span>
+                                        --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form id="payment-form" action="{{ route('checkout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary py-3 px-5" id="checkoutButton">
+                                Processing Payments <i class="ms-2 fas fa-arrow-right"></i>
+                            </button>
+
+                        </form>
+                    </div>
                     @foreach ($carts as $cartItem)
                         <div class="job-item p-4 mb-4">
                             <div class="row g-4">
@@ -84,65 +139,6 @@
                             </div>
                         </div>
                     </div> --}}
-                    <div class="job-item p-4 mb-4">
-                        <div class="row g-4">
-                            <div class="col-sm-12 col-md-8 text-start">
-                                <span class="badge bg-primary p-2 ms-3 rounded-pill">
-                                    <i class="fas fa-dollar me-0 fs-0"></i>
-                                </span>
-                                <span class="ms-2"><strong>Payment Options</strong></span>
-
-                                <div class="text-start">
-                                    <h6 class="ms-3"><strong>Payment Details</strong></h6>
-                                    <div class="ms-4 p-0">
-                                        <!-- Menampilkan jumlah total item -->
-                                        <span class="">Total Items:</span>
-
-                                        <!-- Menampilkan subtotal -->
-                                        <span class="d-block">Subtotal:</span>
-
-                                        <!-- Jika Anda memiliki informasi TAX, Discount, Payable Account, tampilkan di sini -->
-                                        <!-- Contoh: -->
-                                        {{--
-                                            <span class="d-block">TAX: {{ 'Rp ' . number_format($tax, 0, ',', '.') }}</span>
-                                            <span class="d-block">Discount: {{ 'Rp ' . number_format($discount, 0, ',', '.') }}</span>
-                                            <span class="d-block">Payable Account: {{ 'Rp ' . number_format($payableAccount, 0, ',', '.') }}</span>
-                                        --}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="col-sm-12 col-md-3 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                <div class="btn pt-0 text-end text-align">
-                                    <span class="fw-bold d-block fs-6 p-0 text-start text-primary">
-                                        <strong>Cash</strong>
-                                        <span class="fas fa-chevron-right ms-1"></span>
-                                    </span>
-                                </div>
-                                <div class="text-start p-3">
-                                    <div class="pt-1">
-                                        <!-- Menampilkan informasi total item dan total harga -->
-                                        <span class="d-block ms-4" id="total-items2">{{ $totalItems }} Items</span>
-                                        <span class="d-block ms-4"
-                                            id="total-price2">{{ 'Rp ' . number_format($totalPrice, 0, ',', '.') }}</span>
-
-                                        <!-- Menampilkan informasi TAX, Discount, Payable Account jika diperlukan -->
-                                        {{--
-                                            <span class="d-block ms-4">{{ 'Rp ' . number_format($tax, 0, ',', '.') }}</span>
-                                            <span class="d-block ms-4">{{ 'Rp ' . number_format($discount, 0, ',', '.') }}</span>
-                                        --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <form id="payment-form" action="{{ route('checkout') }}" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-primary py-3 px-5" id="checkoutButton">
-                                Processing Payments <i class="ms-2 fas fa-arrow-right"></i>
-                            </button>
-
-                        </form>
-                    </div>
 
                     {{-- <div class="job-item p-4 mb-4">
                             <div class="row g-4">

@@ -27,6 +27,10 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 
+        if ($user->is_active == 0) {
+            auth()->logout(); // Log the user out
+            return redirect()->route('userincative')->with('error', 'Your account is inactive. Please contact the administrator.');
+        }
 
         // Redirect based on user role
         if ($user->role === 'admin') {

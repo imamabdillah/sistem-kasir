@@ -28,6 +28,10 @@ class HomeController extends Controller
     {
         return view('tenant');
     }
+    public function userinactive()
+    {
+        return view('layout.userinactive');
+    }
     public function home()
     {
         $user = auth()->user();
