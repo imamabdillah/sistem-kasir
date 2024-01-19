@@ -1,39 +1,5 @@
 @include('layout.base')
 
-<head>
-    <meta charset="utf-8">
-    <title>Foody - Organic Food Website Template</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap"
-        rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- Button Search -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-
 <body>
     <!-- Spinner Start -->
     <div id="spinner"
@@ -44,46 +10,36 @@
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s"
+        style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+            <h3 class="fw-bold font-secondary m-0"><span class=" text-dark">KENANGAN</span></h3>
+        </a>
 
-        <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
-                <h3 class="fw-bold font-secondary m-0"><span class=" text-dark">KENANGAN</span></h3>
-            </a>
-
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="{{ '/' }}" class="nav-item nav-link active">Home</a>
-                    <a href="{{ '/aboutus' }}" class="nav-item nav-link">About Us</a>
-
-                    <a href="{{ '/tenant' }}" class="nav-item nav-link">Tenant</a>
-
-                    <a href="{{ '/contactus' }}" class="nav-item nav-link">Contact Us</a>
-                </div>
-                <div>
-                    <a href="{{ '/login' }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
-                </div>
-                <div class="d-none d-lg-flex ms-2">
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-search text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-user text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-shopping-bag text-body"></small>
-                    </a>
-
-                </div>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{{ '/' }}" class="nav-item nav-link active">Home</a>
+                <a href="{{ '/aboutus' }}" class="nav-item nav-link">About Us</a>
+                <a href="{{ '/tenant' }}" class="nav-item nav-link">Tenant</a>
+                <a href="{{ '/contactus' }}" class="nav-item nav-link">Contact Us</a>
             </div>
-        </nav>
-    </div>
+            <div class="d-none d-lg-flex ms-2">
+                <a class="btn-sm-square bg-white rounded-circle-primary ms-3" href="">
+                    <small class="fa fa-search text-body"></small>
+                </a>
+                <a class=" btn-sm-square bg-white rounded-circle-primary ms-3" href="">
+                    <small class="fa fa-user text-body"></small>
+                </a>
+
+            </div>
+            <div>
+                <a href="{{ '/login' }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
+            </div>
+        </div>
+    </nav>
     <!-- Navbar End -->
 
 
@@ -125,8 +81,10 @@
             <div class="col-lg-6">
                 <h6 class=" text-start text-primary text-uppercase">Foodcourt Kenangan</h6>
                 <h1 class="mb-4">TENANTS</h1>
-                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et
-                    eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
+                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam
+                    et
+                    eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet
+                </p>
                 <div class=" image row g-2 ">
                     <div class="col-sm-4 wow fadeIn" data-wow-delay="0.1s"
                         style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
@@ -159,13 +117,11 @@
                             style="margin-top: 25%; visibility: visible; animation-delay: 0.1s; animation-name: zoomIn;">
                     </div>
                     <div class="col-6 text-start">
-                        <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s"
-                            src="assets/img/about.jpg"
+                        <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.3s" src="assets/img/about.jpg"
                             style="visibility: visible; animation-delay: 0.3s; animation-name: zoomIn;">
                     </div>
                     <div class="col-6 text-end">
-                        <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s"
-                            src="assets/img/parkir.jpg"
+                        <img class="img-fluid rounded w-50 wow zoomIn" data-wow-delay="0.5s" src="assets/img/parkir.jpg"
                             style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;">
                     </div>
                     <div class="col-6 text-start">
@@ -474,7 +430,8 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Address</h4>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>CQCH+QF3, Jl. Jetis Permai Gg. 13, Gentan, Kec. Baki,
+                    <p><i class="fa fa-map-marker-alt me-3"></i>CQCH+QF3, Jl. Jetis Permai Gg. 13, Gentan, Kec.
+                        Baki,
                         Kabupaten Sukoharjo, Jawa Tengah 57556</p>
                     <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                     <p><i

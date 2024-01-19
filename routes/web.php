@@ -139,6 +139,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('transaksi', [KasirController::class, 'transaksi'])->name('kasir.transaksi');
         Route::post('checkin', [KasirController::class, 'checkIn'])->name('presensiIn');
         Route::post('checkout', [KasirController::class, 'checkOut'])->name('presensiOut');
+        Route::get('stockkasir', [KasirController::class, 'stockkasir'])->name('stockkasir');
+        Route::get('kasirbahan', [KasirController::class, 'kasirbahan'])->name('kasirbahan');
     });
 
     Route::group(['prefix' => 'member', 'middleware' => ['auth', 'check.role:member']], function () {

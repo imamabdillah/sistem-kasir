@@ -52,7 +52,7 @@
                     <a href="">Forgot password?</a>
                 </div>
             </div>
-            <button type="submit" class="button-login">Register</button> <br>
+            <button type="submit" class="button-login">Register Tenant</button> <br>
             <p><strong>Or With Sign</strong></p>
             <div class="register">
                 <p class="text-dark">Already have an account? <a href="{{ route('login.form') }}"

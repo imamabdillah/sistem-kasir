@@ -1,4 +1,4 @@
-@extends('layout.base')
+@include('layout.base')
 
 <body>
     <!-- Spinner Start -->
@@ -9,46 +9,36 @@
     <!-- Spinner End -->
 
     <!-- Navbar Start -->
-    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s"
+        style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+        <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+            <h3 class="fw-bold font-secondary m-0"><span class=" text-dark">KENANGAN</span></h3>
+        </a>
 
-        <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
-                <h3 class="fw-bold font-secondary m-0"><span class=" text-dark">KENANGAN</span></h3>
-            </a>
-
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="{{ '/' }}" class="nav-item nav-link active">Home</a>
-                    <a href="{{ '/aboutus' }}" class="nav-item nav-link">About Us</a>
-
-                    <a href="{{ '/tenant' }}" class="nav-item nav-link">Tenant</a>
-
-                    <a href="{{ '/contactus' }}" class="nav-item nav-link">Contact Us</a>
-                </div>
-                <div>
-                    <a href="{{ '/login' }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
-                </div>
-                <div class="d-none d-lg-flex ms-2">
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-search text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-user text-body"></small>
-                    </a>
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-shopping-bag text-body"></small>
-                    </a>
-
-                </div>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{{ '/' }}" class="nav-item nav-link active">Home</a>
+                <a href="{{ '/aboutus' }}" class="nav-item nav-link">About Us</a>
+                <a href="{{ '/tenant' }}" class="nav-item nav-link">Tenant</a>
+                <a href="{{ '/contactus' }}" class="nav-item nav-link">Contact Us</a>
             </div>
-        </nav>
-    </div>
+            <div class="d-none d-lg-flex ms-2">
+                <a class="btn-sm-square bg-white rounded-circle-primary ms-3" href="">
+                    <small class="fa fa-search text-body"></small>
+                </a>
+                <a class=" btn-sm-square bg-white rounded-circle-primary ms-3" href="">
+                    <small class="fa fa-user text-body"></small>
+                </a>
+
+            </div>
+            <div>
+                <a href="{{ '/login' }}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Login</a>
+            </div>
+        </div>
+    </nav>
     <!-- Navbar End -->
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s"
@@ -56,10 +46,6 @@
         <div class="container">
             <h1 class="display-3 mb-3  slideInDown">About Us</h1>
             <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
-                    <li class="breadcrumb-item text-dark active" aria-current="page">About Us</li>
-                </ol>
             </nav>
         </div>
     </div>
@@ -160,7 +146,7 @@
                                     <div class="col-md-6" style="min-height: 400px;">
                                         <div class="position-relative h-100">
                                             <img class="position-absolute img-fluid w-100 h-100"
-                                                src='{!! asset('assets/img/Tempat.png') !!}' style="object-fit: cover;"
+                                                src="assets/img/Tempat.png" style="object-fit: cover;"
                                                 alt="">
                                         </div>
                                     </div>

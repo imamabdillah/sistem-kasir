@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tenant;
+use App\Models\BahanBaku;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\PresensiMasuk;
@@ -20,6 +21,16 @@ class KasirController extends Controller
     public function presensimasuk()
     {
         return view('kasir.presensimasuk');
+    }
+    public function stockkasir()
+    {
+        $bahanBakus = BahanBaku::all();
+        return view('kasir.stockkasir', compact('bahanBakus'));
+    }
+    public function kasirbahan()
+    {
+        $bahanBakus = BahanBaku::all();
+        return view('kasir.kasirbahan', compact('bahanBakus'));
     }
     public function presensikeluar()
     {
