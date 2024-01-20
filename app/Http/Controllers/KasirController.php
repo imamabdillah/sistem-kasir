@@ -20,32 +20,61 @@ class KasirController extends Controller
 
     public function presensimasuk()
     {
-        return view('kasir.presensimasuk');
+        $currentUser = Auth::user();
+        $tenant = $currentUser->tenant;
+
+        return view('kasir.presensimasuk', compact('tenant'));
+    }
+
+    public function presensikeluar()
+    {
+        $currentUser = Auth::user();
+        $tenant = $currentUser->tenant;
+
+        return view('kasir.presensikeluar', compact('tenant'));
     }
     public function stockkasir()
     {
+        $currentUser = Auth::user();
+        $tenant = $currentUser->tenant;
+
         $bahanBakus = BahanBaku::all();
-        return view('kasir.stockkasir', compact('bahanBakus'));
+        return view('kasir.stockkasir', compact('bahanBakus', 'tenant'));
     }
+
     public function kasirbahan()
     {
+        $currentUser = Auth::user();
+        $tenant = $currentUser->tenant;
+
         $bahanBakus = BahanBaku::all();
-        return view('kasir.kasirbahan', compact('bahanBakus'));
+        return view('kasir.kasirbahan', compact('bahanBakus', 'tenant'));
     }
-    public function presensikeluar()
-    {
-        return view('kasir.presensikeluar');
-    }
+
+
 
     public function transaksi()
     {
-        $operatorId = Auth::user()->id;
-        // Mendapatkan transaksi berdasarkan user_id
-        $transactions = Transaction::where('user_id', $operatorId)->get();
+        $currentUser = Auth::user();
+        $tenant = $currentUser->tenant;
+
+        // Mengambil transaksi berdasarkan user_id dengan informasi tenant
+        $transactions = Transaction::with('tenant')
+            ->where('user_id', $currentUser->id)
+            ->get();
+
+        // Memeriksa apakah ada transaksi
+        if ($transactions->isEmpty()) {
+            return redirect()->route('transaksi')->with('error', 'Belum ada transaksi.');
+        }
+
         // Menghitung total transaksi sukses
         $totalHargaTransaksi = $transactions->where('status', 'success')->sum('total_price');
-        return view('kasir.transaksi', compact('transactions', 'totalHargaTransaksi'));
+
+        return view('kasir.transaksi', compact('transactions', 'totalHargaTransaksi', 'tenant'));
     }
+
+
 
     public function checkIn(Request $request)
     {

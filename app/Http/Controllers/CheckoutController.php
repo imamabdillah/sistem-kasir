@@ -208,7 +208,8 @@ class CheckoutController extends Controller
             'menus' => $menus,
             'transaction' => $transaction,
             'orderItems' => $orderItems,
-            'order_id' => $transaction->order_id // Menyesuaikan variabel order_id
+            'order_id' => $transaction->order_id,
+            'tenant' => $transaction->tenant,
         ]);
     }
 
