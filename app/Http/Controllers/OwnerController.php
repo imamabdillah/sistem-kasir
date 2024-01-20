@@ -8,12 +8,13 @@ use App\Models\User;
 use App\Models\Tenant;
 use App\Models\Category;
 
-use App\Models\Transaction;
+use App\Models\BahanBaku;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\PresensiMasuk;
-use App\Models\PresensiKeluar;
 
+use App\Models\PresensiKeluar;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -151,6 +152,12 @@ class OwnerController extends Controller
         // $combinedData = $presensiMasuk->merge($presensiKeluar)->sortBy('checkout_date');
 
         return view('owner.presensikeluar', compact('presensiKeluar'));
+    }
+
+    public function riwayatbahan()
+    {
+        $bahanBakus = BahanBaku::all();
+        return view('owner.bahanbaku.riwayatbahan', compact('bahanBakus'));
     }
 
     public function activate(User $user)

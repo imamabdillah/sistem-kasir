@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'owner', 'kasir', 'member']);
             $table->unsignedBigInteger('tenant_id')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->boolean('is_active')->default(false);
 
             $table->rememberToken();
             $table->timestamps();

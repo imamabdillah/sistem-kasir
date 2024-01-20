@@ -67,22 +67,22 @@
                             @foreach ($menus as $menu)
                                 @if ($menu->category_id == $category->id && $menu->tenant_id == auth()->user()->tenant_id)
                                     <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.075s">
-                                        <div class="product-item">
+                                        <div class="product-item"
+                                            onclick="addToCart({{ $menu->id }}, '{{ $menu->nama }}', {{ $menu->harga }})">
                                             <div class="position-relative bg-light overflow-hidden">
                                                 <img class="img-fluid w-100"
                                                     src="{{ asset('storage/foto_produk/' . $menu->foto_produk) }}"
                                                     alt="{{ $menu->nama }}"
                                                     style="object-fit: cover; object-position: center; height: 200px; width: 100%;">
-
                                                 <div class="card-img-overlay ps-0">
                                                     <span class="badge bg-primary p-2 ms-3 rounded-pill btn-add-to-cart"
                                                         data-menu-id="{{ $menu->id }}"
-                                                        onclick="addToCart({{ $menu->id }}, '{{ $menu->nama }}', {{ $menu->harga }})">
+                                                        onclick="addToCart(event, '{{ $menu->id }}', '{{ $menu->nama }}', {{ $menu->harga }})">
                                                         <i class="fas fa-plus me-0 fs-0"></i>
                                                     </span>
-                                                    <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill"
-                                                        onclick="removeFromCart('{{ $menu->id }}')">
-                                                        <i class="fas fa-minus me-0 fs-0"></i>
+                                                    <span class="badge bg-danger ms-2 me-1 p-2 rounded-pill">
+                                                        <i class="fas fa-minus me-0 fs-0"
+                                                            onclick="removeFromCart(event, '{{ $menu->id }}')"></i>
                                                     </span>
                                                     <span class="badge bg-primary p-2 ms-4 rounded-pill align-end"
                                                         data-bs-toggle="modal" data-bs-target="#noteModal"
@@ -190,7 +190,8 @@
 
         let cartItems = []; // Array untuk menyimpan item yang dipilih
 
-        function addToCart(menuId, menuNama, menuHarga, tenant) {
+        function addToCart(event, menuId, menuNama, menuHarga, tenant) {
+            event.stopPropagation();
             // Kirim permintaan HTTP ke server untuk menambahkan item ke database
             fetch(`{{ route('cart.addToCart', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                     method: 'POST',
@@ -218,7 +219,9 @@
                 .catch(error => console.error('Error:', error));
         }
 
-        function removeFromCart(menuId, tenant) {
+        function removeFromCart(event, menuId, tenant) {
+            event.stopPropagation();
+
             fetch(`{{ route('cart.removeFromCart', ['tenant' => ':tenant']) }}`.replace(':tenant', tenant), {
                     method: 'POST',
                     headers: {

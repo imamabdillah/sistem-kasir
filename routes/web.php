@@ -88,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/tenant', [OwnerController::class, 'tenant'])->name('owner.tenant');
         Route::get('/presensimasuk', [OwnerController::class, 'masuk'])->name('owner.presensimasuk');
         Route::get('/presensikeluar', [OwnerController::class, 'keluar'])->name('owner.presensikeluar');
+        Route::get('/riwayatbahan', [OwnerController::class, 'riwayatbahan'])->name('owner.riwayatbahan');
 
         //CRUD supplier
         Route::resource('suppliers', SupplierController::class);

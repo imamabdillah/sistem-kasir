@@ -36,7 +36,7 @@
     <div class="wrapper">
         <form action="{{ route('register') }}" method="POST">
             @csrf
-            <h2 class="text-primary">Register</h2>
+            <h2 class="text-primary">Register Tenant</h2>
             <div class="form">
                 <input type="text" name="nama" class="login mt-3" placeholder="Nama Tenant" required>
                 <input type="text" name="name" class="login mt-3" placeholder="Username" required>

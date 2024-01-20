@@ -627,32 +627,57 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="menu-item">
+                            <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                                 <!--begin:Menu link-->
-                                <a class="menu-link" href="{{ route('bahanbaku.index') }}">
+                                <span class="menu-link">
                                     <span class="menu-icon">
-                                        <!--begin::Svg Icon | path: icons/duotune/abstract/abs014.svg-->
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-soup">
-                                                <path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z" />
-                                                <path d="M7 21h10" />
-                                                <path d="M19.5 12 22 6" />
+                                                class="lucide lucide-clipboard-signature">
+                                                <rect width="8" height="4" x="8" y="2" rx="1"
+                                                    ry="1" />
+                                                <path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-.5" />
+                                                <path d="M16 4h2a2 2 0 0 1 1.73 1" />
                                                 <path
-                                                    d="M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62" />
-                                                <path
-                                                    d="M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62" />
-                                                <path
-                                                    d="M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62" />
+                                                    d="M18.42 9.61a2.1 2.1 0 1 1 2.97 2.97L16.95 17 13 18l.99-3.95 4.43-4.44Z" />
+                                                <path d="M8 18h1" />
                                             </svg>
                                         </span>
                                         <!--end::Svg Icon-->
                                     </span>
-                                    <span class="menu-title px-2">Bahan Baku</span>
-                                </a>
-                                <!--end:Menu link-->
+                                    <span class="menu-title px-w">Bahan Baku</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <!--end:Menu item-->
+                                <div class="menu-sub menu-sub-accordion px-4">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link" href="{{ route('bahanbaku.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Stock</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                </div>
+                                <div class="menu-sub menu-sub-accordion px-4">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link" href="{{ route('owner.riwayatbahan') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Riwayat Stock</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!--end::Menu wrapper-->

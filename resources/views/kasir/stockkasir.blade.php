@@ -1,12 +1,12 @@
-@include('layout.adminheader')
+@include('layout.base')
 
 <body id="kt_app_body" data-kt-app-layout="dark-sidebar" data-kt-app-header-fixed="true" data-kt-app-sidebar-enabled="true"
     data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-hoverable="true" data-kt-app-sidebar-push-header="true"
     data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" data-kt-app-toolbar-enabled="true"
     class="app-default">
 
-    @include('layout.ownernav')
-    <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+    @include('layout.kasirnav')
+    <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6" style="margin-top: 5%">
         <!--begin::Toolbar container-->
         <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
             <!--begin::Page title-->
@@ -19,7 +19,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-muted">
-                        <a href="" class="text-muted text-hover-primary">Owner</a>
+                        <a href="" class="text-muted text-hover-primary">Kasir</a>
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->
