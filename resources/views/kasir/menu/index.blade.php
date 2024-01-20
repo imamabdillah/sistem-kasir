@@ -68,7 +68,7 @@
                                 @if ($menu->category_id == $category->id && $menu->tenant_id == auth()->user()->tenant_id)
                                     <div class="col-xl-2 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.075s">
                                         <div class="product-item"
-                                            onclick="addToCart({{ $menu->id }}, '{{ $menu->nama }}', {{ $menu->harga }})">
+                                            onclick="addToCart(event, '{{ $menu->id }}', '{{ $menu->nama }}', {{ $menu->harga }})">
                                             <div class="position-relative bg-light overflow-hidden">
                                                 <img class="img-fluid w-100"
                                                     src="{{ asset('storage/foto_produk/' . $menu->foto_produk) }}"
