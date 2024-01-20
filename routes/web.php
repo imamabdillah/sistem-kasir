@@ -120,7 +120,7 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::group(['prefix' => 'kasir', 'middleware' => ['auth', 'check.role:kasir']], function () {
-        Route::get('/menu', [KasirController::class, 'index'])->name('kasir.menu.index');
+        Route::get('/menu', [KasirController::class, 'index'])->name('kasir.menu');
         Route::get('/menu/{tenant}', [MenuController::class, 'index'])->name('kasir.menu.index');
         Route::post('menu/add-to-cart/{tenant}', [CartController::class, 'addToCart'])->name('cart.addToCart');
         Route::post('menu/remove-from-cart/{tenant}', [CartController::class, 'removeFromCart'])->name('cart.removeFromCart');
