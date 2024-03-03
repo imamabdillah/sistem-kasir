@@ -134,6 +134,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('menu/checkout/payment/status/{orderId}', [CheckoutController::class, 'handleCashPayment'])->name('get-payment-status');
         Route::post('menu/checkout/payment/cash', [CheckoutController::class, 'handleCashPayment'])->name('handle-cash-payment');
         Route::post('menu/checkout/payment/success', [CheckoutController::class, 'handlePaymentSuccess'])->name('handle-payment-success');
+        Route::get('menu/checkout/invoice', [CheckoutController::class, 'Invoice'])->name('invoice');
+
 
         Route::get('PresensiMasuk', [KasirController::class, 'presensimasuk'])->name('presensimasuk');
         Route::get('PresensiKeluar', [KasirController::class, 'presensikeluar'])->name('presensikeluar');

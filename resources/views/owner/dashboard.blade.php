@@ -291,6 +291,8 @@
                                         <th class="text-center min-w-100px">Payment Method</th>
                                         <th class="text-center min-w-100px">Status</th>
                                         <th class="text-center min-w-100px">Tenant</th>
+                                        <th class="text-center min-w-100px">Transaction Time</th>
+
                                     </tr>
                                 </thead>
                                 <tbody class="fw-semibold text-gray-600 text-center pe-0">
@@ -304,6 +306,8 @@
                                                 <td>{{ $transaction->payment_method }}</td>
                                                 <td>{{ $transaction->status }}</td>
                                                 <td>{{ $transaction->tenant->nama }}</td>
+                                                <td>{{ $transaction->created_at }}</td>
+
                                             </tr>
                                         @endif
                                     @endforeach

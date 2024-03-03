@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Menu;
 use App\Models\Order;
+use Barryvdh\DomPDF\PDF as PDF;
 use App\Models\OrderItem;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -233,6 +234,49 @@ class CheckoutController extends Controller
         }
     }
 
+    // public function generateInvoice($transactionId)
+    // {
+    //     $transaction = Transaction::find($transactionId);
+
+    //     if (!$transaction) {
+    //         return redirect()->route('tampilanpayment')->with('error', 'Transaksi tidak ditemukan.');
+    //     }
+
+    //     // Mengambil order items dari tabel order_items yang sesuai dengan order_id dari transaction
+    //     $orderItems = OrderItem::where('order_id', $transaction->order_id)->get();
+
+    //     // Menghitung total items dan total price dari order items yang sesuai
+    //     $totalItems = $orderItems->sum('quantity');
+    //     $totalPrice = $orderItems->sum(function ($item) {
+    //         return $item->quantity * $item->harga;
+    //     });
+
+    //     // Sesuaikan data yang dibutuhkan untuk invoice
+    //     $data = [
+    //         'transaction' => $transaction,
+    //         'orderItems' => $orderItems,
+    //         'totalItems' => $totalItems,
+    //         'totalPrice' => $totalPrice,
+    //     ];
+
+    //     // Generate PDF menggunakan library DomPDF
+    //     $pdf = PDF::loadView('pdf.invoice', $data);
+
+    //     // Simpan atau tampilkan PDF (sesuai kebutuhan)
+    //     // Contoh menyimpan PDF
+    //     $pdfPath = public_path('invoices/invoice_' . $transaction->id . '.pdf');
+    //     $pdf->save($pdfPath);
+
+    //     // Jika ingin menampilkan PDF langsung di browser
+    //     // return $pdf->stream('invoice.pdf');
+
+    //     return redirect()->route('generate.invoice')->with('success', 'Invoice berhasil dibuat.');
+    // }
+
+    public function invoice()
+    {
+        return view('kasir.menu.invoice');
+    }
 
     public function handleCashPayment(Request $request)
     {

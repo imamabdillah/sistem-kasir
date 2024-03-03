@@ -46,6 +46,7 @@ class RegisterController extends Controller
             // tambahkan sesuai kebutuhan
         ]);
 
+
         return redirect()->route('login.form')->with('success', 'register berhasil');
     }
 }

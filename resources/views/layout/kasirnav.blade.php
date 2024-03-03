@@ -24,7 +24,7 @@
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bahan</a>
                     <div class="dropdown-menu m-0">
                         <a href="{{ route('stockkasir') }}" class="dropdown-item">Stock</a>
-                        <a href="{{ route('kasirbahan') }}" class="dropdown-item">Bahan Keluar</a>
+                        {{-- <a href="{{ route('kasirbahan') }}" class="dropdown-item">Bahan Keluar</a> --}}
                     </div>
                 </div>
                 <a href="{{ route('kasir.transaksi') }}" class="nav-item nav-link">Transaksi</a>

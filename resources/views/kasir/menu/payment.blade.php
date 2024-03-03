@@ -220,6 +220,9 @@
                 alert('Selesaikan pembayaran terlebih dahulu.');
             }
         }
+        function redirectToInvoice() {
+            window.location.href = '{{ route('invoice') }}';
+        }
 
         // Fungsi untuk menangani pembayaran pending (opsional)
         function handlePaymentPending(result) {
@@ -259,7 +262,7 @@
                     if (response.message && response.message === 'Pembayaran tunai berhasil') {
                         paymentStatus = 'success';
                         alert('Pembayaran tunai berhasil!');
-                        redirectToKasirMenu(); // Redirect directly after cash payment success
+                        redirectToInvoice(); // Redirect directly after cash payment success
                     } else {
                         console.error('Server response indicates an error:', response);
                     }

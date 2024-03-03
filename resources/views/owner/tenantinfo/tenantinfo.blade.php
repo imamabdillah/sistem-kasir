@@ -44,7 +44,7 @@
                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
                         <div class="w-100 mw-150px">
                         </div>
-                        <a href="{{ route('tenantinfos.create') }}" class="btn btn-primary">Tambah Informasi Tenant</a>
+                        <a href="{{ route('tenantinfos.create') }}" class="btn btn-primary">Edit Informasi Tenant</a>
                     </div>
                 </div>
                 <div class="card">

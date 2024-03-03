@@ -213,6 +213,18 @@
                                                     <!--end::Description-->
                                                 </div>
                                                 <!--end::Input group-->
+                                                <div class="mb-10 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label class="required form-label">Stock</label>
+                                                    <!--end::Label-->
+                                                    <!--begin::Input-->
+                                                    <input type="number" name="stock" class="form-control mb-2"
+                                                        placeholder="Product Stock" value="" />
+                                                    <!--end::Input-->
+                                                    <!--begin::Description-->
+                                                    <div class="text-muted fs-7">Product Stock</div>
+                                                    <!--end::Description-->
+                                                </div>
                                             </div>
                                             <!--end::Card header-->
                                         </div>

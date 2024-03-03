@@ -58,7 +58,7 @@
                             <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                 <th class="w-60px pe-2">No</th>
                                 <th class="min-w-100px">Nama Bahan Baku</th>
-                                <th class="text-center min-w-100px">Jumlah</th>
+                                <th class="text-center min-w-100px">Jumlah (kg)</th>
                                 <th class="text-center min-w-100px">Harga</th>
                                 <th class="text-center min-w-100px">Foto</th>
                                 <th class="text-center min-w-70px">Actions</th>

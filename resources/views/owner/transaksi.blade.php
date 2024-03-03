@@ -61,7 +61,7 @@
                             </span>
                             <!--end::Svg Icon-->
                             <input type="text" data-kt-ecommerce-product-filter="search"
-                                class="form-control form-control-solid w-250px ps-14" placeholder="Search Product" />
+                                class="form-control form-control-solid w-250px ps-14" placeholder="Search" />
                         </div>
                         <!--end::Search-->
                     </div>
@@ -80,9 +80,7 @@
                             </select>
                             <!--end::Select2-->
                         </div>
-                        <!--begin::Add product-->
-                        <a href="{{ route('create') }}" class="btn btn-primary">Tambah User</a>
-                        <!--end::Add product-->
+
                     </div>
                     <!--end::Card toolbar-->
                 </div>
@@ -102,6 +100,8 @@
                                 <th class="text-center min-w-100px">Status</th>
                                 <th class="text-center min-w-100px">Tenant</th>
                                 <th class="text-center min-w-100px">Operator</th>
+                                <th class="text-center min-w-100px">Transaction Time</th>
+
                             </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600 text-center pe-0">
@@ -114,6 +114,8 @@
                                     <td>{{ $transaction->status }}</td>
                                     <td>{{ $transaction->tenant->nama }}</td>
                                     <td>{{ $transaction->users->name }}</td>
+                                    <td>{{ $transaction->created_at }}</td>
+
                                 </tr>
                             @endforeach
                         </tbody>
