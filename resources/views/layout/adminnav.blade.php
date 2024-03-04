@@ -524,7 +524,7 @@
                                         <!--end:Menu link-->
                                     </div>
                                 </div>
-                                <div class="menu-sub menu-sub-accordion px-4">
+                                {{-- <div class="menu-sub menu-sub-accordion px-4">
                                     <!--begin:Menu item-->
                                     <div class="menu-item">
                                         <!--begin:Menu link-->
@@ -536,7 +536,7 @@
                                         </a>
                                         <!--end:Menu link-->
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="menu-item">
                                 <!--begin:Menu link-->
